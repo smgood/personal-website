@@ -1,0 +1,523 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+  <!--      
+
+  Now that you're looking at this, do you want to grab a coffee and talk about future opportunities?
+  Hit me up at smgood@umich.edu
+
+  Lookng forward to meeting you!
+
+  Thanks,
+  Sean
+    ______     ______    ______   	 ______ 
+   /\  ___\   /\  ___\  /\  __ \  	/\   \ \
+   \ \___  \  \ \  __\   \ \  __ \ 	\ \ \ \ \
+    \/\_____\  \ \_____\   \ \_\ \_\  \ \_\__\
+      \/_____/   \/_____/   \/_/\/_/   \/_/__/
+      
+  -->
+
+
+
+
+
+		<title>Sean Goodrich</title>
+        <link rel="shortcut icon" type="image/x-icon" href="IMAGES/favicon.ico"/>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="keywords" content="Sean, Goodrich, UM, Michigan, Computer, Science, Los Angeles">
+        
+		<style>
+			body {
+				color: #cccccc;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+
+				background-color: #333;
+				margin: 0px;				
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a {
+
+				color: #0080ff;
+			}
+			
+			#container
+				{
+				position:absolute;
+				z-index:2;
+				}
+
+		</style>
+	</head>
+	<body>
+
+        <div id = "continue" style="color: white; position: absolute; bottom: 5vh; cursor: pointer; text-align: center; font-size: 5vh; width:100%; z-index:3;" onclick="ExplodeFunction('true')">
+        	Scroll Down
+        </div>
+        
+        <div id = "top_background" style="background-color:black; position:absolute; top:0px; width:100%; z-index:1; height:100vh;"></div>
+        <div id = "bottom_background" style="background-color:#999; position:absolute; top:200vh; width:100%; z-index:1; height:100vh;"></div>
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="js/dat.gui.min.js"></script>
+		<script src="js/three.min.js"></script>
+
+		<script>
+
+			var group;
+			var container;
+			var particlesData = [];
+			var camera, scene, renderer;
+			var positions,colors;
+			var pointCloud;
+			var particlePositions;
+			var linesMesh;
+
+			var maxParticleCount = 500;
+			var particleCount = 500;
+			var r = 800;
+			var rHalf = r / 2;
+			var collision_rad = 100;
+
+			var effectController = {
+				showDots: false,
+				showLines: true,
+				minDistance: 80,
+				limitConnections: false,
+				maxConnections: 20,
+				particleCount: 500
+			}
+
+			init();
+			animate();
+
+			var scrolling = false;
+/*
+			function initGUI() {
+
+				var gui = new dat.GUI();
+
+				gui.add( effectController, "showDots" ).onChange( function( value ) { pointCloud.visible = value; } );
+				gui.add( effectController, "showLines" ).onChange( function( value ) { linesMesh.visible = value; } );
+				gui.add( effectController, "minDistance", 10, 300 );
+				gui.add( effectController, "limitConnections" );
+				gui.add( effectController, "maxConnections", 0, 30, 1 );
+				gui.add( effectController, "particleCount", 0, maxParticleCount, 1 ).onChange( function( value ) {
+
+					particleCount = parseInt( value );
+					particles.drawcalls[ 0 ].count = particleCount;
+
+				});
+
+			}
+*/
+			function init() {
+				particlesData = [];
+				particleCount = 10;
+				
+				container = document.createElement('div');
+				container.id ="container";
+				$( "body" ).append( container );
+				
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / (window.innerHeight * 2), 1, 10000 );
+				camera.position.z = 1300 * 2;
+
+				scene = new THREE.Scene();
+
+				group = new THREE.Group();
+				scene.add( group );
+				
+				var segments = maxParticleCount * maxParticleCount;
+
+				positions = new Float32Array( segments * 3 );
+				colors = new Float32Array( segments * 3 );
+
+				var pMaterial = new THREE.PointCloudMaterial( {
+					color: 0xFFFFFF,
+					size: 3,
+					blending: THREE.AdditiveBlending,
+					transparent: true,
+					sizeAttenuation: false
+				} );
+
+				particles = new THREE.BufferGeometry();
+				particlePositions = new Float32Array( maxParticleCount * 3 );
+
+				for ( var i = 0; i < maxParticleCount; i++ ) {
+					var y = (Math.random() * 4/3 * r) - (7*r / 12);
+					var x = 0;
+					if (y>rHalf)
+						{
+						y = y - rHalf/3;
+						x = 15*Math.sqrt(rHalf-y) + (Math.random() * 2 * collision_rad - collision_rad);
+						}
+					else if (y< -rHalf)
+						{
+						y = y + rHalf/3;
+						x = -15*Math.sqrt(rHalf+y) + (Math.random() * 2 * collision_rad - collision_rad);	
+						}
+					else
+						x = (-Math.sin(y * Math.PI / rHalf) * rHalf/2) + (Math.random() * 2 * collision_rad - collision_rad);
+					
+					var z = Math.random() * collision_rad - collision_rad/2;
+
+					particlePositions[ i * 3     ] = x;
+					particlePositions[ i * 3 + 1 ] = y;
+					particlePositions[ i * 3 + 2 ] = z;
+
+					// add it to the geometry
+					particlesData.push( {
+						velocity: new THREE.Vector3( -.5 + Math.random() * 1, -.5 + Math.random() * 1,  -.5 + Math.random() * 1 ),
+						numConnections: 0
+					} );
+
+				}
+
+				particles.drawcalls.push( {
+					start: 0,
+					count: particleCount,
+					index: 0
+				} );
+
+				particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3 ) );
+
+				// create the particle system
+				pointCloud = new THREE.PointCloud( particles, pMaterial );
+				group.add( pointCloud );
+				pointCloud.visible = false;
+				
+				var geometry = new THREE.BufferGeometry();
+
+				geometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3 ) );
+				geometry.addAttribute( 'color', new THREE.DynamicBufferAttribute( colors, 3 ) );
+
+				geometry.computeBoundingSphere();
+
+				geometry.drawcalls.push( {
+					start: 0,
+					count: 0,
+					index: 0
+				} );
+
+				var material = new THREE.LineBasicMaterial( {
+					vertexColors: THREE.VertexColors,
+					blending: THREE.AdditiveBlending,
+					transparent: true
+				} );
+
+				linesMesh = new THREE.Line( geometry, material, THREE.LinePieces );
+				group.add( linesMesh );
+
+				//
+
+				renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+				renderer.setClearColor( 0xffffff, 0 ); // the default
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight * 2);
+
+				renderer.gammaInput = true;
+				renderer.gammaOutput = true;
+
+				container.appendChild( renderer.domElement );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+				
+				container.style.top = -0.5 * window.innerHeight + "px";
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / (window.innerHeight * 2);
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight * 2);
+				container.style.top = -0.5 * window.innerHeight + "px";
+			}
+			
+			
+			
+			var explode = false;
+			function ExplodeFunction (scroll) {
+				explode = true;		
+				
+				$("#continue").fadeOut(600);
+				
+				if (scroll == 'true')
+					{
+					scrolling = true;
+					pageScroll(1)
+					}
+			}
+			
+			function pageScroll(time) 
+						{
+						$(window).scrollTop(window.innerHeight * (time-1)/40)
+						if ($(window).scrollTop() < window.innerHeight)
+							scrolldelay = setTimeout(function(){
+								pageScroll(time*1.025);
+								},10); // scrolls every 10 milliseconds
+						else
+							{
+							$(window).scrollTop(window.innerHeight);
+							scrolling = false;
+							}
+						}	
+			
+			function animate() {
+
+				var vertexpos = 0;
+				var colorpos = 0;
+				var numConnected = 0;
+				
+				
+				
+				
+				
+				if (explode == false && $(window).scrollTop() > window.innerHeight / 8)
+					ExplodeFunction ('false');
+				
+				if (explode == true && $(window).scrollTop() < window.innerHeight / 8 && scrolling == false)	
+					{
+					explode = false;
+					$( "#container" ).remove();
+					init();
+					$("#continue").fadeIn();
+					}
+				
+				if (particleCount < 500)
+					{
+					particleCount+=10;	
+					particles.drawcalls[ 0 ].count = particleCount;
+					}
+					
+					
+										
+				for ( var i = 0; i < particleCount; i++ )
+					particlesData[ i ].numConnections = 0;
+
+				for ( var i = 0; i < particleCount; i++ ) {
+
+					// get the particle
+					var particleData = particlesData[i];
+
+					particlePositions[ i * 3     ] += particleData.velocity.x;
+					particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+					particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+				
+					xPos = particlePositions[ i * 3];
+					yPos = particlePositions[ i * 3 +1];
+					zPos = particlePositions[ i * 3 +2];
+					
+					xVel = particleData.velocity.x; 
+					yVel = particleData.velocity.y;
+					zVel = particleData.velocity.z;
+					
+					if (explode == true)
+						{
+						particleData.velocity.x *= 1.05; 
+						particleData.velocity.y *= 1.05;
+						particleData.velocity.z *= 1.05;
+						}
+						
+					else
+						{
+						if (Math.abs(xPos) > rHalf/2)
+							particleData.velocity.x = -xVel;
+								
+						if (Math.abs(yPos) > rHalf)
+							particleData.velocity.y = -yVel;
+						
+						if (Math.abs(zPos) > collision_rad)
+							particleData.velocity.z = -zVel;
+						
+						// boundary conditions for top quadratic part of S 	
+						if (xPos > 0 && yPos > rHalf/2 && yPos < 2*rHalf/3)
+									{
+									particleData.velocity.y = -yVel;
+									}	
+						else if (xPos > 0 && yPos > 2*rHalf/3)
+									{
+									var estimated_width = 15*Math.sqrt(rHalf-yPos);
+									var rad_quad = Math.abs(xPos - estimated_width);
+									if (rad_quad > collision_rad)
+										{
+										parallel_vector = -15/(2*Math.sqrt(rHalf-yPos));
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_quad > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+											{
+											particlePositions[ i * 3] = estimated_width;
+											}	
+										}
+									}
+							// boundary conditions for bottom quadratic part of S 
+							else if (xPos < 0 && yPos < -rHalf/2 && yPos > -2*rHalf/3)
+									{
+									particleData.velocity.y = -yVel;
+									}		
+							else if (xPos < 0 && yPos < -2*rHalf/3)
+									{
+									var estimated_width = -15*Math.sqrt(rHalf+yPos);
+									var rad_quad = Math.abs(xPos - estimated_width);
+									if (rad_quad > collision_rad)
+										{
+										parallel_vector = -15/(2*Math.sqrt(rHalf+yPos));
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_quad > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+											{
+											particlePositions[ i * 3] = estimated_width;
+											}	
+										}
+									}		
+							// boundary conditions for middle Sin Wave part of S 			
+							else
+									{
+									var expected_width = -Math.sin(yPos * Math.PI / rHalf) * rHalf/2;
+									var rad_sin = Math.abs(xPos - expected_width);
+									if (rad_sin > collision_rad)
+										{
+										parallel_vector = -Math.cos(yPos * Math.PI / rHalf);
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_sin > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+											{
+											particlePositions[ i * 3] = expected_width;
+											}
+										}	
+									}
+						}
+
+					if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+						continue;
+
+					// Check collision
+					for ( var j = i + 1; j < particleCount; j++ ) {
+
+						var particleDataB = particlesData[ j ];
+						if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+							continue;
+
+						var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+						var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+						var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+						var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+						if ( dist < effectController.minDistance ) {
+
+							particleData.numConnections++;
+							particleDataB.numConnections++;
+
+							var alpha = 1.0 - dist / effectController.minDistance;
+
+							positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+							positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+							positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+							positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+							positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+							positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+							if (Math.abs(particlePositions[ j * 3 + 1 ]) > 500)
+								{
+								alpha = (51 / 255) * (1-alpha) + alpha;	// 51 is rgb value of background color
+								}
+								
+							colors[ colorpos++ ] = alpha;
+							colors[ colorpos++ ] = alpha;
+							colors[ colorpos++ ] = alpha;
+
+							colors[ colorpos++ ] = alpha;
+							colors[ colorpos++ ] = alpha;
+							colors[ colorpos++ ] = alpha;
+
+							numConnected++;
+						}
+					}
+				}
+
+
+				linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+				linesMesh.geometry.attributes.position.needsUpdate = true;
+				linesMesh.geometry.attributes.color.needsUpdate = true;
+
+				pointCloud.geometry.attributes.position.needsUpdate = true;
+
+				requestAnimationFrame( animate );
+
+				render();
+
+			}
+
+			var round1 = true;
+			var activated = false;
+			
+			function render() {
+
+				var time = Date.now() * 0.00015;
+				
+				if (time%4 < 1)
+					{
+					group.rotation.y = (1-Math.pow(Math.sin(time%2 * Math.PI/2),2)) * Math.PI;
+					group.rotation.x = (1-Math.pow(Math.sin(time%2 * Math.PI/2),2)) * Math.PI;
+					}
+				else if (time%4 < 2)
+					{
+					group.rotation.y = 0;
+					group.rotation.x = 0;
+					}
+				else if (time%4 < 3)
+					{
+					group.rotation.y = Math.pow(Math.sin(time%2 * Math.PI/2),2) * Math.PI;
+					group.rotation.x = Math.pow(Math.sin(time%2 * Math.PI/2),2) * Math.PI;
+					}
+				else
+					{
+					group.rotation.y = Math.PI;
+					group.rotation.x = Math.PI;	
+					}
+					
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+	</body>
+</html>

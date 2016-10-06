@@ -1,0 +1,81 @@
+<html>
+<head>
+
+<style type="text/css">
+body {
+	font-family: helvetica, arial, sans serif;
+	margin:0px;
+}
+</style>
+
+<script>
+function showUser(str) {
+  if (str=="") {
+    document.getElementById("txtHint").innerHTML="";
+    return;
+  } 
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+      document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+    }
+  }
+  xmlhttp.open("GET","getuser.php?q="+str,true);
+  xmlhttp.send();
+}
+
+function insert() {
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+      document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+    }
+  }
+  xmlhttp.open("GET","insert.php?q=",true);
+  xmlhttp.send();
+}
+</script>
+</head>
+<body>
+
+<div style="width:100%; height:40px; padding-top:15px; background-color: red; color:white; font-size: 20px;">
+    <div style="margin-right:25px; height:20px; padding-top:5px; font-size:16px; float:right; background-color:#FF6666; width: 80px; text-align:center; border-radius:10px; border: 1px solid #990000;">Log In</div>
+    <form style="float:right;">
+        <input style="height:25px; width:150px; font-size:16px;  margin-right:25px;" id="username" type="text" name="username" placeholder="Username">
+        <input style="height:25px; width:150px; font-size:16px;  margin-right:25px;" id="password" type="text" name="password" placeholder="Password">
+    </form>
+
+</div>
+
+<form>
+<select name="users" onChange="showUser(this.value)">
+<option value="">Select a person:</option>
+<option value="1">Peter Griffin</option>
+<option value="2">Lois Griffin</option>
+<option value="3">Glenn Quagmire</option>
+<option value="4">Joseph Swanson</option>
+</select>
+</form>
+<br>
+<div id="txtHint"><b>Person info will be listed here.</b></div>
+
+
+<form onClick="insert()" method="post">
+Firstname: <input type="text" name="firstname">
+Lastname: <input type="text" name="lastname">
+Age: <input type="text" name="age">
+<input type="submit">
+</form>
+
+</body>
+</html>

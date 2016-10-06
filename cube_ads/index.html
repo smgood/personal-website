@@ -1,0 +1,780 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>MarketU</title>
+
+<!-- jquery plugins -->
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.ui.effect.js"></script>
+<script src="js/jquery.ui.effect-slide.js"></script>
+<script src="js/jquery.ui.core.js"></script>
+<script src="js/jquery.ui.widget.js"></script>
+<script src="js/jquery.ui.mouse.js"></script>
+<script src="js/jquery.ui.draggable.js"></script>
+<script src="js/jquery.ui.droppable.js"></script>
+<script src="js/jquery.ui.effect-drop.js"></script>
+<script src="js/jquery.ui.resizable.js"></script>
+
+<script src="js/prefixfree.min.js"></script>
+
+
+<style>
+		@font-face {
+			font-family: 'ProximaNova';
+			src: url('Font/ProximaNova-Reg.otf') format('truetype');
+		}
+		
+		@font-face {
+			font-family: 'ProximaNova';
+			font-weight: bold;
+			src: url('Font/ProximaNova-Sbold.otf') format('truetype');
+		}
+</style>
+
+
+<style type='text/css'>
+
+/* /!\ You need to add vendor prefixes in order to render the CSS properly (or simply use http://leaverou.github.io/prefixfree/) /!\ */ 
+
+body {
+	font-family: 'ProximaNova', serif;
+	font-size:16px;
+	background-color:white;
+	margin:0px;
+	padding:0px;
+	height:2000px;
+}
+
+#tridiv {
+  perspective: 800px;
+  perspective-origin: 50% 50%;
+  width: 300px;
+  height: 250px;
+  z-index:2;
+  position:fixed;
+  top:100px;
+}
+.face {
+  /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);*/
+}
+.scene, .shape, .face, .face-wrapper, .cr {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+.scene {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  margin: 0 0 0 0;
+}
+.shape {
+  width: 0;
+  height: 0;
+  transform-origin: 50%;
+  transform:translate3D(0, 0, -40px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.face, .face-wrapper {
+  overflow: hidden;
+  transform-origin: 0 0;
+  -webkit-backface-visibility: visible; /* Chrome, Safari, Opera */
+  backface-visibility: visible;
+	  /* hidden by default, prevent blinking and other weird rendering glitchs */
+}
+.face {
+  background-size: 100% 100%!important;
+  background-position: center;
+}
+.face-wrapper .face {
+  left: 100%;
+  width: 100%;
+  height: 100%
+}
+.photon-shader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%
+}
+.side {
+  left: 50%;
+}
+.cr, .cr .side {
+  height: 100%;
+}
+
+[class*="cub"] .ft, [class*="cub"] .bk {
+  width: 100%;
+  height: 100%;
+}
+[class*="cub"] .ft {
+  transform:translateZ(40px);
+}
+[class*="cub"] .bk {
+  left: 100%;
+  transform:translateZ(-40px) rotateY(180deg);
+}
+
+[class*="cub"] .rt, [class*="cub"] .lt {
+  width:80px;
+  height:100%;
+}
+[class*="cub"] .rt {
+  transform: rotateY(-90deg) translateX(-50%);
+}
+[class*="cub"] .lt {
+  transform: rotateY(90deg) translateX(-50%);
+  left: 100%;
+}
+
+[class*="cub"] .tp, [class*="cub"] .bm {
+  width:100%;
+  height:80px;
+}
+[class*="cub"] .tp {
+  transform: rotateX(90deg) translateY(-50%);
+}
+[class*="cub"] .bm {
+  transform: rotateX(-90deg) translateY(-50%);
+  top: 100%;
+}
+
+.canvas {
+	position: relative;
+	left: 0;
+	top: 0;
+	width:100%;
+	height:100%;	
+}
+
+.left_img
+	{
+	display:none;
+	}
+
+</style>
+
+
+
+<script type="text/javascript">
+
+var current_image;
+var secondary_image;
+var img1_loaded = false;
+var img2_loaded = false;
+
+var explosion_width = 365; 
+var explosion_height;
+var proportion;
+var explosion_depth = 40;
+var rows = 8;
+var columns = 8;
+var cubes_total = rows * columns;
+
+var cube_top = [];
+var cube_left = [];
+var cubes = [];
+
+var max_columns = 10;
+var max_rows = 10;
+
+var red = 180;
+var green = 180;
+var blue = 130;
+
+$( document ).ready(function()
+	{ 
+	current_image = document.getElementById('source');
+	secondary_image = document.getElementById('image2');
+	
+	for (var  i = 0; i < cubes_total; i++)
+		createCube(i);
+	
+	current_image.onload = function()
+		{ 
+		img1_loaded = true;	
+		formImage(current_image, secondary_image);
+		}
+		
+	secondary_image.onload = function()
+		{
+		img2_loaded = true;	
+		formImage(current_image, secondary_image);
+		};
+	});
+
+function createCube(cube_num)
+	{
+	var shape = document.createElement("div");
+	cubes [cube_num] = shape;
+	shape.className = "shape cub-" + cube_num;
+	$(shape).width(100/columns + "%");
+	$(shape).height(100/rows + "%");	
+	
+	var current_row = Math.floor(cube_num/columns);
+	cube_top [cube_num] = current_row / rows;
+	shape.style.top = (100 * current_row / rows) + "%";
+	
+	var current_column = cube_num % columns;
+	cube_left [cube_num] = current_column / columns;
+	shape.style.left = (100 * current_column / columns) + "%";
+
+	$("#scene").append(shape);
+	
+	var front = document.createElement("div");
+	front.className = "face ft";
+	$(shape).append(front);
+	
+	var front_image = document.createElement("canvas");
+	front_image.className = "canvas";
+	front_image.id="img" + cube_num;
+	$(front).append(front_image);
+	
+	var back = document.createElement("div");
+	back.className = "face bk";
+	set_color(back, cube_num);
+	$(shape).append(back);
+	
+	var right = document.createElement("div");
+	right.className = "face rt";
+	set_color(right, cube_num);
+	$(shape).append(right);
+	
+	var left = document.createElement("div");
+	left.className = "face lt";
+	set_color(left, cube_num);
+	$(shape).append(left);
+	
+	var left_image = document.createElement("canvas");
+	left_image.className = "canvas left_img";
+	left_image.id="left_img" + cube_num;
+	$(right).append(left_image);
+	
+	var bottom = document.createElement("div");
+	bottom.className = "face bm";
+	set_color(bottom, cube_num);
+	$(shape).append(bottom);
+	
+	var top = document.createElement("div");
+	top.className = "face tp";
+	set_color(top, cube_num);
+	$(shape).append(top);	
+	}
+	
+	var randomOpacities = [];
+	for (var i = 0; i < 5*max_columns*max_rows; i++)
+		{
+		randomOpacities[i] = (Math.random() * 0.5) + 0.25;
+		}
+
+function set_color(object, i) {
+	
+	var opacity;
+	if ($(object).hasClass('bk'))
+		opacity = randomOpacities[i*5];
+	else if ($(object).hasClass('rt'))
+		opacity = randomOpacities[i*5+1];
+	else if ($(object).hasClass('lt'))
+		opacity = randomOpacities[i*5+2];
+	else if ($(object).hasClass('bm'))
+		opacity = randomOpacities[i*5+3];
+	else
+		opacity = randomOpacities[i*5+4];
+
+    object.style.backgroundColor = "rgba(" + red + "," + green + ","+ blue  + "," + opacity + ")";
+}	
+	
+function formImage(img1, img2)
+	{
+	if (img1_loaded == true && img2_loaded == true)
+		{
+		var photo_width1 = img1.naturalWidth;
+		var photo_height1 = img1.naturalHeight;
+		proportion = photo_height1 / photo_width1;
+		changeSize();
+		changeDepth();
+		
+		for (var  i = 0; i < cubes_total; i++)
+				{
+				var horz_start = photo_width1 * cube_left[i];
+				var vert_start = photo_height1 * cube_top[i];
+				splitImage(img1, document.getElementById('img' + i), horz_start, vert_start);
+				}	
+
+		var photo_width2 = img2.naturalWidth;
+		var photo_height2 = img2.naturalHeight;
+		for (var  i = 0; i < cubes_total; i++)
+				{			
+				var horz_start = photo_width2 * cube_left[i];
+				var vert_start = photo_height2 * cube_top[i];
+				splitImage(img2, document.getElementById('left_img' + i), horz_start, vert_start);
+				}	
+		}
+	};
+
+function centerImage()
+	{
+	var explosion_margin = ($("#left").width() + $(window).width() - $("#tridiv").width())/2;
+	$("#tridiv").css( { marginLeft : explosion_margin +"px" } );
+	};
+	
+function changeSize()
+	{
+	explosion_width = document.getElementById("areaRange").value;
+	explosion_height = explosion_width * proportion;
+  	$("#tridiv").width(explosion_width).height(explosion_height);
+	$("#image2").width(explosion_width).height(explosion_height);
+	
+	if (bool_slideshow == true)
+		{
+		changeDepth();
+		}
+	centerImage();
+
+	$("#width").html($("#tridiv").width() + "px"); 
+	$("#height").html($("#tridiv").height() + "px");
+	}
+	
+function changeDepth()
+	{
+	if (bool_slideshow == true)
+		{
+		explosion_depth = explosion_width / columns;
+		}
+	else
+		{
+		explosion_depth = document.getElementById("depthRange").value;
+		$("#depth").html(explosion_depth + "px"); 
+		choose_animation();
+		}
+
+	$(".rt").width(explosion_depth);
+	$(".lt").width(explosion_depth);
+	
+	$(".tp").height(explosion_depth);
+	$(".bm").height(explosion_depth);
+	
+	$(".ft").css({
+				 '-webkit-transform' : 'translateZ('+ explosion_depth/2 +'px)',
+                 '-moz-transform' : 'translateZ('+ explosion_depth/2 +'px)',
+                 '-ms-transform' : 'translateZ('+ explosion_depth/2 +'px)',
+                 'transform' : 'translateZ('+ explosion_depth/2 +'px)'
+				 });
+				 
+	$(".bk").css({
+				 '-webkit-transform' : 'translateZ('+ -explosion_depth/2 +'px) rotateY(' + 180 + 'deg)',
+                 '-moz-transform' : 'translateZ('+ -explosion_depth/2 +'px) rotateY(' + 180 + 'deg)',
+                 '-ms-transform' : 'translateZ('+ -explosion_depth/2 +'px) rotateY(' + 180 + 'deg)',
+                 'transform' : 'translateZ('+ -explosion_depth/2 +'px) rotateY(' + 180 + 'deg)'
+				 });
+	}
+
+function changeColumns()
+	{
+	columns = document.getElementById("columnsRange").value;
+	cubes_total = rows * columns;
+
+	var cube_top = [];
+	var cube_left = [];
+	$('#scene').empty();
+
+	for (var  i = 0; i < cubes_total; i++)
+		createCube(i);
+	formImage(current_image, secondary_image);		
+	choose_animation();
+
+	$("#columns").html(columns); 
+	}
+
+function changeRows()
+	{
+	rows = document.getElementById("rowsRange").value;
+	cubes_total = rows * columns;
+
+	var cube_top = [];
+	var cube_left = [];
+	$('#scene').empty();
+
+	for (var  i = 0; i < cubes_total; i++)
+		createCube(i);
+	formImage(current_image, secondary_image);
+	choose_animation();
+
+	$("#rows").html(rows); 
+	}
+
+function changeColor(range, color)
+	{
+	$("#" + color).html(range.value);
+	if (color == "red")
+		red = range.value;
+	else if (color == "green")
+		green = range.value;
+	else
+		blue = range.value;
+			
+	var cube_top = [];
+	var cube_left = [];
+	$('#scene').empty();
+	
+	for (var  i = 0; i < cubes_total; i++)
+		createCube(i);
+	formImage(current_image, secondary_image);
+	choose_animation();
+	}
+	
+function onWindowResize() 
+	{
+	centerImage();
+	};
+window.addEventListener( 'resize', onWindowResize, false );
+
+function splitImage(img, canvas, widthStart, heightStart)
+	{
+	var ctx = canvas.getContext('2d');
+	ctx.drawImage(img,
+				widthStart, heightStart, img.naturalWidth/columns, img.naturalHeight/rows, 0, 0, canvas.width, canvas.height);	
+	}
+	
+	var randomVelocities = [];
+	for (var i = 0; i < 3*max_columns*max_rows; i++)
+		{
+		randomVelocities[i] = (Math.random() - 0.5) * 0.2;
+		}
+		
+	var randomRotations = [];
+	for (var i = 0; i < 3*max_columns*max_rows; i++)
+		{
+		randomRotations[i] = (Math.random() - 0.5) * 0.2;
+		}
+		
+$( window ).scroll(function() 
+		{
+		choose_animation();
+		});
+	
+function choose_animation()
+	{
+	var animation_options = document.getElementById("animation");
+	var animation_selected = animation_options.options[animation_options.selectedIndex].value;
+	if (bool_pinpression == true)
+		{
+		bool_pinpression = false;
+		$("#image2").show();
+		clearInterval(run_pinpression);
+		}
+	
+	if (bool_slideshow == true)
+		{
+		bool_slideshow = false;
+		$("#image2").show();
+		$(".left_img").hide();	
+		}
+
+	if (animation_selected == "Explode")
+		prepare_explosion();
+	else if (animation_selected == "Gravity")
+		prepare_gravity();
+	else if (animation_selected == "Pinpression")
+		prepare_pinpression();
+	else
+		prepare_slideshow();
+	}
+
+function prepare_explosion()
+		{
+		$("#instructions").html("Scroll down to view animation");
+		var scroll_dist = $(document).scrollTop();		// distance scrolled
+		var browser_height = $(window).height();		// height of browser
+		var browser_width = $(window).width();
+		var bottom = scroll_dist + browser_height;		// amount of pixels from the top for the bottom of the viewable page
+		
+		for (var  i = 0; i < cubes_total; i++)
+			{
+			var velocityX = cube_left[i] + 1/(2*columns)  - 0.5;
+			var velocityY = cube_top[i] + 1/(2*rows) - 0.5;
+			var velocityZ = 0.5;
+			var norm = Math.sqrt(Math.pow(velocityX,2) + Math.pow(velocityY,2) + Math.pow(velocityZ,2));
+			
+			velocityX = velocityX / norm;
+			velocityY = velocityY / norm;
+			velocityZ = velocityZ / norm;
+	
+			rotationX = (cube_top[i] + 1/(2*rows) - 0.5);		
+			rotationY = (cube_left[i] + 1/(2*columns)  - 0.5);
+			rotationZ = 0;
+			
+			explode ('.cub-' + i, scroll_dist, 0, 0, -explosion_depth/2,velocityX, velocityY, velocityZ, rotationX, rotationY, rotationZ, 
+				randomVelocities[3*i], randomVelocities[3*i+1], randomVelocities[3*i+2], randomRotations[3*i], randomRotations[3*i+1], randomRotations[3*i+2]);	
+			}		
+		};
+		
+	
+function explode (object, scroll_dist, originX, originY, originZ, velocityX, velocityY, velocityZ, rotationX, rotationY, rotationZ, 
+		randVX, randVY, randVZ, randRX, randRY, randRZ) //add randomness factor to velocity and rotation
+		{
+			$(object).css({
+				 '-webkit-transform' : 'translate3D('+ (originX + (velocityX + randVX) * scroll_dist) +'px, '+ (originY + (velocityY + randVY) * scroll_dist) +'px, '+ (originZ + (velocityZ + randVZ) * scroll_dist) +'px) rotateX('+ (scroll_dist*(rotationX+randRX)) +'deg) rotateY('+ (scroll_dist*(rotationY+randRY)) +'deg) rotateZ('+ (scroll_dist*(rotationZ+randRZ)) +'deg)',
+                 '-moz-transform' : 'translate3D('+ (originX + (velocityX + randVX) * scroll_dist) +'px, '+ (originY + (velocityY + randVY) * scroll_dist) +'px, '+ (originZ + (velocityZ + randVZ) * scroll_dist) +'px) rotateX('+ (scroll_dist*(rotationX+randRX)) +'deg) rotateY('+ (scroll_dist*(rotationY+randRY)) +'deg) rotateZ('+ (scroll_dist*(rotationZ+randRZ)) +'deg)',
+                 '-ms-transform' : 'translate3D('+ (originX + (velocityX + randVX) * scroll_dist) +'px, '+ (originY + (velocityY + randVY) * scroll_dist) +'px, '+ (originZ + (velocityZ + randVZ) * scroll_dist) +'px) rotateX('+ (scroll_dist*(rotationX+randRX)) +'deg) rotateY('+ (scroll_dist*(rotationY+randRY)) +'deg) rotateZ('+ (scroll_dist*(rotationZ+randRZ)) +'deg)',
+                 'transform' : 'translate3D('+ (originX + (velocityX + randVX) * scroll_dist) +'px, '+ (originY + (velocityY + randVY) * scroll_dist) +'px, '+ (originZ + (velocityZ + randVZ) * scroll_dist) +'px) rotateX('+ (scroll_dist*(rotationX+randRX)) +'deg) rotateY('+ (scroll_dist*(rotationY+randRY)) +'deg) rotateZ('+ (scroll_dist*(rotationZ+randRZ)) +'deg)'});
+		}
+
+
+	var GravityTimes = [];
+	for (var i = 0; i < max_columns*max_rows; i++)
+		{
+		GravityTimes[i] = Math.random() * 100;
+		}
+		
+function prepare_gravity()
+		{
+		$("#instructions").html("Scroll down to view animation");
+		var scroll_dist = $(document).scrollTop();		// distance scrolled
+		var browser_height = $(window).height();		// height of browser
+		var browser_width = $(window).width();
+		var bottom = scroll_dist + browser_height;		// amount of pixels from the top for the bottom of the viewable page
+	
+		var DropTimes = [];
+		for (var  i = 0; i < cubes_total; i++)
+			{
+			var dropTime = GravityTimes[i];
+			var current_row = Math.floor(i/columns);
+			while (current_row < rows-1)
+				{
+				current_row++;	
+				dropTime += GravityTimes[i + (rows-current_row)*columns];
+				}
+			
+			var distance = scroll_dist - dropTime;
+			if (distance > 0)
+				{
+				$('.cub-' + i).css({
+				 '-webkit-transform' : 'translate3D('+ (randomVelocities[3*i] * distance) +'px, '+ (Math.pow(distance/50,2) * 10) +'px, '+ (randomVelocities[3*i+2] * distance - explosion_depth/2) +'px) rotateX('+ (distance*randomRotations[3*i])*2 +'deg) rotateY('+ (distance*randomRotations[3*i+1])*2 +'deg) rotateZ('+ (distance*randomRotations[3*i+2])*2 +'deg)',
+                 '-moz-transform' : 'translate3D('+ (randomVelocities[3*i] * distance) +'px, '+ (Math.pow(distance/50,2) * 10) +'px, '+ (randomVelocities[3*i+2] * distance - explosion_depth/2) +'px) rotateX('+ (distance*randomRotations[3*i])*2 +'deg) rotateY('+ (distance*randomRotations[3*i+1])*2 +'deg) rotateZ('+ (distance*randomRotations[3*i+2])*2 +'deg)',
+                 '-ms-transform' : 'translate3D('+ (randomVelocities[3*i] * distance) +'px, '+ (Math.pow(distance/50,2) * 10) +'px, '+ (randomVelocities[3*i+2] * distance - explosion_depth/2) +'px) rotateX('+ (distance*randomRotations[3*i])*2 +'deg) rotateY('+ (distance*randomRotations[3*i+1])*2 +'deg) rotateZ('+ (distance*randomRotations[3*i+2])*2 +'deg)',
+                 'transform' : 'translate3D('+ (randomVelocities[3*i] * distance) +'px, '+ (Math.pow(distance/50,2) * 10) +'px, '+ (randomVelocities[3*i+2] * distance - explosion_depth/2) +'px) rotateX('+ (distance*randomRotations[3*i])*2 +'deg) rotateY('+ (distance*randomRotations[3*i+1])*2 +'deg) rotateZ('+ (distance*randomRotations[3*i+2])*2 +'deg)'});
+				}
+			else
+				{
+				$('.cub-' + i).css({
+				 '-webkit-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				 '-moz-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				  '-ms-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				  'transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)'});
+				}
+			}
+			
+		
+		};
+
+
+	var cursorX;
+	var cursorY;
+	document.onmousemove = function(e){
+		cursorX = e.pageX;
+		cursorY = e.pageY;
+	}
+	var run_pinpression;
+	var bool_pinpression = false;	
+	
+function checkCursor(){
+	
+	for (var  i = 0; i < cubes_total; i++)
+		{
+		var xAxis = ($('#img' + i).offset().left) - cursorX + $('#img' + i).width()/2;
+		var yAxis = ($('#img' + i).offset().top) - cursorY + $('#img' + i).height()/2;
+		var mouse_distance = Math.sqrt(Math.pow(xAxis, 2) + Math.pow(yAxis, 2));
+		var radius = explosion_width/3;
+		var pop_dist = 0;
+		if (mouse_distance < radius)
+			{
+			pop_dist = Math.pow((radius-mouse_distance)/(radius/11),2);
+			}
+		$('.cub-' + i).css({
+				 '-webkit-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ (-explosion_depth/2 + pop_dist) +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				 '-moz-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ (-explosion_depth/2 + pop_dist) +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				  '-ms-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ (-explosion_depth/2 + pop_dist) +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				  'transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ (-explosion_depth/2 + pop_dist) +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)'});
+		}
+}
+	
+function prepare_pinpression()
+	{	
+	bool_pinpression = true;
+	$("#instructions").html("Hover over image for animation");
+	$("#image2").hide();
+	run_pinpression = setInterval("checkCursor()", 50);
+	};
+	
+		
+	var bool_slideshow = false;	
+
+function prepare_slideshow()
+	{
+	bool_slideshow = true;
+	$("#instructions").html("Scroll down to view animation");
+	changeDepth();
+	$("#image2").hide();
+	$(".left_img").show();
+	var scroll_dist = $(document).scrollTop();		// distance scrolled
+	var browser_height = $(window).height();		// height of browser
+	var browser_width = $(window).width();
+	var bottom = scroll_dist + browser_height;		// amount of pixels from the top for the bottom of the viewable page
+	
+	for (var  i = 0; i < cubes_total; i++)
+		{
+		var dropTime =Math.abs((i%columns)-Math.floor(i/columns))*70;
+		var distance = scroll_dist - dropTime;
+		if (distance < 0)
+			{
+			$('.cub-' + i).css({
+				 '-webkit-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				 '-moz-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				  '-ms-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)',
+				  'transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 0 +'deg) rotateZ('+ 0 +'deg)'});
+			}
+		
+		else if (distance > 180)
+			{
+			$('.cub-' + i).css({
+				 '-webkit-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 90 +'deg) rotateZ('+ 0 +'deg)',
+				 '-moz-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 90 +'deg) rotateZ('+ 0 +'deg)',
+				  '-ms-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 90 +'deg) rotateZ('+ 0 +'deg)',
+				  'transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ 90 +'deg) rotateZ('+ 0 +'deg)'});
+			}
+		
+		else
+			{
+			$('.cub-' + i).css({
+				 '-webkit-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ distance/2 +'deg) rotateZ('+ 0 +'deg)',
+				 '-moz-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ distance/2 +'deg) rotateZ('+ 0 +'deg)',
+				  '-ms-transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ distance/2 +'deg) rotateZ('+ 0 +'deg)',
+				  'transform' : 'translate3D('+ 0 +'px, '+ 0 +'px, '+ -explosion_depth/2 +'px) rotateX('+ 0 +'deg) rotateY('+ distance/2 +'deg) rotateZ('+ 0 +'deg)'});
+			}		
+		}
+	}
+
+		
+// Uploading filles		
+function handleFiles(file) 
+		{ 
+		file = file[0];	 
+		if (!file.type.match("image/*")) 
+			{
+			alert("INCORRECT FILE TYPE!");
+			}
+		else
+			{
+			var img = document.createElement("img");  
+			img.file = file;  
+			var reader = new FileReader();  
+			reader.onload = (function(aImg) {
+				return function(e) { 
+					$(aImg).load(function() {	
+					}).attr("src", e.target.result);
+				};
+			})(img);
+			reader.readAsDataURL(file);
+			
+			current_image = img;
+			current_image.onload = function()
+				{ 
+				formImage(current_image, secondary_image);
+				};
+			}
+		};
+					
+		
+</script>
+
+
+
+</head>
+
+<body>
+
+<div style="display:none;">
+	<img id="source" src="images/BigHouse.jpg"/>
+</div>
+
+<div id="left" style="float:left; background-color:#CEF; position:fixed; width:300px; height:100%; overflow:scroll;">
+
+    <form style="margin-left: 25px; margin-top: 25px; margin-right:25px;">
+    
+      <div style="font-size:23px; font-weight:bold;">
+      <div style="float:left; margin-right:10px;">Instructions:</div> 
+      <div id="instructions">Scroll down to view animation</div>
+      </div>
+      </br>
+      
+      <div> Select an animation: </div>
+      <select id = "animation" onChange="choose_animation()">
+          <option value="Gravity">Gravity</option>
+          <option value="Pinpression">Pinpression</option>
+          <option value="Explode">Explode</option>
+          <option value="Slideshow">Slideshow</option>
+      </select>
+      </br></br>
+     
+      <div> Select primary image file: </div>
+      <input type="file" name="file" id="file_select" onChange="handleFiles(this.files)">
+      </br></br>
+      
+       <div> Select secondary image file: </div>
+      <input type="file" name="file2" id="file_2" onChange="">
+      </br></br>
+      
+      <input type="range" id="areaRange" value="365" min = "100" max = "600" oninput="changeSize()">
+      </br>
+	  <div style="float:left; margin-right:10px;">Width:</div> <div id = "width" ></div> 
+      <div style="float:left; margin-right:10px;">Height:</div> <div id = "height"></div>
+      
+      <input type="range" id="depthRange" value="40" min = "10" max = "150" oninput="changeDepth()">
+      </br>
+	  <div style="float:left; margin-right:10px;">Depth:</div> <div id = "depth" >40px</div> 
+      </br>
+      
+      <input type="range" id="columnsRange" value="8" min = "1" max = "10" oninput="changeColumns()">
+      </br>
+	  <div style="float:left; margin-right:10px;">Columns:</div> <div id = "columns" >8</div> 
+      
+      <input type="range" id="rowsRange" value="8" min = "1" max = "10" oninput="changeRows()">
+      </br>
+	  <div style="float:left; margin-right:10px;">Rows:</div> <div id = "rows" >8</div> 
+      </br>
+      
+      <input type="range" id="redRange" value="180" min = "0" max = "255" oninput="changeColor(this, 'red')">
+      </br>
+	  <div style="float:left; margin-right:10px;">Red:</div> <div id = "red" >180</div> 
+      
+      <input type="range" id="greenRange" value="180" min = "0" max = "255" oninput="changeColor(this, 'green')">
+      </br>
+	  <div style="float:left; margin-right:10px;">Green:</div> <div id = "green">180</div> 
+      
+      <input type="range" id="blueRange" value="130" min = "0" max = "255" oninput="changeColor(this, 'blue')">
+      </br>
+	  <div style="float:left; margin-right:10px;">Blue:</div> <div id = "blue" >130</div> 
+      </br>
+    </form>
+
+</div>
+
+            
+<div id="tridiv">
+  <img id="image2" src="images/wing_helmet.jpg" />
+  <div id="scene" class="scene" style="-webkit-transform:rotateX(0deg) rotateY(0deg); -moz-transform:rotateX(0eg) rotateY(0deg); -ms-transform:rotateX(0deg) rotateY(0deg); transform:rotateX(0deg) rotateY(0deg); ">
+  </div>
+</div>
+
+
+
+
+
+
+</body>
+</html>

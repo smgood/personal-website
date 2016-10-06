@@ -1,0 +1,201 @@
+/*
+ * Import nib
+ */
+@import 'nib'
+@import 'rupture'
+@import 'jeet'
+@import 'axis'
+
+/*
+ * Nib provides a CSS reset
+ */
+global-reset()
+
+/*
+ * Store the main color and
+ * background color as variables
+ */
+
+// screen sizes
+extralarge = 1400px
+large = 1200px
+mediumlarge = 1050px
+medium = 850px
+small = 650px
+extrasmall = 500px
+
+
+//Font sizes
+mainTitle = 32pt
+subTitle = 28pt
+header = 16pt
+content = 13pt
+
+
+transWhite = rgba(255, 255, 255, .75)
+projectBlue = #4FB2A8
+projectGreen = #50E276
+projectGray = #2F4442
+
+lightGray = #FAFAFA
+
+bg-size ()
+  -webkit-background-size: arguments;
+  -moz-background-size: arguments;
+  -o-background-size: arguments;
+
+.hidden
+  display none
+  height 0px
+  width 0px
+  height 0px
+  overflow hidden
+
+body
+  font-family Helvetica, Ariel, sans-serif
+  color projectGray
+
+h1
+  font-size mainTitle
+  text-align center
+  color transWhite
+
+h2
+  font-size subTitle
+
+h3
+  font-size header
+
+p
+  font-size content
+
+a
+  color projectBlue
+  text-decoration none
+
+
+#big-video-wrap
+  position absolute
+  z-index -1
+
+.splash
+  width 100%
+  height 100vh
+  display table
+
+  div
+    display table-cell
+    text-align center
+    vertical-align middle
+
+    img
+      width 150px
+      margin-top -24px
+      margin-bottom 12px
+.content
+  background-color white
+
+  .purpose
+    box-sizing border-box
+    width 100%
+    padding 300px 24px
+    border-width 48px 0px 0px 0px
+    border-color projectBlue
+    border-style solid
+    background-image url("../../public/images/action_shot.png")
+    background-position left
+    background-size cover
+    background-repeat no-repeat
+
+    h2
+      text-align center
+      color white
+
+  .instructions
+    cf()
+    width 80%
+    margin 0 auto
+    padding 64px 0px
+    +below(small)
+      width 90%
+
+
+    .topic
+      column(1/3)
+      padding-bottom 48px
+      +below(medium)
+        stack()
+
+      .image
+        width 100%
+        display inline-block
+        text-align center
+        margin 32px 0px
+        +below(medium)
+          column(1/3)
+          margin 0px
+
+
+        img
+          height 150px
+          +below(small)
+            height auto
+            width 80%
+
+
+      .text
+
+        +below(medium)
+          column(2/3)
+
+        h3
+          background-color projectGreen
+          text-align center
+          color white
+          padding 12px 0px
+          margin-bottom 12px
+        p
+          line-height 1.4
+          margin-bottom 8px
+
+
+  h2
+    text-align center
+    margin-bottom 24px;
+
+  .stack
+    cf()
+    width 100%
+    padding 64px 10%
+    box-sizing border-box
+    text-align center
+    background-color lightGray
+    +below(extrasmall)
+      padding 28px 5%
+
+    img
+      display inline
+      height 100px
+      margin 0px 4px
+
+      +below(small)
+        height 64px
+
+
+  .contact
+    display block
+    width 100%
+    text-align center
+    padding: 24px 0px
+    background-color projectGray
+    transition background-color .3s
+    color white
+
+    img
+      height 100px
+      margin-bottom 8px
+
+  .contact:hover
+    background-color projectBlue
+
+

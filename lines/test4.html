@@ -1,0 +1,1726 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+  <!--      
+
+  Now that you're looking at this, do you want to grab a coffee and talk about future opportunities?
+  Hit me up at smgood@umich.edu
+
+  Lookng forward to meeting you!
+
+  Thanks,
+  Sean
+    ______     ______    ______   	 ______ 
+   /\  ___\   /\  ___\  /\  __ \  	/\   \ \
+   \ \___  \  \ \  __\   \ \  __ \ 	\ \ \ \ \
+    \/\_____\  \ \_____\   \ \_\ \_\  \ \_\__\
+      \/_____/   \/_____/   \/_/\/_/   \/_/__/
+      
+  -->
+
+		<title>Sean Goodrich</title>
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="keywords" content="Sean, Goodrich, UM, Michigan, Computer, Science, Los Angeles">
+        
+        <link rel="stylesheet" type="text/css" href="css/MainStyleSheet.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+
+		<script src="js/dat.gui.min.js"></script>
+		<script src="js/three.min.js"></script>
+	    
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
+		<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+        
+        <script src="js/Detector.js"></script>
+		<script src="js/tween.min.js"></script>
+
+	</head>
+	<body>
+
+		<div id ="container"></div>
+
+        <div id = "continue">
+        	Scroll &#9661 Down
+        </div>
+                
+        <div id="fullpage">
+        
+            <div class="section " id="section0">
+            </div>
+        
+            <div class="section" id="section1">
+            </div>
+        
+            <div class="section" id="section2">
+                <img id="signature" style="right: 25px; z-index:1; position:absolute; height:10vh; bottom:1vh;" src="images/signature_white.png"/>
+                <div id ="bottom">
+        		</div>
+            </div>
+        
+        </div>   
+        
+        <div id = "instructions">
+        	Drag to spin. Hover to play video. Click for more information.
+        </div>
+        
+    	<div id = "opacity_page" >
+		</div>
+        
+        <div id = "info_page">
+        
+            <div id="close">
+             	<img id="delete_box" src="images/close_box.png"/>
+                Close
+          	</div> 
+            
+            <div id = "gallery" style="position:absolute;">
+                <img id = "photo"/>
+            </div>
+            <div id = "text" style="position:absolute; font-size: 2vh; text-align:left;">
+                <div id = "project_title" style="display: inline-block; font-size: 4.5vh; font-weight:bold"></div>
+                    </br>
+               
+                <div id = "project_year" style="display: inline-block; font-size: 2.5vh;"></div>
+                    </br>
+ 				
+                <p id = "project_team" class="paragraph">
+                </p> 
+               
+                <a id = "project_link" class = "title" target="_blank">Link</a>
+                    
+                <p id = "project_summary" class="paragraph">
+                </p>
+                    
+ 				<p id = "project_role" class="paragraph">
+                </p>
+                    
+ 				<p id = "project_skills" class="paragraph">
+                </p>
+        	</div>
+        </div>
+
+
+
+<script type="text/javascript">
+
+		var scroll_height;
+		var scrolling = false;
+		var explode = false;
+		var stop_logo = true;
+		var current_page;
+		
+		var portfolio_loaded = false;
+		var loaded_pg2 = false;
+		var loaded_pg3 = false;
+		
+		$(document).ready(function() {
+			page1 = new S_Logo();
+			page2 = new Portfolio();
+			create_Logo();
+			page2.init();
+
+			$('#fullpage').fullpage({
+
+				sectionsColor: ['#000000', '#282828', '#33383D'],
+
+				navigation: true,
+
+				navigationPosition: 'right',
+	
+	//			scrollBar:true,
+	//			anchors: ['Welcome', 'Portfolio', 'Connect'],
+	
+	        	scrollingSpeed: 1000,
+
+				navigationTooltips: ['Logo', 'Portfolio', 'Connect'],
+				
+				 'onLeave': function(index, nextIndex, direction)
+				 	{
+					scrolling = true;
+					if (index == 1)  
+						{  
+						ExplodeFunction(); 
+						$("#continue").fadeOut(function()
+							{
+							if (nextIndex == 2)
+									$("#instructions").fadeIn();
+							});
+							
+							if (nextIndex == 2)
+								{
+								setTimeout(function(){ page2.transform(250); }, 2000);
+								loaded_pg2 = true;
+								} 	
+							else if (nextIndex == 3)
+								{
+								page2.linksAppear(250);
+								loaded_pg3 = true	
+								}
+						}
+					else if (index == 2)
+						{
+						$("#instructions").fadeOut(function()
+							{
+							if (nextIndex == 1)
+								$("#continue").fadeIn();
+							});
+								
+						if (nextIndex == 3 && loaded_pg3 == false)
+							{
+							loaded_pg3 = true;
+							page2.linksAppear(250);
+							}
+						}
+					else
+						{
+						if (nextIndex == 1)
+							$("#continue").fadeIn();
+						else if (nextIndex == 2)
+							{
+							$("#instructions").fadeIn();
+							if (loaded_pg2 == false)
+								{
+								loaded_pg2 = true;
+								page2.transform(250);
+								}
+							}
+						}
+							
+					if (nextIndex == 1)
+						{
+						create_Logo();
+						loaded_pg2 = loaded_pg3 = false;
+						page2.hidePortfolio(250);
+						}
+					else
+						{				
+						if (portfolio_loaded == false)
+							{
+							page2.animate();
+							portfolio_loaded = true;
+							}
+						}
+						
+						
+       				},
+					
+				'afterLoad': function(anchorLink, index)
+				 	{
+					scrolling = false;
+					current_page = index;
+       				}
+					
+
+			});
+			
+			// Add actions to the arrows
+			$('#continue').on('click', function() {
+				$.fn.fullpage.moveSectionDown();
+			});
+
+			function create_Logo ()	{
+				explode = false;
+				$( "#container" ).empty();
+				
+				page1.init();
+						
+				if (stop_logo  == true)
+					{
+					stop_logo = false;
+					page1.animate();
+					}
+						
+				document.getElementById("container").style.top = "0px";
+				document.getElementById("continue").style.top = "93vh";
+				}
+				
+				
+			function ExplodeFunction () {
+					explode = true;
+					page2.resetPortfolio();
+					setTimeout(function(){ 
+						if (explode == true)
+							{
+							stop_logo = true; 
+							$( "#container" ).empty();
+							}
+					}, 2000);			
+				}
+
+			setInterval(function () 
+				{
+				var node = document.getElementById("fullpage");
+				scroll_height = -1 * node.getBoundingClientRect().top; //real offset top			
+				}, 20);
+		});
+
+	</script>
+
+	<script>
+	var S_Logo = function(){ 
+
+			var group;
+			var container;
+			var particlesData = [];
+			var camera, scene, renderer;
+			var positions,colors;
+			var pointCloud;
+			var particlePositions;
+			var linesMesh;
+
+			var maxParticleCount = 500;
+			var particleCount = 500;
+			var r = 800;
+			var rHalf = r / 2;
+			var collision_rad = 100;
+
+			var effectController = {
+				showDots: false,
+				showLines: true,
+				minDistance: 65,
+				limitConnections: false,
+				maxConnections: 20,
+				particleCount: 500
+			}
+
+			var flipped = 1;
+
+/*
+			function initGUI() {
+
+				var gui = new dat.GUI();
+
+				gui.add( effectController, "showDots" ).onChange( function( value ) { pointCloud.visible = value; } );
+				gui.add( effectController, "showLines" ).onChange( function( value ) { linesMesh.visible = value; } );
+				gui.add( effectController, "minDistance", 10, 300 );
+				gui.add( effectController, "limitConnections" );
+				gui.add( effectController, "maxConnections", 0, 30, 1 );
+				gui.add( effectController, "particleCount", 0, maxParticleCount, 1 ).onChange( function( value ) {
+
+					particleCount = parseInt( value );
+					particles.drawcalls[ 0 ].count = particleCount;
+
+				});
+
+			}
+*/
+			function init() {
+				particlesData = [];
+				particleCount = 10;
+				
+				container = document.getElementById("container");
+				
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / (window.innerHeight), 1, 10000 );
+				camera.position.z = 1300;
+
+				scene = new THREE.Scene();
+
+				group = new THREE.Group();
+				scene.add( group );
+				
+				var segments = maxParticleCount * maxParticleCount;
+
+				positions = new Float32Array( segments * 3 );
+				colors = new Float32Array( segments * 3 );
+
+				var pMaterial = new THREE.PointCloudMaterial( {
+					color: 0xFFFFFF,
+					size: 3,
+					blending: THREE.AdditiveBlending,
+					transparent: true,
+					sizeAttenuation: false
+				} );
+
+				particles = new THREE.BufferGeometry();
+				particlePositions = new Float32Array( maxParticleCount * 3 );
+
+				for ( var i = 0; i < maxParticleCount; i++ ) {
+					var y = (Math.random() * 4/3 * r) - (7*r / 12);
+					var x = 0;
+					if (y>rHalf)
+						{
+						y = y - rHalf/3;
+						x = 15*Math.sqrt(rHalf-y) + (Math.random() * 2 * collision_rad - collision_rad);
+						}
+					else if (y< -rHalf)
+						{
+						y = y + rHalf/3;
+						x = -15*Math.sqrt(rHalf+y) + (Math.random() * 2 * collision_rad - collision_rad);	
+						}
+					else
+						x = (-Math.sin(y * Math.PI / rHalf) * rHalf/2) + (Math.random() * 2 * collision_rad - collision_rad);
+					
+					var z = Math.random() * collision_rad - collision_rad/2;
+
+					particlePositions[ i * 3     ] = x;
+					particlePositions[ i * 3 + 1 ] = y;
+					particlePositions[ i * 3 + 2 ] = z;
+
+					// add it to the geometry
+					particlesData.push( {
+						velocity: new THREE.Vector3( -.5 + Math.random() * 1, -.5 + Math.random() * 1,  -.5 + Math.random() * 1 ),
+						numConnections: 0
+					} );
+
+				}
+
+				particles.drawcalls.push( {
+					start: 0,
+					count: particleCount,
+					index: 0
+				} );
+
+				particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3 ) );
+
+				// create the particle system
+				pointCloud = new THREE.PointCloud( particles, pMaterial );
+				group.add( pointCloud );
+				//pointCloud.visible = false;
+				
+				var geometry = new THREE.BufferGeometry();
+
+				geometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3 ) );
+				geometry.addAttribute( 'color', new THREE.DynamicBufferAttribute( colors, 3 ) );
+
+				geometry.computeBoundingSphere();
+
+				geometry.drawcalls.push( {
+					start: 0,
+					count: 0,
+					index: 0
+				} );
+
+				var material = new THREE.LineBasicMaterial( {
+					vertexColors: THREE.VertexColors,
+					blending: THREE.AdditiveBlending,
+					transparent: true
+				} );
+
+				linesMesh = new THREE.Line( geometry, material, THREE.LinePieces );
+				group.add( linesMesh );
+
+				//
+
+				renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+				renderer.setClearColor( 0xffffff, 0 ); // the default
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight);
+
+				renderer.gammaInput = true;
+				renderer.gammaOutput = true;
+
+				container.appendChild( renderer.domElement );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / (window.innerHeight);
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight);
+				
+				$(".section").height(window.innerHeight);
+				
+				var transform = 'translate3d(' + 0 + 'px, ' +((1-current_page) * window.innerHeight)+ 'px, 0)';
+ 				document.getElementById("fullpage").style.MozTransform = transform;
+ 				document.getElementById("fullpage").style.WebkitTransform = transform;
+ 				document.getElementById("fullpage").style.OTransform = transform;
+ 				document.getElementById("fullpage").style.transform = transform;				
+			}
+			
+			function animate() {
+					
+				var vertexpos = 0;
+				var colorpos = 0;
+				var numConnected = 0;
+				
+				if (particleCount < 500)
+					{
+					particleCount+=10;	
+					particles.drawcalls[ 0 ].count = particleCount;
+					}
+					
+				for ( var i = 0; i < particleCount; i++ )
+					particlesData[ i ].numConnections = 0;
+
+				for ( var i = 0; i < particleCount; i++ ) {
+
+					// get the particle
+					var particleData = particlesData[i];
+
+					particlePositions[ i * 3     ] += particleData.velocity.x;
+					particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+					particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+				
+					xPos = particlePositions[ i * 3];
+					yPos = particlePositions[ i * 3 +1];
+					zPos = particlePositions[ i * 3 +2];
+					
+					xVel = particleData.velocity.x; 
+					yVel = particleData.velocity.y;
+					zVel = particleData.velocity.z;
+					
+					if (explode == true)
+						{
+						particleData.velocity.x *= 1.07; 
+						particleData.velocity.y *= 1.07;
+						particleData.velocity.z *= 1.07;
+						
+						if (scroll_height > window.innerHeight)
+							{
+							document.getElementById("container").style.top = window.innerHeight - scroll_height + "px";
+							document.getElementById("continue").style.top = 1.93 * window.innerHeight - scroll_height + "px" ;
+							}
+						}
+						
+					else
+						{
+						if (Math.abs(xPos) > rHalf/2)
+							particleData.velocity.x = -xVel;
+								
+						if (Math.abs(yPos) > rHalf)
+							particleData.velocity.y = -yVel;
+						
+						if (Math.abs(zPos) > collision_rad)
+							particleData.velocity.z = -zVel;
+						
+						// boundary conditions for top quadratic part of S 	
+						if (xPos > 0 && yPos > rHalf/2 && yPos < 2*rHalf/3)
+									{
+									particleData.velocity.y = -yVel;
+									}	
+						else if (xPos > 0 && yPos > 2*rHalf/3)
+									{
+									var estimated_width = 15*Math.sqrt(rHalf-yPos);
+									var rad_quad = Math.abs(xPos - estimated_width);
+									if (rad_quad > collision_rad)
+										{
+										parallel_vector = -15/(2*Math.sqrt(rHalf-yPos));
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_quad > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+											{
+											particlePositions[ i * 3] = estimated_width;
+											}	
+										}
+									}
+							// boundary conditions for bottom quadratic part of S 
+							else if (xPos < 0 && yPos < -rHalf/2 && yPos > -2*rHalf/3)
+									{
+									particleData.velocity.y = -yVel;
+									}		
+							else if (xPos < 0 && yPos < -2*rHalf/3)
+									{
+									var estimated_width = -15*Math.sqrt(rHalf+yPos);
+									var rad_quad = Math.abs(xPos - estimated_width);
+									if (rad_quad > collision_rad)
+										{
+										parallel_vector = -15/(2*Math.sqrt(rHalf+yPos));
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_quad > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+											{
+											particlePositions[ i * 3] = estimated_width;
+											}	
+										}
+									}		
+							// boundary conditions for middle Sin Wave part of S 			
+							else
+									{
+									var expected_width = -Math.sin(yPos * Math.PI / rHalf) * rHalf/2;
+									var rad_sin = Math.abs(xPos - expected_width);
+									if (rad_sin > collision_rad)
+										{
+										parallel_vector = -Math.cos(yPos * Math.PI / rHalf);
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_sin > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+											{
+											particlePositions[ i * 3] = expected_width;
+											}
+										}	
+									}
+						}
+
+					if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+						continue;
+
+					// Check collision
+					for ( var j = i + 1; j < particleCount; j++ ) {
+
+						var particleDataB = particlesData[ j ];
+						if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+							continue;
+
+						var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+						var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+						var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+						var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+						if ( dist < effectController.minDistance ) {
+
+							particleData.numConnections++;
+							particleDataB.numConnections++;
+
+							var alpha = 1.0 - dist / effectController.minDistance;
+
+							positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+							positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+							positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+							positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+							positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+							positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+							// need to account for x position
+							if (flipped * particlePositions[ i * 3 + 1 ] < ( 1042 * (scroll_height/window.innerHeight - 47/400)) - 400)
+								alpha = (40 / 255) * (1-alpha) + alpha;
+
+							colors[ colorpos++ ] = alpha;
+							colors[ colorpos++ ] = alpha;
+							colors[ colorpos++ ] = alpha;
+
+							colors[ colorpos++ ] = alpha;
+							colors[ colorpos++ ] = alpha;
+							colors[ colorpos++ ] = alpha;
+
+							numConnected++;
+						}
+					}
+				}
+
+
+				linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+				linesMesh.geometry.attributes.position.needsUpdate = true;
+				linesMesh.geometry.attributes.color.needsUpdate = true;
+
+				pointCloud.geometry.attributes.position.needsUpdate = true;
+				
+				if (stop_logo == false)
+					{
+					requestAnimationFrame( animate );
+					render();
+					}
+			}
+			
+			function render() {
+
+				var time = Date.now() * 0.00015;
+				
+				if (time%4 > 0.5 && time%4 < 2.5)
+					flipped = 1;
+				else
+					flipped = -1;
+					
+					
+				if (time%4 < 1)
+					{
+					group.rotation.y = (1-Math.pow(Math.sin(time%2 * Math.PI/2),2)) * Math.PI;
+					group.rotation.x = (1-Math.pow(Math.sin(time%2 * Math.PI/2),2)) * Math.PI;
+					filpped = -1 * Math.cos(time%4 * Math.PI);
+					}
+				else if (time%4 < 2)
+					{
+					group.rotation.y = 0;
+					group.rotation.x = 0;
+					flipped = 1;
+					}
+				else if (time%4 < 3)
+					{
+					group.rotation.y = Math.pow(Math.sin(time%2 * Math.PI/2),2) * Math.PI;
+					group.rotation.x = Math.pow(Math.sin(time%2 * Math.PI/2),2) * Math.PI;
+					flipped = Math.cos(time%4 * Math.PI);
+					}
+				else
+					{
+					group.rotation.y = Math.PI;
+					group.rotation.x = Math.PI;	
+					flipped = -1
+					}
+					
+				renderer.render( scene, camera );
+
+			}
+			
+			 return {
+				"init": init,
+				"animate":animate
+			 };
+		
+		}
+		</script>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+	<script>
+
+	var Portfolio = function(){ 
+
+			var videos = [
+				"cubeAds.mp4",
+				"3dLetterS.mp4",
+				"DrumCircle.mp4",
+				"SmartArt.mp4",
+				"MarketU.mp4",
+				"Burst.mp4",
+				"circle.mp4",
+				"Woven.mp4",
+				"3dwebsite.mp4",
+				"CommndGame.mp4",
+				"Brickbreaker.mp4",
+				"Groom.mp4",	
+				"Coalman.mp4",
+				"CityPaperBox.mp4",
+				"artwork.mp4",
+				"3dwebsite.mp4"	// add oculus shooter or spinning cube
+			];
+			
+			//title, year, members, link, sumamry, role, skills, image
+			var project_info = [
+				"3d Banner Ads", "(Summer 2015)", "NA", "http://www.smgoodrich.com/cube_ads/", 
+					"A prototype for fun and interactive banner ads. Potential clients have many options to customize the banner including the ability to upload images, select from various animations, and determine the banner size. Depending on which is chosen, the animation will activate either as the user scrolls down or when the user hovers over the banner.",
+					"NA", "HTML, CSS, Javascript", "cubeAds.png",
+					
+				"Personal Logo", "(Summer 2015)", "NA", "http://www.smgoodrich.com/S/",
+					 "A WebGL experiment that forms the letter S. Each of the points in the scene moves in a random direction bounded by sin and quadratic equations.",
+					 "NA", "WebGL, Three.js", "logoS.png",
+					 
+				"DrumCircle", "(Winter 2015)","Samuel Oliver, Russell Trupiano, Maxwell Yinger", "http://smgoodrich.com/DrumCircle/",
+					 "Drum Circle attempts to create an improved conceptual model over current digital audio workstations by offering an intuitive yet simple solution for creating quick drum loops in real time. Drum Circle takes advantage of virtual reality with Oculus Rift, which allows users to take advantage of 360 degrees of space around them and natural hand gestures via the Myo armband.",
+					 "Handle instrument state with the Myo; Create an intuitive and fluid user experience", " Unity, C#, Oculus Rift, Myo Armband, User Interface Development", "DrumCircle.png",
+					 
+				"SmartArt", "(Winter 2015)","NA", "http://www.smgoodrich.com/SmartArt/",
+				 	"SmartArt is a project to assist visitors while viewing art shows. It has an intuitive user interface allowing art curators to easily upload the information they would like to share. It simplifies the task of displaying the information to the visitor and adds novelty to the service by implementing art recognition technology.",
+					"NA", "Computer Vision, HTML, CSS, Javascript", "smartArtPoster.jpg",
+					
+				"MarketU", "(Winter 2015)","Nathan Riley, Xiaoshi Wang", "NA",
+					 "MarketU is a cross platform app to serve as a marketplace tailored to the needs of Michigan students. It guarantees security to its customers by requiring all transactions take place between users who have provided authenticated University of Michigan addresses.",
+					 "Develop MySQL database and PHP processes and create assets", "iOS, PHP, MySQL, AWS, Graphic Design", "marketU.png",
+					 
+				"Burst", "(Fall 2014)","Jonah Scheinerman, Yu-Chen Lee", "http://www.smgoodrich.com/Burst/",
+					 "Burst was created in the Fall of 2014 as the final project for Computer Game Design (EECS 494) at University of Michigan. Burst is a 1st person puzzle game. As a construction worker in the future, you must use the original beam spawning game mechanic to create bridges, to block lasers, to hide from enemies, and much more!",
+					 "Creation of enemies, and level design", "Unity, C#, Game Design", "burst.png",
+				
+				"Previous Personal Website", "(Fall 2014)", "NA", "http://www.smgoodrich.com/circle.php",
+					 "My personal website to share my portfolio, resume, and interests. I used canvas and SVG objects in order to experiment developing a circle based website.",
+					  "NA", "HTML, CSS, Javascript, PHP, AJAX, Wordpress, Canvas, SVG", "circle.png",
+					  	 
+				"Woven CMS", "(Summer 2014)", "Eric Armas", "NA",
+					 "CMS for online publishing company Woven Digital. The CMS was customized in order to streamline the company’s marketing campaigns. Relevant information was displayed depending on the phase of the campaign and department of the particular user.",
+					 "Fullstack Web Development", "HTML, CSS, Javascript, PHP, MySQL, Wordpress", "woven.png",
+					 
+				"3d web prototype", "(Summer 2014)", "NA", "http://www.smgoodrich.com/3d.html",
+					"Recreation of personal website in 3d to explore three.JS and WebGl",
+					"NA", "WebGL", "personal3D.png",
+					
+				"CommndGame", "(Winter 2014)", "NA", "http://www.smgoodrich.com/theGame.html",
+					 "Experimental mobile game that requires user to rotate phone as directed. Inspiration from childrens games such as Bop It and Brain Warp. Play on smart phone.",
+					 "NA", "Mobile Web, Javascript, Accelerameter", "command.png",
+					 
+				"Mobile Game", "(Winter 2014)", "NA", "http://www.smgoodrich.com/brickbreaker.html",
+					 "Basic javascript game that explores use of acceleramter, physics, spin, and other game mechanics. Play on smart phone.",
+					 "NA", "Mobile Web, Javascript, Accelerameter", "brickbreaker.png",
+					 
+				"Groom", "(Fall 2013)", "Sita Syal, Leonard Carrier, Adetunji Dahunsi", "http://www.smgoodrich.com/groom.html",
+					 "User Interface for sustainable design project to optimize lawn qulaity while minimizing environmental impact involved in lawncare.",
+					 "Perform sustainability evaluation and develop interface for demo", "Sustainable design, Mobile Web, Graphic design", "groomPoster.jpg",
+					 
+				"Mary Sue Coalman", "(Summer 2013)", "NA", "http://smgoodrich.com/coalman/raisingEYEBROWS.html",
+					 "Interactive artwork that challenges the assumption University of Michigan is sustainable",
+					  "NA", "Graphic design, Javascript", "coalman.png",
+					  
+				"City Paper Box", "(Summer 2013)", "NA", "http://citypaperbox.com/",
+					 "Website for small business to promote its products and services",
+					 "NA", "HTML, CSS, Javascript", "cityPaperBox.png",
+					 
+				"Artwork", "(2010 - 2013)", "NA", "NA",
+					 "Various digital artwork I have created for student organizations or during leisure time",
+					 "NA", "Photoshop, Graphic design", "rooster.png",
+					  
+				"3dwebsite", "(Summer 2014)", "NA", "http://www.smgoodrich.com/3d.html",
+					 "Recreation of personal website in 3d to explore three.JS and WebGl",
+					 "NA", "WebGL", "cubeAds.png"	
+			];
+			
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var container;
+			var camera, scene, renderer;
+			var video, texture, material;
+			var mouseX = 0;
+			var mouseY = 0;
+	
+			var meshes = [],
+				materials = [];
+			
+			var video_vect = [];
+			var texture_vect = [];
+
+			var controls;
+			var objects = [];
+			var helix = [];
+			
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+			
+			var raycaster = new THREE.Raycaster();
+			var mouse = new THREE.Vector2();
+			mouse.x = windowHalfX; //preset to big number so raycast doesn't initialize video onload
+			mouse.y = windowHalfY; //preset to big number so raycast doesn't initialize video onload
+			
+			var actualRotation = 0;
+			var targetRotation = 0;
+			var targetRotationOnMouseDown = 0;
+			var mouseXOnMouseDown = 0;
+			
+			var facebook;
+			var linkedIn;
+			var github;
+			var links = [];
+			
+			var portfolio_invisible = true;
+
+			function init() {
+
+				container = document.createElement('div');
+				container.id = "container2";
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = 3000;
+				camera.position.y = 2050*(1.5 - scroll_height/window.innerHeight);
+				
+				scene = new THREE.Scene();
+				
+				var light = new THREE.DirectionalLight( 0xffffff );
+				light.position.set(0.2, 0, 1 ).normalize();
+				scene.add( light );
+				
+				var ambient = new THREE.AmbientLight(0x222222); 
+				scene.add( ambient );
+
+				
+				for ( var i = 0; i < videos.length; i++ ) {
+					var video = document.createElement('video');
+					var source = document.createElement('source'); 
+					source.type = "video/mp4";
+					source.src = "textures/" + videos[2*(i%8) + Math.floor(i/8)];
+					video.appendChild(source);
+					
+					video.autoplay=false;
+					video.loop=true;
+					video.muted=true;
+					video.id="video" + i;
+					
+					video_vect [i] = video;
+				}
+								
+ 				renderer = new THREE.WebGLRenderer( { alpha: true } );
+				renderer.setSize( window.innerWidth, window.innerHeight);
+				container.appendChild( renderer.domElement );
+				
+				for (var i = 0; i < video_vect.length; i++ )
+					{
+					video = video_vect [i];
+					
+					texture = new THREE.VideoTexture( video );
+					texture.minFilter = THREE.LinearFilter;
+					texture.magFilter = THREE.LinearFilter;
+					texture.format = THREE.RGBFormat;
+					texture_vect [i] = texture;
+	
+					var  geometry, xsize, ysize;
+					xsize = 500;
+					ysize = 500;
+	
+					var parameters = { color: 0xAAAAAA, map: texture, vertexColors: THREE.FaceColors },
+	
+					geometry = new THREE.BoxGeometry( xsize, ysize, xsize/10 );
+					
+					//for ( var j = 0; j < geometry.faces.length; j ++ ) {
+    	    		geometry.faces[ 10 ].color.setHex( 0x4C4C4C );
+    				geometry.faces[ 11 ].color.setHex( 0x4C4C4C );
+					//}
+					
+					change_uvs( geometry, xsize, ysize );
+
+					materials[ i ] = new THREE.MeshLambertMaterial( parameters );
+					material = materials[ i ];
+	
+					var mesh = new THREE.Mesh( geometry, material );
+					mesh.position.x = 0;
+					mesh.position.y = 0;
+					mesh.position.z = 0;
+					
+					mesh.visible = false;
+					mesh.scale.x = mesh.scale.y = mesh.scale.z = 1;
+					meshes[ i ] = mesh;
+					scene.add(meshes[ i ]);
+				}
+				
+				
+				
+			var ctx_facebook = new THREE.Shape();
+			    ctx_facebook.moveTo(204.1, 0.0);
+				ctx_facebook.lineTo(11.9, 0.0);
+				ctx_facebook.bezierCurveTo(5.3, 0.0, 0.0, 5.3, 0.0, 11.9);
+				ctx_facebook.lineTo(0.0, 204.1);
+				ctx_facebook.bezierCurveTo(0.0, 210.7, 5.3, 216.0, 11.9, 216.0);
+				ctx_facebook.lineTo(115.4, 216.0);
+				ctx_facebook.lineTo(115.4, 132.4);
+				ctx_facebook.lineTo(87.2, 132.4);
+				ctx_facebook.lineTo(87.2, 99.8);
+				ctx_facebook.lineTo(115.4, 99.8);
+				ctx_facebook.lineTo(115.4, 75.7);
+				ctx_facebook.bezierCurveTo(115.4, 47.8, 132.4, 32.6, 157.3, 32.6);
+				ctx_facebook.bezierCurveTo(169.2, 32.6, 179.5, 33.5, 182.5, 33.9);
+				ctx_facebook.lineTo(182.5, 63.1);
+				ctx_facebook.lineTo(165.2, 63.1);
+				ctx_facebook.bezierCurveTo(151.7, 63.1, 149.0, 69.5, 149.0, 78.9);
+				ctx_facebook.lineTo(149.0, 99.8);
+				ctx_facebook.lineTo(181.3, 99.8);
+				ctx_facebook.lineTo(177.1, 132.4);
+				ctx_facebook.lineTo(149.0, 132.4);
+				ctx_facebook.lineTo(149.0, 216.0);
+				ctx_facebook.lineTo(204.1, 216.0);
+				ctx_facebook.bezierCurveTo(210.7, 216.0, 216.0, 210.7, 216.0, 204.1);
+				ctx_facebook.lineTo(216.0, 11.9);
+				ctx_facebook.bezierCurveTo(216.0, 5.3, 210.7, 0.0, 204.1, 0.0);
+			
+			var extrusionSettings = {
+				amount: 125,
+				bevelEnabled: true,
+				bevelThickness: 0.5,
+				bevelSize: 0.5,
+				bevelSegments: 8,
+				material: 0,
+				extrudeMaterial: 1
+			};
+			
+			var geometry_facebook = new THREE.ExtrudeGeometry( ctx_facebook, extrusionSettings );
+			
+			var facebook_material = new THREE.MeshLambertMaterial({
+				color: 0x3B5998,
+			});
+						
+			facebook = new THREE.Mesh( geometry_facebook, facebook_material );
+			facebook.position.set(0, -800 , -1000);
+			facebook.rotation.x = 0.5*Math.PI;
+			facebook.rotation.y = 0.5*Math.PI;			
+			scene.add( facebook );
+			facebook.visible = false;
+			facebook.scale.x = facebook.scale.y = 1.5;
+			links.push(facebook, "https://www.facebook.com/sean.m.goodrich");
+			
+			var ctx_linkedIn = new THREE.Shape();
+
+			   // layer1/Compound Path/Path
+			  ctx_linkedIn.moveTo(200.0, 0.0);
+			  ctx_linkedIn.lineTo(15.9, 0.0);
+			  ctx_linkedIn.bezierCurveTo(7.1, 0.0, 0.0, 7.0, 0.0, 15.6);
+			  ctx_linkedIn.lineTo(0.0, 200.5);
+			  ctx_linkedIn.bezierCurveTo(0.0, 209.0, 7.1, 216.0, 15.9, 216.0);
+			  ctx_linkedIn.lineTo(200.0, 216.0);
+			  ctx_linkedIn.bezierCurveTo(208.8, 216.0, 216.0, 209.0, 216.0, 200.4);
+			  ctx_linkedIn.lineTo(216.0, 15.6);
+			  ctx_linkedIn.bezierCurveTo(216.0, 7.0, 208.8, 0.0, 200.0, 0.0);
+			  
+			  // bottom part of letter i
+			  var hole1 = new THREE.Path();
+			  hole1.moveTo(64.1, 184.1);
+			  hole1.lineTo(32.0, 184.1);
+			  hole1.lineTo(32.0, 81.0);
+			  hole1.lineTo(64.1, 81.0);
+			  hole1.lineTo(64.1, 184.1);
+			  ctx_linkedIn.holes.push( hole1 );
+			  
+			  // top part of letter i
+			  var hole2 = new THREE.Path();
+			  hole2.moveTo(48.0, 66.9);
+			  hole2.bezierCurveTo(37.7, 66.9, 29.4, 58.6, 29.4, 48.3);
+			  hole2.bezierCurveTo(29.5, 38.1, 37.8, 29.7, 48.0, 29.7);
+			  hole2.bezierCurveTo(58.2, 29.7, 66.6, 38.0, 66.6, 48.3);
+			  hole2.bezierCurveTo(66.6, 58.6, 58.3, 66.9, 48.0, 66.9);
+			  ctx_linkedIn.holes.push( hole2 );
+			  
+			  // letter n
+			  var hole3 = new THREE.Path();
+			  hole3.moveTo(184.0, 184.1);
+			  hole3.lineTo(152.0, 184.1);
+			  hole3.lineTo(152.0, 134.0);
+			  hole3.bezierCurveTo(152.0, 122.0, 151.8, 106.7, 135.3, 106.7);
+			  hole3.bezierCurveTo(118.6, 106.7, 116.1, 119.7, 116.1, 133.2);
+			  hole3.lineTo(116.1, 184.2);
+			  hole3.lineTo(84.1, 184.2);
+			  hole3.lineTo(84.1, 81.0);
+			  hole3.lineTo(84.2, 81.0);
+			  hole3.lineTo(114.9, 81.0);
+			  hole3.lineTo(114.9, 95.1);
+			  hole3.lineTo(115.3, 95.1);
+			  hole3.bezierCurveTo(119.6, 87.0, 130.0, 78.5, 145.6, 78.5);
+			  hole3.bezierCurveTo(178.0, 78.5, 184.0, 99.8, 184.0, 127.6);
+			  hole3.lineTo(184.0, 184.1);
+			  ctx_linkedIn.holes.push( hole3 );
+			
+			var extrusionSettings = {
+				amount: 125,
+				bevelEnabled: true,
+				bevelThickness: 0.5,
+				bevelSize: 0.5,
+				bevelSegments: 8,
+				material: 0,
+				extrudeMaterial: 1
+			};
+			
+			var geometry_linkedIn = new THREE.ExtrudeGeometry( ctx_linkedIn, extrusionSettings );
+			
+			var linkedIn_material = new THREE.MeshLambertMaterial({
+				color: 0x007bb6,
+			});
+			
+			linkedIn = new THREE.Mesh( geometry_linkedIn, linkedIn_material );
+			linkedIn.position.set(0, -800 , -1000);
+			linkedIn.rotation.x = 0.5*Math.PI;
+			scene.add( linkedIn );
+			linkedIn.visible = false;
+			linkedIn.scale.x = linkedIn.scale.y = 1.5;
+			links.push(linkedIn, "https://www.linkedin.com/in/smgoodrich");
+
+			
+			var ctx_github = new THREE.Shape();
+			  ctx_github.moveTo(108.0, 0.0);
+			  ctx_github.bezierCurveTo(48.4, 0.0, 0.0, 48.4, 0.0, 108.0);
+			  ctx_github.bezierCurveTo(0.0, 155.7, 30.9, 196.2, 73.9, 210.5);
+			  ctx_github.bezierCurveTo(79.3, 211.5, 81.2, 208.1, 81.2, 205.3);
+			  ctx_github.bezierCurveTo(81.2, 202.7, 81.1, 194.2, 81.1, 185.2);
+			  ctx_github.bezierCurveTo(51.0, 191.7, 44.7, 172.4, 44.7, 172.4);
+			  ctx_github.bezierCurveTo(39.8, 160.0, 32.7, 156.6, 32.7, 156.6);
+			  ctx_github.bezierCurveTo(22.9, 149.9, 33.5, 150.1, 33.5, 150.1);
+			  ctx_github.bezierCurveTo(44.3, 150.8, 50.0, 161.2, 50.0, 161.2);
+			  ctx_github.bezierCurveTo(59.6, 177.7, 75.3, 172.9, 81.4, 170.2);
+			  ctx_github.bezierCurveTo(82.4, 163.2, 85.2, 158.4, 88.3, 155.7);
+			  ctx_github.bezierCurveTo(64.3, 153.0, 39.1, 143.7, 39.1, 102.4);
+			  ctx_github.bezierCurveTo(39.1, 90.6, 43.3, 80.9, 50.2, 73.4);
+			  ctx_github.bezierCurveTo(49.1, 70.6, 45.4, 59.7, 51.3, 44.8);
+			  ctx_github.bezierCurveTo(51.3, 44.8, 60.3, 41.9, 81.0, 55.9);
+			  ctx_github.bezierCurveTo(89.6, 53.5, 98.8, 52.3, 108.0, 52.2);
+			  ctx_github.bezierCurveTo(117.2, 52.3, 126.4, 53.5, 135.1, 55.9);
+			  ctx_github.bezierCurveTo(155.7, 41.9, 164.7, 44.8, 164.7, 44.8);
+			  ctx_github.bezierCurveTo(170.6, 59.7, 166.9, 70.6, 165.8, 73.4);
+			  ctx_github.bezierCurveTo(172.7, 80.9, 176.9, 90.6, 176.9, 102.4);
+			  ctx_github.bezierCurveTo(176.9, 143.8, 151.6, 153.0, 127.6, 155.6);
+			  ctx_github.bezierCurveTo(131.5, 159.0, 134.9, 165.6, 134.9, 175.6);
+			  ctx_github.bezierCurveTo(134.9, 190.1, 134.8, 201.7, 134.8, 205.3);
+			  ctx_github.bezierCurveTo(134.8, 208.2, 136.7, 211.5, 142.2, 210.5);
+			  ctx_github.bezierCurveTo(185.1, 196.2, 216.0, 155.7, 216.0, 108.0);
+			  ctx_github.bezierCurveTo(216.0, 48.4, 167.6, 0.0, 108.0, 0.0);
+			  
+			 
+			var ctx_tentacle1 = new THREE.Shape();
+			ctx_tentacle1.moveTo(40.9, 155.1);
+			ctx_tentacle1.bezierCurveTo(40.7, 155.6, 39.8, 155.8, 39.1, 155.4);
+			ctx_tentacle1.bezierCurveTo(38.3, 155.0, 37.8, 154.3, 38.1, 153.8);
+	  		ctx_tentacle1.bezierCurveTo(38.3, 153.2, 39.2, 153.1, 39.9, 153.4);
+			ctx_tentacle1.bezierCurveTo(40.7, 153.8, 41.2, 154.5, 40.9, 155.1);
+		 	ctx_tentacle1.lineTo(40.9, 155.1);
+			
+			var ctx_tentacle2 = new THREE.Shape();
+			ctx_tentacle2.moveTo(45.3, 159.9);
+      		ctx_tentacle2.bezierCurveTo(44.8, 160.4, 43.8, 160.2, 43.1, 159.4);
+     		ctx_tentacle2.bezierCurveTo(42.4, 158.7, 42.2, 157.7, 42.8, 157.2);
+     		ctx_tentacle2.bezierCurveTo(43.3, 156.7, 44.3, 156.9, 45.0, 157.7);
+     		ctx_tentacle2.bezierCurveTo(45.7, 158.5, 45.8, 159.5, 45.3, 159.9);
+     		ctx_tentacle2.lineTo(45.3, 159.9);
+		
+			var ctx_tentacle3 = new THREE.Shape();
+			ctx_tentacle3.moveTo(49.5, 166.2);
+      		ctx_tentacle3.bezierCurveTo(48.9, 166.6, 47.8, 166.2, 47.1, 165.2);
+      		ctx_tentacle3.bezierCurveTo(46.5, 164.3, 46.5, 163.1, 47.1, 162.7);
+      		ctx_tentacle3.bezierCurveTo(47.8, 162.2, 48.9, 162.6, 49.6, 163.6);
+      		ctx_tentacle3.bezierCurveTo(50.2, 164.5, 50.2, 165.7, 49.5, 166.2);
+      		ctx_tentacle3.lineTo(49.5, 166.2);
+
+			var ctx_tentacle4 = new THREE.Shape();
+			ctx_tentacle4.moveTo(55.4, 172.2);
+     		ctx_tentacle4.bezierCurveTo(54.8, 172.8, 53.5, 172.6, 52.6, 171.8);
+     		ctx_tentacle4.bezierCurveTo(51.7, 170.9, 51.4, 169.7, 52.0, 169.0);
+      		ctx_tentacle4.bezierCurveTo(52.6, 168.3, 53.9, 168.5, 54.8, 169.4);
+      		ctx_tentacle4.bezierCurveTo(55.7, 170.3, 56.0, 171.5, 55.4, 172.2);
+      		ctx_tentacle4.lineTo(55.4, 172.2);
+
+			var ctx_tentacle5 = new THREE.Shape();
+    		ctx_tentacle5.moveTo(63.4, 175.7);
+      		ctx_tentacle5.bezierCurveTo(63.2, 176.5, 61.9, 176.9, 60.7, 176.5);
+      		ctx_tentacle5.bezierCurveTo(59.5, 176.2, 58.7, 175.2, 58.9, 174.3);
+      		ctx_tentacle5.bezierCurveTo(59.2, 173.5, 60.4, 173.1, 61.7, 173.4);
+      		ctx_tentacle5.bezierCurveTo(62.9, 173.8, 63.7, 174.8, 63.4, 175.7);
+     		ctx_tentacle5.lineTo(63.4, 175.7);
+	  
+			var ctx_tentacle6 = new THREE.Shape();
+			ctx_tentacle6.moveTo(72.3, 176.3);
+      		ctx_tentacle6.bezierCurveTo(72.3, 177.2, 71.3, 177.9, 70.0, 178.0);
+      		ctx_tentacle6.bezierCurveTo(68.7, 178.0, 67.6, 177.3, 67.6, 176.4);
+      		ctx_tentacle6.bezierCurveTo(67.6, 175.5, 68.6, 174.8, 69.9, 174.7);
+      		ctx_tentacle6.bezierCurveTo(71.2, 174.7, 72.3, 175.4, 72.3, 176.3);
+      		ctx_tentacle6.lineTo(72.3, 176.3);
+			
+			var ctx_tentacle7 = new THREE.Shape();
+		 	ctx_tentacle7.moveTo(80.5, 174.9);
+			ctx_tentacle7.bezierCurveTo(80.6, 175.8, 79.7, 176.7, 78.5, 176.9);
+			ctx_tentacle7.bezierCurveTo(77.2, 177.1, 76.1, 176.6, 75.9, 175.7);
+			ctx_tentacle7.bezierCurveTo(75.7, 174.8, 76.6, 174.0, 77.9, 173.7);
+			ctx_tentacle7.bezierCurveTo(79.2, 173.5, 80.3, 174.0, 80.5, 174.9);
+			ctx_tentacle7.lineTo(80.5, 174.9);
+			 
+			var extrusionSettings = {
+				amount: 125,
+				bevelEnabled: true,
+				bevelThickness: 0.5,
+				bevelSize: 0.5,
+				bevelSegments: 8,
+				material: 0,
+				extrudeMaterial: 1
+			};
+			
+			var geometry_github = new THREE.ExtrudeGeometry( ctx_github, extrusionSettings );
+			var geometry_tentacle1 = new THREE.ExtrudeGeometry( ctx_tentacle1, extrusionSettings );
+			var geometry_tentacle2 = new THREE.ExtrudeGeometry( ctx_tentacle2, extrusionSettings );
+			var geometry_tentacle3 = new THREE.ExtrudeGeometry( ctx_tentacle3, extrusionSettings );
+			var geometry_tentacle4 = new THREE.ExtrudeGeometry( ctx_tentacle4, extrusionSettings );
+			var geometry_tentacle5 = new THREE.ExtrudeGeometry( ctx_tentacle5, extrusionSettings );
+			var geometry_tentacle6 = new THREE.ExtrudeGeometry( ctx_tentacle6, extrusionSettings );
+			var geometry_tentacle7 = new THREE.ExtrudeGeometry( ctx_tentacle7, extrusionSettings );
+			
+			geometry_github.merge( geometry_tentacle1 ); 
+			geometry_github.merge( geometry_tentacle2 ); 
+			geometry_github.merge( geometry_tentacle3 ); 
+			geometry_github.merge( geometry_tentacle4 ); 
+			geometry_github.merge( geometry_tentacle5 ); 
+			geometry_github.merge( geometry_tentacle6 ); 
+			geometry_github.merge( geometry_tentacle7 ); 
+
+			var github_material = new THREE.MeshLambertMaterial({
+				color: 0xE6E6E6,
+			});
+			
+			github = new THREE.Mesh( geometry_github, github_material );
+			github.position.set(0, -800 , -1000);
+			github.rotation.x = 1.5*Math.PI;
+			github.rotation.y = 0*Math.PI;			
+			scene.add( github );
+			github.visible = false;
+			github.scale.x = github.scale.y = 1.5;
+			links.push(github, "https://github.com/smgood");
+
+			
+	
+				
+				// helix
+
+				for ( var i = 0, l = meshes.length; i < l; i ++ ) {
+					
+					var phi = (i * Math.PI/4);
+					
+					var vector = new THREE.Vector3();
+					vector.x = 800 * Math.sin( phi );
+					vector.y = (-640 * Math.floor(i/8)) + 1350;
+					vector.z = 800 * Math.cos( phi );
+
+					helix.push( vector );
+
+				}
+				
+				raycaster = new THREE.Raycaster();
+
+				renderer.autoClear = false;
+				document.addEventListener( 'mousemove', onMouseMove, false );
+				
+				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+				
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				renderer.setClearColor( 0x000000, 0 ); // the default
+			}
+			
+			
+			var box_clicked = false;
+			var down_clicked;
+			var start_position;
+			
+			// stuff to do with the portfolio info 
+			$( document ).ready(function() {
+
+				$("#instructions").css( { marginLeft : 0.50 * window.innerWidth - 0.30 * window.innerHeight  + "px" } );
+
+				// clicking on videos
+				$( 'body' ).mousedown(function(){
+  					if (current_mesh >= 0)
+						{
+						box_clicked = true;
+						down_clicked = current_mesh;
+						start_position = mouseX;
+
+						timeout = setInterval(function(e)
+							{
+							if (current_mesh != down_clicked || Math.abs(start_position - mouseX) > 30)
+								{
+								box_clicked = false;
+								clearInterval(timeout);
+								}
+							}, 50);
+						}
+				}).mouseup(function(){
+					if (box_clicked == true)
+						{
+						clearInterval(timeout);
+						box_clicked = false;	
+						
+						// 1st number represents number of inputs
+						var current_project = 8 * (2*(down_clicked%8) + Math.floor(down_clicked/8));		
+						
+						$("#project_title").html(project_info[current_project]);	
+						$("#project_year").html(project_info[current_project + 1]);	
+						
+						if (project_info[current_project + 2] == "NA")
+							$("#project_team").html("");	
+						else
+							{
+							$("#project_team").html(
+								"<font class='title'>Team members: </font>" + 
+								project_info[current_project + 2]);	
+							}
+							
+						if (project_info[current_project + 3] == "NA")
+							$("#project_link").hide();	
+						else
+							{
+							$("#project_link").show();
+							$("#project_link").attr("href", project_info[current_project + 3])
+							}
+						
+						$("#project_summary").html(
+								"<font class='title'>Summary: </font>" + 
+								project_info[current_project + 4]);	
+						
+						if (project_info[current_project + 5] == "NA")
+							$("#project_role").html("");	
+						else
+							{
+							$("#project_role").html(
+								"<font class='title'>Primary Role: </font>" + 
+								project_info[current_project + 5]);	
+							}	
+						
+						$("#project_skills").html(
+								"<font class='title'>Skills: </font>" + 
+								project_info[current_project + 6]);		
+						
+						$("#photo").one("load", function() 
+							{
+								resizeInfo();
+								$("#opacity_page").fadeIn();
+								$("#info_page").fadeIn();
+							}).attr("src", "images/" + project_info[current_project + 7]); 
+						}
+				});
+				
+				$( 'body' ).click(function(){
+						if (current_link >=0)
+							{
+							location.assign(links[current_link+1]);	
+							}
+				});
+				$("#close").click(function()
+					{
+					$("#opacity_page").fadeOut();
+					$("#info_page").fadeOut();
+					});
+			});
+			
+			function change_uvs( geometry, width, height) {
+				
+				var faceVertexUvs = geometry.faceVertexUvs[ 0 ];
+
+				for (var i = 0; i < faceVertexUvs.length; i++ ) {
+					var unitx = 1;
+					var unity = 1;
+					var offsetx = 0;
+					var offsety = 0;
+								
+					if (i == 0 || i == 1) //right
+						{
+						unitx = 1;
+						offsetx = width;
+						}
+					else if (i == 2 || i == 3) //left
+						{
+						unitx = 0;
+						offsetx = 0;
+						}
+					else if (i == 4 || i == 5) //top
+						{
+						unity = 1;
+						offsety = height;
+						}
+					else if (i == 6 || i == 7) //bottom
+						{
+						unity = 0;
+						offsety = 0;
+						}
+				
+						var uvs = faceVertexUvs[ i ];
+	
+						for (var j = 0; j < uvs.length; j++ ) 
+							{
+							var uv = uvs[ j ];
+							uv.x = ( uv.x + offsetx ) * unitx;
+							uv.y = ( uv.y + offsety ) * unity;
+							}				
+				}
+			}
+
+			function onMouseMove( event ) {
+				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;		
+			}
+			
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight);
+				
+				resizeInfo();
+				$("#instructions").css( { marginLeft : 0.50 * window.innerWidth - 0.30 * window.innerHeight  + "px" } );
+
+			}
+
+			//	
+			function resizeInfo () {
+				var gallery_ratio;
+				if ($(window).height() + 20 > (1/0.85)*$(window).width())
+					{
+					$("#info_page").css( { width : $(window).width() - 20 } );
+					$("#info_page").css( { marginLeft : "10px" } );
+					var gallery_ratio = ($(window).height() * 0.76) / ($(window).width() - 20);
+					}
+				else
+					{
+					$("#info_page").css( { width : "85vh" } );
+					var marginLeft = ($(window).width() - 0.85*$(window).height())/2;
+					$("#info_page").css( { marginLeft : marginLeft } );		
+					var gallery_ratio = (0.76 /  0.85);
+					}
+				
+				var photo = document.getElementById("photo");
+				var photo_ratio = photo.naturalHeight / photo.naturalWidth;
+				
+				if (photo_ratio > 1) // if photo height < gallery height then go back to vertical split
+					{
+					gallery_ratio *= 2; 
+					if (photo_ratio > 0.75 * gallery_ratio)
+						{
+						$("#gallery").css( {height : "100%", width : "50%" } );
+						$("#text").css( {height : "100%", width: "50%", top : "0%", left : "50%" } );
+						$("#photo").height("auto").width("95%");	
+					
+						$("#text").css( { marginLeft : "0" } );
+						$("#gallery").css( { marginLeft : "0" } );
+						$("#close").css( { marginLeft : "0" } );
+						}
+					else
+						{	
+						var info_width = ($(window).height() * 0.38) / photo_ratio;	
+						$("#gallery").css( {height : "50%", width : info_width } );
+						$("#text").css( {height : "50%", width: info_width, top : "50%", left : "0%" } );
+						$("#photo").height("100%").width("auto");	
+						
+						var marginLeft = ($("#info_page").width() - info_width) / 2;
+						$("#text").css( { marginLeft : marginLeft  + "px" } );
+						$("#gallery").css( { marginLeft : marginLeft  + "px" } );
+						$("#close").css( { marginLeft : marginLeft + "px" } );	
+						}
+					}
+				else
+					{
+					gallery_ratio /= 2; 
+					$("#gallery").css( {height : "50%" } );
+					$("#text").css( {height : "50%", top : "50%", left : "0%" } );
+					
+					if (gallery_ratio > photo_ratio)
+						{
+						$("#photo").height("auto").width("100%");	
+						$("#text").width("100%");						
+						$("#gallery").width("100%");		
+						
+						$("#text").css( { marginLeft : "0" } );
+						$("#gallery").css( { marginLeft : "0" } );
+						$("#close").css( { marginLeft : "0" } );
+						}
+					else
+						{
+						$("#photo").height("100%").width("auto");	
+						var info_width = ($(window).height() * 0.38) / photo_ratio;
+						$("#text").width(info_width);							
+						$("#gallery").width(info_width);	
+						
+						var marginLeft = ($("#info_page").width() - info_width) / 2;
+						$("#text").css( { marginLeft : marginLeft  + "px" } );
+						$("#gallery").css( { marginLeft : marginLeft  + "px" } );
+						$("#close").css( { marginLeft : marginLeft + "px" } );						
+						}
+					}
+			}
+
+			function onDocumentMouseDown( event ) {
+
+				event.preventDefault();
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.addEventListener( 'mouseout', onDocumentMouseOut, false );
+
+				mouseXOnMouseDown = event.clientX - windowHalfX;
+				targetRotationOnMouseDown = targetRotation;
+
+			}
+
+			function onDocumentMouseMove( event ) {
+
+				mouseX = event.clientX - windowHalfX;
+
+				targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.008;
+
+			}
+
+			function onDocumentMouseUp( event ) {
+
+				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+
+			}
+
+			function onDocumentMouseOut( event ) {
+
+				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+
+			}
+
+			function onDocumentTouchStart( event ) {
+
+				if ( event.touches.length === 1 ) {
+
+					event.preventDefault();
+
+					mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
+					targetRotationOnMouseDown = targetRotation;
+
+				}
+
+			}
+
+			function onDocumentTouchMove( event ) {
+
+				if ( event.touches.length === 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.008;
+
+				}
+
+			}
+
+		function animate() {
+				camera.position.y = 2050*(1.5 - scroll_height/window.innerHeight);
+				requestAnimationFrame( animate );
+				TWEEN.update();
+				render();
+			}
+			
+			var current_mesh = -1;				
+			var current_link = -1;
+			
+			function render() {
+				
+				camera.lookAt (new THREE.Vector3(0,camera.position.y,0));
+						
+				// update the picking ray with the camera and mouse position	
+				raycaster.setFromCamera( mouse, camera );	
+				
+				// calculate objects intersecting the picking ray
+				var intersects = raycaster.intersectObjects( scene.children );
+				
+				if (intersects.length > 0)
+						{
+						document.body.style.cursor = "pointer";
+						for (var i = 0; i < meshes.length; i++)
+							{
+							if (meshes[i] === intersects[0].object && i != current_mesh)
+								{
+								if (current_mesh >= 0)
+									{
+									meshes[current_mesh].material.color.set( 0xAAAAAA );
+									video_vect [current_mesh].pause();	
+									}
+									
+								current_mesh = i;
+								meshes[current_mesh].material.color.set( 0xffffff );
+								video_vect [current_mesh].play();
+								}
+							}
+						
+						for (var i = 0; i < links.length; i+=2)
+							{
+							if (links[i] === intersects[0].object && i != current_link)
+								{
+								if (current_link >=0)
+									{
+									links[current_link].rotation.y = 0;	
+
+									}
+								
+								current_link = i;						
+								links[current_link].rotation.y = Math.PI * 0.1;	
+								}
+							}				
+						}
+					else
+						{
+						document.body.style.cursor = "default";
+						if (current_mesh >= 0)
+							{
+							meshes[current_mesh].material.color.set( 0xAAAAAA );
+							video_vect [current_mesh].pause();
+							current_mesh = -1;
+							}
+						
+						if (current_link >= 0)
+							{
+							links[current_link].rotation.y = 0;	
+							current_link = -1;
+							}
+						}
+
+
+				actualRotation += ( targetRotation - actualRotation ) * 0.05;
+					
+				for (var i = 0; i < meshes.length; i++)
+					{
+					var radius = Math.sqrt(Math.pow(meshes[i].position.x, 2) + Math.pow(meshes[i].position.z, 2))
+					
+					var phi = (i * Math.PI/4) + actualRotation;
+	
+					meshes[i].position.x = radius * Math.sin( phi );
+					meshes[i].position.y = (-640 * Math.floor(i/8)) + 1350;
+					meshes[i].position.z = radius * Math.cos( phi );	
+	
+					meshes[i].rotation.y = (phi);									
+					}
+						
+				renderer.clear();
+				renderer.render( scene, camera );		
+			}
+			
+			
+			
+			
+			
+			
+			function transform( duration ) {
+				
+	//			video_vect[video_vect.length - 1].addEventListener('loadeddata', function() {
+					portfolio_invisible = false;
+
+					for ( var i = 0; i < meshes.length; i ++ ) {
+						
+						var object = meshes[ i ];
+						
+						var target = helix[ i ];
+						
+						delayShow(object, duration * (8-i%8));
+
+						new TWEEN.Tween( object.position )
+							.to( { x: target.x, y: target.y, z: target.z }, duration*4)
+							.easing( TWEEN.Easing.Elastic.Out)
+							.delay(duration * (8-i%8))
+							.start();
+	
+					}
+	
+					new TWEEN.Tween( this )
+						.to( {}, duration * meshes.length + duration *6)
+						.onUpdate( render )
+						.start();
+					
+//				}, false);		
+
+			}
+			
+			
+			function hidePortfolio( duration ) {
+
+					for ( var i = 0; i < meshes.length; i ++ ) {
+	
+						var object = meshes[ i ];
+							
+						new TWEEN.Tween( object.position )
+							.to( { x: 0, y: 0, z: 0 }, duration*40)
+							.easing( TWEEN.Easing.Elastic.Out)
+							.delay(0)
+							.start();
+	
+					}
+	
+					new TWEEN.Tween( this )
+						.to( {}, duration * 2)
+						.onUpdate( render )
+						.start();
+	
+			}
+			
+
+			function delayShow(object, duration) {
+					setTimeout(function()
+						{ 
+						if (portfolio_invisible == false)
+							object.visible = true; 
+						}, duration);
+			}
+			
+			function linksAppear(duration) {
+						
+				new TWEEN.Tween( linkedIn.position )
+						.to( { x: -500, y: -400, z: 0 }, duration*4)
+						.easing(TWEEN.Easing.Sinusoidal.Out)
+						.delay(duration * 2)
+						.start();
+						
+				new TWEEN.Tween( linkedIn.rotation )
+						.to( { x: 1*Math.PI, y: Math.PI * 0, z: 0 }, duration*4)
+						.easing(TWEEN.Easing.Sinusoidal.Out)
+						.delay(duration * 2)
+						.start();
+					
+					
+				new TWEEN.Tween( facebook.position )
+						.to( { x: -500, y: -800, z: 0 }, duration*4)
+						.easing(TWEEN.Easing.Sinusoidal.Out)
+						.delay(duration * 4)
+						.start();
+						
+				new TWEEN.Tween( facebook.rotation )
+						.to( { x: 1*Math.PI, y: Math.PI * 0, z: 0 }, duration*4)
+						.easing(TWEEN.Easing.Sinusoidal.Out)
+						.delay(duration * 4)
+						.start();
+					
+						
+				new TWEEN.Tween( github.position )
+						.to( { x: -500, y: -1200, z: 0 }, duration*4)
+						.easing(TWEEN.Easing.Sinusoidal.Out)
+						.delay(duration * 6)
+						.start();
+						
+				new TWEEN.Tween( github.rotation )
+						.to( { x: 1*Math.PI, y: Math.PI * 0, z: 0 }, duration*4)
+						.easing(TWEEN.Easing.Sinusoidal.Out)
+						.delay(duration * 6)
+						.start();
+				
+				setTimeout(function(){ linkedIn.visible = true; }, 2 * duration);
+				setTimeout(function(){ facebook.visible = true; }, 4 * duration);
+				setTimeout(function(){ github.visible = true; }, 6 * duration);
+
+				new TWEEN.Tween( this )
+					.to( {}, duration *4)
+					.onUpdate( render )
+					.start();
+
+			}
+			
+			function resetPortfolio() 
+				{
+				TWEEN.removeAll();		
+
+				for ( var i = 0; i < meshes.length; i ++ ) 
+							{
+							var object = meshes[ i ];
+							object.position.x = 0;
+							object.position.y = 0;
+							object.position.z = 0;
+							object.visible = false;
+							}	
+				portfolio_invisible = true;
+				}
+			
+			return {
+				"init": init,
+				"animate":animate,
+				"linksAppear":linksAppear,
+				"transform":transform,
+				"hidePortfolio":hidePortfolio,
+				"resetPortfolio":resetPortfolio
+			};
+		 	
+		}
+		
+		</script>
+
+        
+        
+	</body>
+</html>

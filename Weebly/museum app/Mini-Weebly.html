@@ -1,0 +1,691 @@
+<html>
+<head>
+
+<!-- jquery plugins -->
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.ui.effect.js"></script>
+<script src="js/jquery.ui.effect-slide.js"></script>
+<script src="js/jquery.ui.core.js"></script>
+<script src="js/jquery.ui.widget.js"></script>
+<script src="js/jquery.ui.mouse.js"></script>
+<script src="js/jquery.ui.draggable.js"></script>
+<script src="js/jquery.ui.droppable.js"></script>
+<script src="js/jquery.ui.effect-drop.js"></script>
+<script src="js/jquery.ui.resizable.js"></script>
+
+<!-- CSS -->
+
+<link rel="stylesheet" type="text/css" href="Mini-Weebly.css">
+
+<!-- Favicon Image -->
+<link rel="shortcut icon" href="Images/favicon.ico" type="image/x-icon">
+
+<!-- Font -->
+<style>
+		@font-face {
+			font-family: 'ProximaNova';
+			src: url('Assets/Font/ProximaNova-Reg.otf') format('truetype');
+		}
+		
+		@font-face {
+			font-family: 'ProximaNova';
+			font-weight: bold;
+			src: url('Assets/Font/ProximaNova-Sbold.otf') format('truetype');
+		}
+</style>
+
+
+<script type="text/javascript">
+
+$( document ).ready(function()
+	{
+	var upload_container = document.getElementById("upload_container");
+	});
+	
+//var uploadedFiles = [];
+
+//SHOW IMAGE AND IAMGE DETAILS
+function handleFiles(files) { 
+	var already_chosen = 0;
+	 
+    for (var i = 0; i < files.length; i++) {  
+        var file = files[i]; 
+		
+		if (!file.type.match("image/*")) {
+			alert("INCORRECT FILE TYPE!");
+			}
+		else
+			{
+			/*
+			var copy = 0;
+			for (var j = 0; j < uploadedCount; j++)
+				{
+				if (file.name == uploadedFiles[j].name)
+					{
+					alert("FILE ALREADY CHOSEN!");
+					++already_chosen;
+					copy = 1;
+					}
+				}
+			*/
+			//if (copy == 0)
+				//{
+				create_art(file, i - already_chosen);
+				//uploadedFiles[uploadedCount] = file;
+				//}
+			}
+	}
+}
+
+function create_art(file, i)
+			{		
+				var container = document.createElement("div");
+				container.className = "container";
+				container.style.display = "none";
+				currentGallery.appendChild(container);
+				
+				var flipping = document.createElement("div");
+				flipping.className = "flipping_div";
+				container.appendChild(flipping);
+				
+				var overflow = document.createElement("div");
+				overflow.classList.add("overflow_image");
+				flipping.appendChild(overflow);
+				
+				var img = document.createElement("img");  
+				img.classList.add("image");			
+				img.file = file;  
+				overflow.appendChild(img);
+				
+				var back_info = document.createElement('div');
+				back_info.classList.add("info");			
+				flipping.appendChild(back_info);
+				
+				var flip = document.createElement("div");
+				flip.classList.add("flip");
+				container.appendChild(flip);
+				
+				var remove = document.createElement("div");
+				remove.classList.add("remove");
+				container.appendChild(remove);
+				
+				var reader = new FileReader();  
+				reader.onload = (function(aImg) {
+					return function(e) { 
+						$(aImg).load(function() {	
+							ratio = aImg.height / aImg.width;
+						
+							if (ratio < 1)
+								{
+								aImg.style.height = "144px";
+								aImg.style.width = "auto";								
+								aImg.style.left = (-144/ratio + 144)/2 + "px";
+								}
+							else
+								{
+								aImg.style.width = "144px";
+								aImg.style.height = "auto";
+								aImg.style.top = (-144*ratio + 144)/2 + "px";
+								}
+						}).attr("src", e.target.result);
+					};
+				})(img);
+				reader.readAsDataURL(file);
+				
+				var artworks = currentGallery.childNodes;							
+				if (artworks.length % 2 ==0)
+					{
+					$(upload_container).animate({ left:'-160', top:'160px' }, 2000, function(){
+						$(container).fadeIn(1000);
+						container.style.display = "block";
+						upload_container.style.left = "0px";
+						upload_container.style.top = "0px";
+						});				
+					}
+				else	
+					{
+					$(upload_container).animate({ left:'160' }, 2000, function(){
+						$(container).fadeIn(1000);
+						container.style.display = "block";
+						upload_container.style.left= "0px";
+						});
+					}
+					
+				$( container ).hover(
+					function() {
+						$(flip).fadeIn();
+						$(remove).fadeIn();
+					}, function() {
+						$(flip).stop(true, false).fadeOut();
+						$(remove).stop(true, false).fadeOut();
+				});
+				
+				$(flip).click(function(){
+					if ( $( flipping ).hasClass( "flipped" ) )
+						{
+						$( flipping ).removeClass( "flipped" );
+						}
+					else
+						{
+						$( ".flipping_div" ).removeClass( "flipped" );
+						$(flipping).addClass("flipped");	
+						}
+				});
+				
+				$(remove).click(function(){
+					var artworks = currentGallery.childNodes;
+					var move = 0;
+					
+					$(container).children().fadeOut("1000"); 
+					
+					setTimeout(function()
+						{
+						for(i=0; i<artworks.length; i++)
+							{
+   							if (container == artworks[i])
+								{
+								move = i;
+								}
+							}
+							
+						for(j=move+1; j<artworks.length; j++)
+							{
+   							if (j%2 == 1)
+								$(artworks[j]).animate({ left:'-160' }, 2000).css({"z-index": '1'});
+							else
+								$(artworks[j]).animate({ left:'160', top:'-160' }, 2000).css({"z-index": '2'});
+							}
+						
+						if (artworks.length%2 == 1)
+							$(upload_container).animate({ left:'-160' }, 2000).css({"z-index": '1'});
+						else
+							$(upload_container).animate({ left:'160', top:'-160' }, 2000).css({"z-index": '2'});
+						
+							
+						setTimeout(function()
+							{
+							$(container).remove();
+							$(".container").animate({ left:'0', top:'0' }, 0).css({"z-index": '1'});
+							}, 2000);
+						}, 1000);
+				});
+				
+				var TextArea = document.createElement("TEXTAREA");
+				TextArea.classList.add("TextArea");
+				$("#artGuide").append(TextArea);
+			}  
+
+$( document ).ready(function(){
+    $(".upload_button").mousemove(function(e) {
+        var offL, offR, inpStart
+        offL = $(this).offset().left;
+        offT = $(this).offset().top;
+        $(this).find("input").css({
+            left:e.pageX-offL - 70,
+            top:e.pageY-offT - 70
+        })
+    }); 
+	
+	
+	$( ".upload_button" ).hover(
+  		function() {
+			$(this).find(".upload_image").attr("src", "IMAGES/upload-hover.png")
+  		}, function() {
+			$(this).find(".upload_image").attr("src", "IMAGES/upload.png")
+ 		}
+	);
+	
+	
+});
+
+
+
+</script>
+
+<style>
+
+.container
+	{
+	display:block;
+	float:left;
+	position:relative;
+	width:160px;
+	height:160px;
+	padding:0px;
+	
+	-webkit-perspective: 500px;
+    	-moz-perspective: 500px;
+    		-o-perspective: 500px;
+    			perspective: 500px;	
+	}
+
+.flipping_div
+	{
+	width:100%;
+	height:100%;
+	
+	-webkit-transition: -webkit-transform .5s;
+    	-moz-transition: -moz-transform .5s;
+     		-o-transition: -o-transform .5s;
+      			transition: transform .5s;
+      -webkit-transform-style: preserve-3d;
+         -moz-transform-style: preserve-3d;
+           -o-transform-style: preserve-3d;
+              transform-style: preserve-3d;	
+	}
+
+.overflow_image
+	{
+	z-index:1;
+	display:block;
+    width: 144px;
+    height: 144px;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+	margin-left:8px;
+	margin-top:8px;
+	position:absolute;
+	overflow:hidden;
+	border-radius:4px;
+	}
+
+.overflow_image:active
+	{
+	box-shadow: 0px 0px 0px #888888;
+	margin-left:11px;
+	margin-top:11px;
+	}
+
+.image
+	{
+	display:block;
+	position:absolute;
+	z-index:1;
+	}	
+
+.info
+	{
+	z-index:2;
+	opacity: 0.9;
+	background-color:#d3d3d3;
+	display:block;
+    width: 144px;
+    height: 144px;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+	margin-left:8px;
+	margin-top:8px;
+	overflow:hidden;
+	position: absolute;
+	border-radius:4px;
+
+	-webkit-transform: rotateY( 180deg );
+         -moz-transform: rotateY( 180deg );
+           -o-transform: rotateY( 180deg );
+              transform: rotateY( 180deg );
+	
+	-webkit-backface-visibility: hidden;
+    	-moz-backface-visibility: hidden;
+           -o-backface-visibility: hidden;
+              backface-visibility: hidden; 
+	}
+	
+.flip
+	{
+	background-color:green;
+	border-radius:50%;
+	height:20px;
+	width:20px;
+	top:0px;
+	right:30px;
+	position:absolute;
+	display:none;
+	}
+
+.remove
+	{
+	background-color:red;
+	border-radius:50%;
+	height:20px;
+	width:20px;
+	top:0px;
+	right:0px;
+	position:absolute;
+	display:none;
+	}
+
+.flipped 
+	{
+      -webkit-transform: rotateY( 180deg );
+         -moz-transform: rotateY( 180deg );
+           -o-transform: rotateY( 180deg );
+              transform: rotateY( 180deg );
+	}
+	
+.upload_button 
+	{
+	display:block;
+    width: 144px;
+    height: 144px;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+	position:relative;
+	margin-top:8px;
+	margin-left:8px;
+	border-radius:4px;
+	overflow:hidden;
+	}
+
+.upload_button:active
+	{
+	box-shadow: 0px 0px 0px #888888;
+	margin-left:11px;
+	margin-top:11px;
+	}
+
+.upload_input
+	{
+    width: 144px;
+    height: 144px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	z-index:2; 
+	position:absolute;
+	}
+	
+.upload_image
+	{
+	width: 144px;
+	height: 144px;
+	position:absolute;
+	}
+	
+.gallery
+	{
+	width:320px;
+	height:auto;
+	position:relative;
+	display:none;	
+	}
+	
+.TextArea
+	{
+	width:100px;
+	height:100px;	
+	position:relative;
+	display:block;
+	float:left;
+	}
+	
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+// Global Variables
+var pagecount = 0;	
+var currentBUTTON = 0;
+var currentGallery;
+
+// create "masterpieces" page and elements on page load
+$( document ).ready(function()
+{
+newBOX("load");
+});
+
+// Function that is called when a new page is created
+// Time specifies if the function is performed on page load or by the user
+function newBOX(time) 
+{
+	++pagecount;
+// Javascript for buttons in template header
+	var outside = document.createElement('div');
+	outside.className="ButtonOutside";
+	document.getElementById('Wcontainer').appendChild(outside);
+		
+	var inside = document.createElement('div');
+	outside.appendChild(inside);
+	if (pagecount==1)
+		inside.className="Current ButtonInside";
+	else
+		inside.className="Other ButtonInside";
+	
+	var pageNAME = document.createElement('input')	
+	pageNAME.className="textBOXbutton";
+	$(pageNAME).attr('maxlength', '20');  
+	var pageTitle;
+	if (time == "load")
+		{
+		pageTitle = "Masterpieces"
+		pageNAME.value = "Masterpieces";
+		}
+	else
+		{
+		pageTitle = document.getElementById('pageTEXT').value; 	
+		if(pageTitle != "")
+			pageNAME.value = pageTitle; 
+		else
+		pageNAME.value = "UNTITLED";
+		}
+	document.getElementById('pageTEXT').value = "";
+	inside.appendChild(pageNAME);
+	pageNAME.disabled = true;
+	
+//Javascript for new artworks area 
+	var gallery = document.createElement('div');
+	gallery.className="gallery";
+	
+	if (time == "load")
+		{
+		currentGallery = gallery;
+		}
+		
+	$(gallery).prependTo("#galleryParent");
+	if (pagecount==1){
+		$(gallery).fadeIn( "fast");
+		currentGallery = gallery;
+	}
+	
+// Javascript for delete icon
+	var deleteICON = document.createElement('img');
+	deleteICON.className="deleteICON";
+	$(deleteICON).attr("src","Images/Delete-Icon.png");
+	inside.appendChild(deleteICON);
+	$(deleteICON).hover(
+ 		function() {
+			$(deleteICON).attr("src","Images/Delete-Icon Hover.png");
+            $(inside).stop(true, true).addClass('red', 500);
+  		}, function() {
+        	$(deleteICON).attr("src","Images/Delete-Icon.png");
+            $(inside).stop(true, true).removeClass('red', 500);
+
+        }
+    );
+	deleteICON.onclick = function() {removeBOX(outside, inside, gallery);}
+
+// Javascript for edit icon
+	var editICON = document.createElement('img');
+	editICON.className="editICON";
+	$(editICON).attr("src","Images/Edit-Icon.png");
+	inside.appendChild(editICON);
+	$(editICON).hover(
+ 		function() {
+			$(editICON).attr("src","Images/Edit-Icon Hover.png");
+  		}, function() {
+        	 $(editICON).attr("src","Images/Edit-Icon.png");
+	});
+	editICON.onclick = function() {
+		pageNAME.disabled = false;
+		pageNAME.focus();
+		pageNAME.onblur=function(){
+			pageNAME.disabled = true;
+			};
+        $(pageNAME).keypress(function( event ) {
+                                if ( event.which == 13 )
+                                    pageNAME.blur();
+        })
+    }
+
+// javascript for new page button animation    
+ 	if (time == "load")
+		{
+		$(outside).show();
+		$(inside).show();		
+		}
+	else
+	{
+	$(outside).slideDown( "fast", function () {
+		$(inside).fadeIn( "fast");			
+	});	
+	}
+
+// javascript to show icons when button is hovered over
+	$(outside).hover(
+  		function() {
+			$(deleteICON).show();
+			$(editICON).show();
+		}, function() {
+            $(deleteICON).hide();
+			$(editICON).hide();
+	});
+	
+//Javascript to when user switches pages
+	var switchPAGE = (function(e){
+		if(e.target !=editICON && e.target != deleteICON && currentBUTTON != $(outside).index()){
+			$("#Wcontainer div.ButtonInside:eq(" + currentBUTTON + ")").switchClass( "Current", "Other", 400, "easeInOutQuad" );
+			$(inside).switchClass( "Other", "Current", 400, "easeInOutQuad" );
+			$(currentGallery).fadeOut( "fast", function(){
+					$(gallery).fadeIn( "fast");
+					});
+			
+			currentBUTTON = $(outside).index();
+			currentGallery = gallery;
+		}
+    });
+	$(inside).bind("click", switchPAGE); 
+	
+}
+
+// Javascript function that is performed when a page is deleted
+// outside and inside are parts of the template button, page specifies that droppable area
+function removeBOX (outside, inside, gallery) 
+{		
+	var deletedPAGE = $(outside).index();
+	if (currentBUTTON > deletedPAGE)
+		currentBUTTON--;
+  
+// Javascript to open new page if current viewing page is removed
+	if ($(inside).hasClass('Current')){
+		if(currentBUTTON==0)
+			{
+			$("#Wcontainer div.ButtonInside:eq(1)").switchClass( "Other", "Current", 400, "easeInOutQuad" );
+			currentGallery = $("#galleryParent .gallery:eq(0)");
+			currentGallery.fadeIn("fast");
+			}
+		else
+			{
+			$("#Wcontainer div.ButtonInside:eq(0)").switchClass( "Other", "Current", 400, "easeInOutQuad" );
+			currentGallery = $("#galleryParent .gallery:eq(-1)");
+			currentGallery.fadeIn("fast");
+			}
+
+		$(gallery).fadeOut( "fast", function (){
+			gallery.remove();
+			});
+		currentBUTTON=0;
+	};
+
+// animation to remove page template		
+	$(inside).fadeOut( "fast", function () {
+		$(outside).slideUp( "fast", function () {
+			outside.remove();
+		});
+	});	
+
+	--pagecount;
+}
+	
+</script>
+ 
+  <title>SmartArt</title>  
+</head>
+
+<body>
+<div class="logo">
+</div>
+
+<div style="width:336px; background-color: #2c3e50; position:relative; top:40px; overflow-y: scroll; height:calc(100% - 40px); min-height: 600px;">
+<!-- Template buttons -->
+	<div class="header" style="border-top:0px;">PROJECTS</div>
+	<div id="Wcontainer" style="margin-top:24px; position:relative; display:block; margin-bottom:10px; width:100%;"> 
+	</div>
+
+	<div id="pageADD"  class="pageADD">
+		<form><input id="pageTEXT" type="text" name="pagename" maxlength="20" class="textBOXbutton" placeholder="ADD PROJECT"></form>
+		<img onClick="newBOX('user')" id="Add-Icon" src="Images/Add-Icon.png" alt="Add Page" style="position:absolute; float:right; top:11px; right:13px;">
+		</div>
+<!-- Artworks boxes -->
+	<div class="header" style="z-index:1;">ARTWORKS</div>
+	
+    <div id="galleryParent" style="width:320px; height:auto; position:relative; display:inline-block; padding:8px;">
+        
+        <div class="container" id="upload_container">
+                <div class="upload_button">
+                    <img class="upload_image" src="IMAGES/upload.png" />
+                    <input class="upload_input" type="file" name="file_array[]" multiple id="file_select" onChange="handleFiles(this.files)">			
+               </div>     
+        </div> 
+        
+	</div>
+ 
+</div>
+
+
+<! Parent for droppable pages -->
+<div id = "background" style="z-index:2; background-color:white; box-shadow: -2px 0px 7px 0px rgba(0, 0, 0, 0.5); min-width:calc(100% - 336px); height:calc(100% - 40px); min-height: 600px; position:absolute; top:0px; margin-left:336px; top:40px;">
+	<div id = "artGuide" style="width:857px; position:relative; margin-left:auto; margin-right:auto;">
+    	                <img style = "z-index:2; position:relative; width: 200px; height: 200px;" src="IMAGES/frame.png" />
+    </div>
+</div>
+
+<script>
+// function to change color of add icon depending
+$("#pageADD").hover(
+  function() {
+		 if (!($("#pageTEXT").is(":focus"))) {
+    		$("#Add-Icon").attr("src","Images/Add-Icon Hover.png");}
+         $("#pageTEXT").focus(
+  			function() {
+         		$("#Add-Icon").attr("src","Images/Add-Icon.png");
+				$("#Add-Icon").hover(
+ 					function() {
+         				$("#Add-Icon").attr("src","Images/Add-Icon Hover.png");
+					}, function() {
+         				$("#Add-Icon").attr("src","Images/Add-Icon.png");
+				});				 
+		 });
+  }, function() {
+         $("#Add-Icon").attr("src","Images/Add-Icon.png");
+});
+
+// allows new box to be creater by pressing enter button
+$("#pageTEXT").keypress(function( event ) {
+    if ( event.which == 13 ){
+        event.preventDefault();
+            newBOX("user");
+            $("#pageTEXT").blur();
+    }
+})
+</script>
+
+</body>
+</html>

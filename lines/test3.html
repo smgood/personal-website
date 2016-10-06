@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+  <!--      
+
+  Now that you're looking at this, do you want to grab a coffee and talk about future opportunities?
+  Hit me up at smgood@umich.edu
+
+  Lookng forward to meeting you!
+
+  Thanks,
+  Sean
+    ______     ______    ______   	 ______ 
+   /\  ___\   /\  ___\  /\  __ \  	/\   \ \
+   \ \___  \  \ \  __\   \ \  __ \ 	\ \ \ \ \
+    \/\_____\  \ \_____\   \ \_\ \_\  \ \_\__\
+      \/_____/   \/_____/   \/_/\/_/   \/_/__/
+      
+  -->
+
+
+
+
+
+		<title>Sean Goodrich</title>
+        <link rel="shortcut icon" type="image/x-icon" href="IMAGES/favicon.ico"/>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="keywords" content="Sean, Goodrich, UM, Michigan, Computer, Science, Los Angeles">
+        
+        <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+
+		<style>
+			@font-face {
+				font-family: 'ProximaNova';
+				src: url('font/ProximaNova-Reg.otf') format('truetype');
+			}
+		
+			@font-face {
+				font-family: 'ProximaNova';
+				font-weight: bold;
+				src: url('font/ProximaNova-Sbold.otf') format('truetype');
+			}
+		
+			body {
+				color: #cccccc;
+				font-family:ProximaNova;
+				font-size:13px;
+				text-align:center;
+				background-color: #333;
+				margin: 0px;				
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a {
+				color: #0080ff;
+			}
+			
+			#container{
+				position:absolute;
+				top:0px;
+				z-index:2;
+			}
+
+
+			#fp-nav ul li a span {
+				background-color:white;
+			}
+			
+			#continue{
+				color: white;
+				position: absolute;
+				top: 93vh;
+				cursor: pointer;
+				text-align: center;
+				font-size: 4vh;
+				width:100%;
+				z-index:3;
+				opacity: 0.5;
+			}
+				
+			#continue:hover{
+				opacity:1;
+			}
+
+		</style>
+	</head>
+	<body>
+    
+
+
+
+		<script src="js/dat.gui.min.js"></script>
+		<script src="js/three.min.js"></script>
+	    
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
+		<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+
+
+         <div id = "continue">
+                Scroll &#9661 Down
+          </div>
+                
+<div id="fullpage">
+
+	<div class="section " id="section0">
+ 
+	</div>
+
+	<div class="section" id="section1">
+
+
+	</div>
+
+	<div class="section" id="section2">
+
+
+	</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+		var page1, page2, page3;
+		var scroll_height;
+		var scrolling = false;
+		
+		$(document).ready(function() {
+
+			$('#fullpage').fullpage({
+
+	//			anchors: ['Welcome', 'Portfolio', 'Connect'],
+
+				sectionsColor: ['#000000', '#333', '#999'],
+
+				navigation: true,
+
+				navigationPosition: 'right',
+	
+	//			scrollBar:true,
+
+				navigationTooltips: ['Logo', 'Portfolio', 'Connect'],
+				
+				 'onLeave': function(index, nextIndex, direction)
+				 	{
+					scrolling = true;
+					if (index == 1 && direction == 'down')  
+						{  
+						//page1.explode = true;  
+						//setTimeout(function(){ 	$( "#container" ).remove(); }, 2000);
+						}
+       				},
+					
+				'afterLoad': function(anchorLink, index)
+				 	{
+					scrolling = false;
+					if (index == 1)
+						{
+						delete page1;
+						//page1.explode = false;
+						page1 = new S_Logo();
+						page1.init();
+						page1.animate();
+
+						//$( "#container" ).remove();
+						//init();
+						//$("#continue").fadeIn();
+						//document.getElementById("container").style.top = "0px";
+						//document.getElementById("continue").style.top = "93vh";
+						}
+       				}
+					
+
+			});
+			
+			// Add actions to the arrows
+			$('#continue').on('click', function() {
+				$.fn.fullpage.moveSectionDown();
+			});
+
+
+			setInterval(function () 
+				{
+				var node = document.getElementById("fullpage");
+				var curTransform = new   WebKitCSSMatrix(window.getComputedStyle(node).webkitTransform);
+				scroll_height = -1 * (node.offsetTop + curTransform.m42); //real offset top
+				}, 20);
+
+		});
+
+	</script>
+
+	<script>
+	
+	var S_Logo = function() 
+		
+		{
+	
+			this.group;
+			this.container;
+			this.particlesData = [];
+			this.camera;
+			this.scene
+			this.renderer;
+			this.positions
+			this.colors;
+			this.pointCloud;
+			this.particlePositions;
+			this.linesMesh;
+
+			this.maxParticleCount = 500;
+			this.particleCount = 500;
+			this.r = 800;
+			this.rHalf = this.r / 2;
+			this.collision_rad = 100;
+
+			this.effectController = {
+				showDots: false,
+				showLines: true,
+				minDistance: 65,
+				limitConnections: false,
+				maxConnections: 20,
+				particleCount: 500
+			}
+			
+			this.flipped = 1;
+  			this.explode = false;
+/*
+			function initGUI() {
+
+				var gui = new dat.GUI();
+
+				gui.add( effectController, "showDots" ).onChange( function( value ) { pointCloud.visible = value; } );
+				gui.add( effectController, "showLines" ).onChange( function( value ) { linesMesh.visible = value; } );
+				gui.add( effectController, "minDistance", 10, 300 );
+				gui.add( effectController, "limitConnections" );
+				gui.add( effectController, "maxConnections", 0, 30, 1 );
+				gui.add( effectController, "particleCount", 0, maxParticleCount, 1 ).onChange( function( value ) {
+
+					particleCount = parseInt( value );
+					particles.drawcalls[ 0 ].count = particleCount;
+
+				});
+
+			}
+*/
+		}
+	
+	S_Logo.prototype.init	= function () {
+				this.particlesData = [];
+				this.particleCount = 10;
+				
+				this.container = document.createElement('div');
+				this.container.id ="container";
+				$( "body" ).append( this.container );
+				
+				this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / (window.innerHeight), 1, 10000 );
+				this.camera.position.z = 1300;
+
+				this.scene = new THREE.Scene();
+
+				this.group = new THREE.Group();
+				this.scene.add( this.group );
+				
+				var segments = this.maxParticleCount * this.maxParticleCount;
+
+				this.positions = new Float32Array( segments * 3 );
+				this.colors = new Float32Array( segments * 3 );
+
+				var pMaterial = new THREE.PointCloudMaterial( {
+					color: 0xFFFFFF,
+					size: 3,
+					blending: THREE.AdditiveBlending,
+					transparent: true,
+					sizeAttenuation: false
+				} );
+
+				particles = new THREE.BufferGeometry();
+				this.particlePositions = new Float32Array( this.maxParticleCount * 3 );
+
+				for ( var i = 0; i < this.maxParticleCount; i++ ) {
+					var y = (Math.random() * 4/3 * this.r) - (7*this.r / 12);
+					var x = 0;
+					if (y>this.rHalf)
+						{
+						y = y - this.rHalf/3;
+						x = 15*Math.sqrt(this.rHalf-y) + (Math.random() * 2 * this.collision_rad - this.collision_rad);
+						}
+					else if (y< -this.rHalf)
+						{
+						y = y + this.rHalf/3;
+						x = -15*Math.sqrt(this.rHalf+y) + (Math.random() * 2 * this.collision_rad - this.collision_rad);	
+						}
+					else
+						x = (-Math.sin(y * Math.PI / this.rHalf) * this.rHalf/2) + (Math.random() * 2 * this.collision_rad - this.collision_rad);
+					
+					var z = Math.random() * this.collision_rad - this.collision_rad/2;
+
+					this.particlePositions[ i * 3     ] = x;
+					this.particlePositions[ i * 3 + 1 ] = y;
+					this.particlePositions[ i * 3 + 2 ] = z;
+
+					// add it to the geometry
+					this.particlesData.push( {
+						velocity: new THREE.Vector3( -.5 + Math.random() * 1, -.5 + Math.random() * 1,  -.5 + Math.random() * 1 ),
+						numConnections: 0
+					} );
+
+				}
+
+				particles.drawcalls.push( {
+					start: 0,
+					count: this.particleCount,
+					index: 0
+				} );
+
+				particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( this.particlePositions, 3 ) );
+
+				// create the particle system
+				this.pointCloud = new THREE.PointCloud( particles, pMaterial );
+				this.group.add( this.pointCloud );
+				//pointCloud.visible = false;
+				
+				var geometry = new THREE.BufferGeometry();
+
+				geometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( this.positions, 3 ) );
+				geometry.addAttribute( 'color', new THREE.DynamicBufferAttribute( this.colors, 3 ) );
+
+				geometry.computeBoundingSphere();
+
+				geometry.drawcalls.push( {
+					start: 0,
+					count: 0,
+					index: 0
+				} );
+
+				var material = new THREE.LineBasicMaterial( {
+					vertexColors: THREE.VertexColors,
+					blending: THREE.AdditiveBlending,
+					transparent: true
+				} );
+
+				this.linesMesh = new THREE.Line( geometry, material, THREE.LinePieces );
+				this.group.add( this.linesMesh );
+
+				//
+
+				this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+				this.renderer.setClearColor( 0xffffff, 0 ); // the default
+				this.renderer.setPixelRatio( window.devicePixelRatio );
+				this.renderer.setSize( window.innerWidth, window.innerHeight);
+
+				this.renderer.gammaInput = true;
+				this.renderer.gammaOutput = true;
+
+				container.appendChild( this.renderer.domElement );
+
+				//
+
+				window.addEventListener( 'resize', S_Logo.prototype.onWindowResize, false );
+			}
+
+	S_Logo.prototype.onWindowResize = function () {
+				this.camera.aspect = window.innerWidth / (window.innerHeight);
+				this.camera.updateProjectionMatrix();
+				this.renderer.setSize( window.innerWidth, window.innerHeight);
+			}
+			
+	S_Logo.prototype.ExplodeFunction =  function () {
+				this.explode = true;		
+				$("#continue").fadeOut(600);			
+			}
+			
+	S_Logo.animate =  function () {
+					
+				var vertexpos = 0;
+				var colorpos = 0;
+				var numConnected = 0;
+				
+				if (this.particleCount < 500)
+					{
+					this.particleCount+=10;	
+					particles.drawcalls[ 0 ].count = this.particleCount;
+					}
+					
+				for ( var i = 0; i < this.particleCount; i++ )
+					this.particlesData[ i ].numConnections = 0;
+
+				for ( var i = 0; i < this.particleCount; i++ ) {
+
+					// get the particle
+					var particleData = this.particlesData[i];
+
+					this.particlePositions[ i * 3     ] += particleData.velocity.x;
+					this.particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+					this.particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+				
+					xPos = this.particlePositions[ i * 3];
+					yPos = this.particlePositions[ i * 3 +1];
+					zPos = this.particlePositions[ i * 3 +2];
+					
+					xVel = particleData.velocity.x; 
+					yVel = particleData.velocity.y;
+					zVel = particleData.velocity.z;
+					
+					if (this.explode == true)
+						{
+						particleData.velocity.x *= 1.07; 
+						particleData.velocity.y *= 1.07;
+						particleData.velocity.z *= 1.07;
+						
+						if (scroll_height > window.innerHeight)
+							{
+							document.getElementById("container").style.top = window.innerHeight - scroll_height + "px";
+							document.getElementById("continue").style.top = 1.93 * window.innerHeight - scroll_height + "px" ;
+							}
+						}
+						
+					else
+						{
+						if (Math.abs(xPos) > this.rHalf/2)
+							particleData.velocity.x = -xVel;
+								
+						if (Math.abs(yPos) > this.rHalf)
+							particleData.velocity.y = -yVel;
+						
+						if (Math.abs(zPos) > this.collision_rad)
+							particleData.velocity.z = -zVel;
+						
+						// boundary conditions for top quadratic part of S 	
+						if (xPos > 0 && yPos > this.rHalf/2 && yPos < 2*this.rHalf/3)
+									{
+									particleData.velocity.y = -yVel;
+									}	
+						else if (xPos > 0 && yPos > 2*this.rHalf/3)
+									{
+									var estimated_width = 15*Math.sqrt(this.rHalf-yPos);
+									var rad_quad = Math.abs(xPos - estimated_width);
+									if (rad_quad > this.collision_rad)
+										{
+										parallel_vector = -15/(2*Math.sqrt(this.rHalf-yPos));
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_quad > (1.1 * this.collision_rad) || Math.abs(zPos) > (1.1 * this.collision_rad))
+											{
+											this.particlePositions[ i * 3] = estimated_width;
+											}	
+										}
+									}
+							// boundary conditions for bottom quadratic part of S 
+							else if (xPos < 0 && yPos < -this.rHalf/2 && yPos > -2*this.rHalf/3)
+									{
+									particleData.velocity.y = -yVel;
+									}		
+							else if (xPos < 0 && yPos < -2*this.rHalf/3)
+									{
+									var estimated_width = -15*Math.sqrt(this.rHalf+yPos);
+									var rad_quad = Math.abs(xPos - estimated_width);
+									if (rad_quad > this.collision_rad)
+										{
+										parallel_vector = -15/(2*Math.sqrt(this.rHalf+yPos));
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_quad > (1.1 * this.collision_rad) || Math.abs(zPos) > (1.1 * this.collision_rad))
+											{
+											this.particlePositions[ i * 3] = estimated_width;
+											}	
+										}
+									}		
+							// boundary conditions for middle Sin Wave part of S 			
+							else
+									{
+									var expected_width = -Math.sin(yPos * Math.PI / this.rHalf) * this.rHalf/2;
+									var rad_sin = Math.abs(xPos - expected_width);
+									if (rad_sin > this.collision_rad)
+										{
+										parallel_vector = -Math.cos(yPos * Math.PI / this.rHalf);
+										normal_vector = -1 / parallel_vector;
+										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
+										normal_x = 1 / normal_norm;
+										normal_y = normal_vector / normal_norm;
+										
+										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
+										
+										particleData.velocity.x = dot_product * normal_x + xVel;
+										particleData.velocity.y = dot_product * normal_y + yVel;
+										
+										if (rad_sin > (1.1 * this.collision_rad) || Math.abs(zPos) > (1.1 * this.collision_rad))
+											{
+											this.particlePositions[ i * 3] = expected_width;
+											}
+										}	
+									}
+						}
+
+					if ( this.effectController.limitConnections && this.particleData.numConnections >= this.effectController.maxConnections )
+						continue;
+
+					// Check collision
+					for ( var j = i + 1; j < this.particleCount; j++ ) {
+
+						var particleDataB = this.particlesData[ j ];
+						if ( this.effectController.limitConnections && particleDataB.numConnections >= this.effectController.maxConnections )
+							continue;
+
+						var dx = this.particlePositions[ i * 3     ] - this.particlePositions[ j * 3     ];
+						var dy = this.particlePositions[ i * 3 + 1 ] - this.particlePositions[ j * 3 + 1 ];
+						var dz = this.particlePositions[ i * 3 + 2 ] - this.particlePositions[ j * 3 + 2 ];
+						var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+						if ( dist < this.effectController.minDistance ) {
+
+							particleData.numConnections++;
+							particleDataB.numConnections++;
+
+							var alpha = 1.0 - dist / this.effectController.minDistance;
+
+							this.positions[ vertexpos++ ] = this.particlePositions[ i * 3     ];
+							this.positions[ vertexpos++ ] = this.particlePositions[ i * 3 + 1 ];
+							this.positions[ vertexpos++ ] = this.particlePositions[ i * 3 + 2 ];
+
+							this.positions[ vertexpos++ ] = this.particlePositions[ j * 3     ];
+							this.positions[ vertexpos++ ] = this.particlePositions[ j * 3 + 1 ];
+							this.positions[ vertexpos++ ] = this.particlePositions[ j * 3 + 2 ];
+
+							// need to account for x position
+							if (this.flipped * this.particlePositions[ i * 3 + 1 ] < ( 1042 * (scroll_height/window.innerHeight - 47/400)) - 400)
+								alpha = (51 / 255) * (1-alpha) + alpha;
+
+							this.colors[ colorpos++ ] = alpha;
+							this.colors[ colorpos++ ] = alpha;
+							this.colors[ colorpos++ ] = alpha;
+
+							this.colors[ colorpos++ ] = alpha;
+							this.colors[ colorpos++ ] = alpha;
+							this.colors[ colorpos++ ] = alpha;
+
+							numConnected++;
+						}
+					}
+				}
+
+
+				this.linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+				this.linesMesh.geometry.attributes.position.needsUpdate = true;
+				this.linesMesh.geometry.attributes.color.needsUpdate = true;
+
+				this.pointCloud.geometry.attributes.position.needsUpdate = true;
+
+				requestAnimationFrame( S_Logo.prototype.animate );
+
+				S_Logo.render();
+
+			}
+			
+	S_Logo.render =  function () {
+
+				var time = Date.now() * 0.00015;
+				
+				if (time%4 > 0.5 && time%4 < 2.5)
+					this.flipped = 1;
+				else
+					this.flipped = -1;
+					
+					
+				if (time%4 < 1)
+					{
+					this.group.rotation.y = (1-Math.pow(Math.sin(time%2 * Math.PI/2),2)) * Math.PI;
+					this.group.rotation.x = (1-Math.pow(Math.sin(time%2 * Math.PI/2),2)) * Math.PI;
+					this.filpped = -1 * Math.cos(time%4 * Math.PI);
+					}
+				else if (time%4 < 2)
+					{
+					this.group.rotation.y = 0;
+					this.group.rotation.x = 0;
+					this.flipped = 1;
+					}
+				else if (time%4 < 3)
+					{
+					this.group.rotation.y = Math.pow(Math.sin(time%2 * Math.PI/2),2) * Math.PI;
+					this.group.rotation.x = Math.pow(Math.sin(time%2 * Math.PI/2),2) * Math.PI;
+					this.flipped = Math.cos(time%4 * Math.PI);
+					}
+				else
+					{
+					this.group.rotation.y = Math.PI;
+					this.group.rotation.x = Math.PI;	
+					this.flipped = -1
+					}
+					
+				this.renderer.render( this.scene, this.camera );
+
+			}
+		
+	</script>
+    
+	</body>
+</html>

@@ -1,0 +1,281 @@
+<html>
+<title>brickbreaker</title>  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <script src="js/jquery-1.6.3.min.js"></script> 
+    <script src="js/jquery.easing.1.3.js"></script> 
+    <script src="js/jquery.animate-colors-min.js"></script> 
+
+<head>
+<style type="text/css">
+
+body {
+	font-family: helvetica, arial, sans serif;
+}
+
+#menu {
+	position:absolute;
+	width:50vw;
+	height:30vw;	
+	left:25vw;
+	top:25vw;
+	background-color:red;
+	color:white;
+	text-align:center;
+	padding-top:20vw;
+}
+
+#paddle {
+	position: absolute;	
+	width: 25vw;
+	height: 4vw;
+	border-radius: 2vw;
+	-webkit-radius: 2vw;
+	background-color: blue;
+}
+
+.ball {
+	position: absolute;	
+	width: 5vw;
+	height: 5vw;
+	border-radius: 2.5vw;
+	-webkit-radius: 2.5vw;
+	background-color: #8BA61F;
+}
+
+#counter{
+	position: absolute;
+	width:5vw;
+	top:0px;
+	right:0px;
+}
+
+.halfOval{
+	border-radius: 50% / 100%;
+   -moz-border-radius: 50% / 100%;
+    -webkit-border-radius: 50% / 100%;
+	border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+	
+.OvalBottomOuter{
+    height:1vw;
+    width:3.2vw;
+    background-color:white;
+	position:absolute;
+	bottom:.6vw;
+	margin-left:1vw;
+}
+
+.OvalBottomInner{
+    height:0.7vw;
+    width:3.2vw;
+    background-color:#8BA61F;
+	position:absolute;
+	bottom:0px;
+}
+	
+.OvalTopOuter{
+    height:.5vw;
+    width:4.4vw;
+    background-color:white;
+	position:absolute;
+	top:1vw;
+	margin-left:0.4vw;
+}
+
+.OvalTopInner{
+    height:0.2vw;
+    width:4.4vw;
+    background-color:#8BA61F;
+	position:absolute;
+	bottom:0px;
+}
+
+</style>
+</head>
+
+<body>
+<div id="content">
+	<div id="menu">Play</div>
+    <div id="counter">0</div>
+    <div id="paddle"></div>
+</div>
+
+<script type="text/javascript">
+
+var windowWidth = $(window).width();
+var windowHeight = $(window).height();
+
+var count = 0;
+var phoneAcceleration = 0;
+var paddleRotateTime = 0;
+
+var paddle = document.getElementById("paddle");
+var paddlewidth = $("#paddle").width();
+var paddleX = (windowWidth - paddlewidth) / 2, paddleVX = 0, paddleAX = 0;
+paddle.style.top = windowWidth + "px";
+
+var ball = document.createElement('div');
+	ball.className="ball";
+	$("#content").append( $( ball ) );
+
+var OvalTopOuter = document.createElement('div');
+	OvalTopOuter.className="halfOval OvalTopOuter";
+	$(ball).append( $( OvalTopOuter ) );
+var OvalTopInner = document.createElement('div');
+	OvalTopInner.className="halfOval OvalTopInner";
+	$(OvalTopOuter).append( $( OvalTopInner) );
+var OvalBottomOuter = document.createElement('div');
+	OvalBottomOuter.className="halfOval OvalBottomOuter";
+	$(ball).append( $( OvalBottomOuter ) );
+var OvalBottomInner = document.createElement('div');
+	OvalBottomInner.className="halfOval OvalBottomInner";
+	$(OvalBottomOuter).append( $( OvalBottomInner) );
+
+var ballwidth = $(window).width() / 20;
+var ballX = (windowWidth - ballwidth) / 2, ballVX = 0, ballAX = 0;
+var ballY = windowWidth - $(ball).height(), ballVY = 600, ballAY = -9.8;
+
+var menuANIMATION;
+var gameANIMATION;
+
+
+window.onload=function(){
+	menuANIMATION = setInterval(menuSTEP, 10);
+};
+
+var menu = document.getElementById("menu")
+menu.onclick=function(){
+	$("#menu").fadeOut("medium", function() {
+		clearInterval(menuANIMATION);
+		gameANIMATION = setInterval(gameSTEP, 10);
+
+  });
+};
+
+if (window.DeviceMotionEvent != undefined) {
+	window.ondevicemotion = function(e) {
+		paddleAX = event.accelerationIncludingGravity.x * 8;     
+		phoneAcceleration = event.acceleration.x;
+
+/*
+		if (Math.abs(phoneAcceleration) > 2.5 && paddleRotateTime == 0)
+			{
+			rotatePaddle(e.rotationRate.alpha);	
+			paddleRotateTime = 1;
+			}
+*/		
+	}
+} 
+
+menuSTEP = function () {
+			paddleVX = paddleVX + paddleAX;
+			paddleVX = paddleVX * 0.98;
+			paddleX = (paddleX + paddleVX / 100);
+	
+			ballX = paddleX + paddlewidth/2 - ballwidth/2;
+			boundingBoxCheck();
+			ballY = windowWidth - $(ball).height()
+			
+			paddle.style.left = paddleX + "px";
+			ball.style.left = ballX + "px";
+			ball.style.top = ballY + "px";
+}
+
+gameSTEP = function () {
+			degree=degree+ballAX/20;
+			rotate();
+			
+			paddleVX = paddleVX + paddleAX;
+			paddleVX = paddleVX * 0.98;
+			paddleX = (paddleX + paddleVX / 100);
+	
+			ballVX = ballVX + ballAX/400;
+			ballX = (ballX + ballVX / 100);
+			ballAX = ballAX*0.99;
+	
+			ballVY = ballVY + ballAY;
+			hitBallCheck();
+			ballY = (ballY - ballVY / 100);
+			
+			boundingBoxCheck();
+			paddle.style.left = paddleX + "px";
+	
+			ball.style.left = ballX + "px";
+			ball.style.top = ballY + "px";
+}
+
+degree = 0;
+function rotate() {
+        $(ball).css({ WebkitTransform: 'rotate(' + degree + 'deg)'});  
+        $(ball).css({ '-moz-transform': 'rotate(' + degree + 'deg)'});                      
+    }
+	
+function rotatePaddle(direction){
+	if (direction > 0)
+		{
+ 	   	$(paddle).css({ WebkitTransform: 'rotate(-45deg)'});
+    	$(paddle).css({ '-moz-transform': 'rotate(-45deg)'});
+		
+		$(paddle)
+  		.delay(1000)
+  		.queue( function(next){ 
+    		$(paddle).css({ WebkitTransform: 'rotate(0deg)'}); 
+    		$(paddle).css({ '-moz-transform': 'rotate(0deg)'});
+    		 paddleRotateTime = 0;
+		next(); 
+  		});
+		}
+	else
+		{
+ 	   	$(paddle).css({ WebkitTransform: 'rotate(45deg)'}); 
+    	$(paddle).css({ '-moz-transform': 'rotate(45deg)'});
+
+		$(paddle)
+  		.delay(1000)
+  		.queue( function(next){ 
+    		$(paddle).css({ WebkitTransform: 'rotate(0deg)'}); 
+    		$(paddle).css({ '-moz-transform': 'rotate(0deg)'});
+    		paddleRotateTime = 0;
+		next(); 
+  		});
+		}
+	}
+
+function boundingBoxCheck(){
+	if (paddleX<0) { paddleX = 0; paddleVX = -paddleVX/2; }
+	if (paddleX>document.documentElement.clientWidth - paddlewidth) { paddleX = document.documentElement.clientWidth - paddlewidth; paddleVX = -paddleVX/2; }
+
+	if (ballX<=0) { ballX = 0; ballVX = -ballVX; }
+	if (ballX>=document.documentElement.clientWidth - ballwidth) { ballX = document.documentElement.clientWidth - ballwidth; ballVX = -ballVX; }
+}
+
+function hitBallCheck(){
+	if($(ball).offset().top >  windowWidth - $("#paddle").height() && $(ball).offset().top <  windowWidth - $("#paddle").height() + $(ball).height()/2)
+		{
+		if(ballX >= paddleX && ballX <= paddleX + paddlewidth)
+				{
+				ballVY = 600;
+				ballY = windowWidth - $(ball).height(); 
+				count++;
+				document.getElementById('counter').innerHTML = count;
+				ballAX = paddleVX*-1;
+				}
+		}
+	else if($(ball).offset().top >  windowHeight)
+		{
+		clearInterval(gameANIMATION);
+		$( "#menu" ).fadeIn( "medium" );
+		menuANIMATION = setInterval(menuSTEP, 10);
+		count = 0;
+		document.getElementById('counter').innerHTML = count;
+		ballVX = 0;
+		ballAX = 0;
+		}	
+}
+</script>
+
+</body>
+</html>
+

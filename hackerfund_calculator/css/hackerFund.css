@@ -1,0 +1,34 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* color examples
+text: 			red, Gold, DodgerBlue, transparent 
+hexadecimal: 	#FFFF00, #808080, #FF69B4		
+rbg:			rgb(0, 0, 0), rgb(255,255,0)
+*/
+
+/* button style */
+.button-operation .face {
+  background-color:white;		
+}
+/* button style on hover */
+.button-operation:hover .face {
+  background-color:#9c89f6;		
+}
+/* button style on active */
+.button-operation:active .face {
+  background-color:#9c89f6;		
+}
+
+/* text style  */
+.button-operation .button-text {
+  color:rgb(70,70,70);
+}
+/* text style on hover */
+.button-operation:hover .button-text {
+  color:rgb(255,255,255);
+}
+/* text style on active */
+.button-operation:active .button-text {
+  color:rgb(255,255,255);
+}
