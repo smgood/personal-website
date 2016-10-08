@@ -1,0 +1,2083 @@
+@charset "UTF-8";
+/* CSS Document */
+
+@font-face {
+  font-family: 'digital';
+  src: url('../fonts/digital-7.ttf') format('truetype');
+  }
+
+/* /!\ You need to add vendor prefixes in order to render the CSS properly (or simply use http://leaverou.github.io/prefixfree/) /!\ */ 
+#tridiv {
+  perspective: 800px;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  font-size: 100%;
+}
+.face {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .3);
+}
+.scene, .shape, .face, .face-wrapper, .cr {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+.scene {
+  width: 80em;
+  height: 80em;
+  top: 50%;
+  left: 50%;
+  margin: -40em 0 0 -40em;
+  -webkit-transform:rotateX(-50deg) rotateY(0deg);
+  -moz-transform:rotateX(-50deg) rotateY(0deg);
+  -ms-transform:rotateX(-50deg) rotateY(0deg);
+  transform:rotateX(-50deg) rotateY(0deg);
+}
+.shape {
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-origin: 50%;
+}
+.face, .face-wrapper {
+  overflow: hidden;
+  transform-origin: 0 0;
+  backface-visibility: hidden;
+  /* hidden by default, prevent blinking and other weird rendering glitchs */
+}
+.face {
+  background-size: 100% 100%!important;
+  background-position: center;
+}
+.face-wrapper .face {
+  left: 100%;
+  width: 100%;
+  height: 100%
+}
+.photon-shader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.side {
+  left: 50%;
+}
+.cr, .cr .side {
+  height: 100%;
+}
+[class*="cuboid"] .ft, [class*="cuboid"] .bk {
+  width: 100%;
+  height: 100%;
+}
+[class*="cuboid"] .bk {
+  left: 100%;
+}
+[class*="cuboid"] .rt {
+  transform: rotateY(-90deg) translateX(-50%);
+}
+[class*="cuboid"] .lt {
+  transform: rotateY(90deg) translateX(-50%);
+}
+[class*="cuboid"] .tp {
+  transform: rotateX(90deg) translateY(-50%);
+}
+[class*="cuboid"] .bm {
+  transform: rotateX(-90deg) translateY(-50%);
+}
+[class*="cuboid"] .lt {
+  left: 100%;
+}
+[class*="cuboid"] .bm {
+  top: 100%;
+}
+/* .button-C styles */
+.button-C {
+  transform:translate3D(-10.5em, -1.75em, -7.75em) rotateX(-30deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-C .ft {
+  transform:translateZ(1.5em);
+}
+.button-C .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-C .rt, .button-C .lt {
+  width:3em;
+  height:1em;
+}
+.button-C .tp, .button-C .bm {
+  width:6em;
+  height:3em;
+}
+.button-C .face {
+  background-color:#ff9fa8;
+}
+.button-C .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-C .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-C .rt, .button-C .lt {
+  width:1.5em;
+}
+.button-C .tp, .button-C .bm, .button-C .tp .photon-shader, .button-C .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-C .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-C .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-C .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-C .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-C .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-C .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-C .side {
+  width:0.42692378864668407em;
+}
+/* .Screen styles */
+.Screen {
+  transform:translate3D(3.5em, -1.75em, -7.75em) rotateX(-30deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:20em;
+  height:.1em;
+  margin:-0.05em 0 0 -10em;
+}
+.Screen .ft {
+  transform:translateZ(1.5em);
+}
+.Screen .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.Screen .rt, .Screen .lt {
+  width:3em;
+  height:.1em;
+}
+.Screen .tp, .Screen .bm {
+  width:20em;
+  height:3em;
+}
+.Screen .face {
+  background-color:#C1C8CB;
+}
+.Screen .ft {
+  width:18.5em;
+  margin-left:0.75em;
+}
+.Screen .bk {
+  width:18.5em;
+  margin-left:-0.75em;
+}
+.Screen .rt, .Screen .lt {
+  width:1.5em;
+}
+.Screen .tp, .Screen .bm, .Screen .tp .photon-shader, .Screen .bm .photon-shader {
+  border-radius:0.75em;
+}
+.Screen .cr {
+  width:0.75em;
+  left:0.375em;
+}
+.Screen .cr-0 {
+  transform: translate3D(18.5em, 0, 0.75em);
+}
+.Screen .cr-1 {
+  transform: translate3D(18.5em, 0, -0.75em);
+}
+.Screen .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.Screen .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.Screen .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.Screen .side {
+  width:0.42692378864668407em;
+}
+/* .button-7 styles */
+.button-7 {
+  transform:translate3D(-10.5em, -.5em, -3.75em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-7 .ft {
+  transform:translateZ(1.5em);
+}
+.button-7 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-7 .rt, .button-7 .lt {
+  width:3em;
+  height:1em;
+}
+.button-7 .tp, .button-7 .bm {
+  width:6em;
+  height:3em;
+}
+.button-7 .face {
+  background-color:#FFFFFF;
+}
+.button-7 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-7 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-7 .rt, .button-7 .lt {
+  width:1.5em;
+}
+.button-7 .tp, .button-7 .bm, .button-7 .tp .photon-shader, .button-7 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-7 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-7 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-7 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-7 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-7 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-7 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-7 .side {
+  width:0.42692378864668407em;
+}
+/* .Frame-Flat styles */
+.Frame-Flat {
+  transform:translate3D(0em, 0em, 2.67em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:31em;
+  height:1em;
+  margin:-0.5em 0 0 -15.5em;
+}
+.Frame-Flat .ft {
+  transform:translateZ(8.575em);
+}
+.Frame-Flat .bk {
+  transform:translateZ(-8.575em) rotateY(180deg);
+}
+.Frame-Flat .rt, .Frame-Flat .lt {
+  width:17.15em;
+  height:1em;
+}
+.Frame-Flat .tp, .Frame-Flat .bm {
+  width:31em;
+  height:17.15em;
+}
+.Frame-Flat .face {
+  background-color:#9dd2ea;
+}
+.Frame-Flat .ft {
+  width:29.5em;
+  margin-left:.75em;
+}
+.Frame-Flat .rt, .Frame-Flat .lt {
+  width:16.4em;
+}
+.Frame-Flat .rt {
+  transform: rotateY(-90deg) translateX(-8.575em);
+}
+.Frame-Flat .lt {
+  transform: rotateY(90deg) translateX(-7.825em);
+}
+.Frame-Flat .tp, .Frame-Flat .tp .photon-shader {
+  border-radius: 0 0 .75em .75em;
+}
+.Frame-Flat .bm, .Frame-Flat .bm .photon-shader {
+  border-radius: .75em .75em 0 0;
+}
+.Frame-Flat .cr {
+  width:.75em;
+  left:0.375em;
+}
+.Frame-Flat .cr-0 {
+  transform: translate3D(29.5em, 0, 7.824999999999999em);
+}
+.Frame-Flat .cr-3 {
+  transform: translate3D(0, 0, 7.824999999999999em);
+}
+.Frame-Flat .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Flat .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Flat .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Flat .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Flat .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Flat .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Flat .side {
+  width:0.42692378864668407em;
+}
+/* .button-8 styles */
+.button-8 {
+  transform:translate3D(-3.5em, -.5em, -3.75em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-8 .ft {
+  transform:translateZ(1.5em);
+}
+.button-8 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-8 .rt, .button-8 .lt {
+  width:3em;
+  height:1em;
+}
+.button-8 .tp, .button-8 .bm {
+  width:6em;
+  height:3em;
+}
+.button-8 .face {
+  background-color:#FFFFFF;
+}
+.button-8 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-8 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-8 .rt, .button-8 .lt {
+  width:1.5em;
+}
+.button-8 .tp, .button-8 .bm, .button-8 .tp .photon-shader, .button-8 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-8 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-8 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-8 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-8 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-8 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-8 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-8 .side {
+  width:0.42692378864668407em;
+}
+/* .button-4 styles */
+.button-4 {
+  transform:translate3D(-10.5em, -.5em, 0.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-4 .ft {
+  transform:translateZ(1.5em);
+}
+.button-4 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-4 .rt, .button-4 .lt {
+  width:3em;
+  height:1em;
+}
+.button-4 .tp, .button-4 .bm {
+  width:6em;
+  height:3em;
+}
+.button-4 .face {
+  background-color:#FFFFFF;
+}
+.button-4 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-4 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-4 .rt, .button-4 .lt {
+  width:1.5em;
+}
+.button-4 .tp, .button-4 .bm, .button-4 .tp .photon-shader, .button-4 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-4 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-4 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-4 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-4 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-4 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-4 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-4 .side {
+  width:0.42692378864668407em;
+}
+/* .button-1 styles */
+.button-1 {
+  transform:translate3D(-10.5em, -.5em, 4.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-1 .ft {
+  transform:translateZ(1.5em);
+}
+.button-1 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-1 .rt, .button-1 .lt {
+  width:3em;
+  height:1em;
+}
+.button-1 .tp, .button-1 .bm {
+  width:6em;
+  height:3em;
+}
+.button-1 .face {
+  background-color:#FFFFFF;
+}
+.button-1 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-1 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-1 .rt, .button-1 .lt {
+  width:1.5em;
+}
+.button-1 .tp, .button-1 .bm, .button-1 .tp .photon-shader, .button-1 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-1 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-1 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-1 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-1 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-1 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-1 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-1 .side {
+  width:0.42692378864668407em;
+}
+/* .button-0 styles */
+.button-0 {
+  transform:translate3D(-10.5em, -.5em, 8.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-0 .ft {
+  transform:translateZ(1.5em);
+}
+.button-0 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-0 .rt, .button-0 .lt {
+  width:3em;
+  height:1em;
+}
+.button-0 .tp, .button-0 .bm {
+  width:6em;
+  height:3em;
+}
+.button-0 .face {
+  background-color:#FFFFFF;
+}
+.button-0 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-0 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-0 .rt, .button-0 .lt {
+  width:1.5em;
+}
+.button-0 .tp, .button-0 .bm, .button-0 .tp .photon-shader, .button-0 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-0 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-0 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-0 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-0 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-0 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-0 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-0 .side {
+  width:0.42692378864668407em;
+}
+/* .button-5 styles */
+.button-5 {
+  transform:translate3D(-3.5em, -.5em, 0.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-5 .ft {
+  transform:translateZ(1.5em);
+}
+.button-5 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-5 .rt, .button-5 .lt {
+  width:3em;
+  height:1em;
+}
+.button-5 .tp, .button-5 .bm {
+  width:6em;
+  height:3em;
+}
+.button-5 .face {
+  background-color:#FFFFFF;
+}
+.button-5 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-5 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-5 .rt, .button-5 .lt {
+  width:1.5em;
+}
+.button-5 .tp, .button-5 .bm, .button-5 .tp .photon-shader, .button-5 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-5 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-5 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-5 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-5 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-5 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-5 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-5 .side {
+  width:0.42692378864668407em;
+}
+/* .button-2 styles */
+.button-2 {
+  transform:translate3D(-3.5em, -.5em, 4.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-2 .ft {
+  transform:translateZ(1.5em);
+}
+.button-2 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-2 .rt, .button-2 .lt {
+  width:3em;
+  height:1em;
+}
+.button-2 .tp, .button-2 .bm {
+  width:6em;
+  height:3em;
+}
+.button-2 .face {
+  background-color:#FFFFFF;
+}
+.button-2 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-2 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-2 .rt, .button-2 .lt {
+  width:1.5em;
+}
+.button-2 .tp, .button-2 .bm, .button-2 .tp .photon-shader, .button-2 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-2 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-2 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-2 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-2 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-2 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-2 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-2 .side {
+  width:0.42692378864668407em;
+}
+/* .button-Decimal styles */
+.button-Decimal {
+  transform:translate3D(-3.5em, -.5em, 8.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-Decimal .ft {
+  transform:translateZ(1.5em);
+}
+.button-Decimal .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-Decimal .rt, .button-Decimal .lt {
+  width:3em;
+  height:1em;
+}
+.button-Decimal .tp, .button-Decimal .bm {
+  width:6em;
+  height:3em;
+}
+.button-Decimal .face {
+  background-color:#FFFFFF;
+}
+.button-Decimal .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-Decimal .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-Decimal .rt, .button-Decimal .lt {
+  width:1.5em;
+}
+.button-Decimal .tp, .button-Decimal .bm, .button-Decimal .tp .photon-shader, .button-Decimal .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-Decimal .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-Decimal .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-Decimal .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-Decimal .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-Decimal .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-Decimal .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Decimal .side {
+  width:0.42692378864668407em;
+}
+/* .button-9 styles */
+.button-9 {
+  transform:translate3D(3.5em, -.5em, -3.75em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-9 .ft {
+  transform:translateZ(1.5em);
+}
+.button-9 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-9 .rt, .button-9 .lt {
+  width:3em;
+  height:1em;
+}
+.button-9 .tp, .button-9 .bm {
+  width:6em;
+  height:3em;
+}
+.button-9 .face {
+  background-color:#FFFFFF;
+}
+.button-9 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-9 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-9 .rt, .button-9 .lt {
+  width:1.5em;
+}
+.button-9 .tp, .button-9 .bm, .button-9 .tp .photon-shader, .button-9 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-9 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-9 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-9 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-9 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-9 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-9 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-9 .side {
+  width:0.42692378864668407em;
+}
+/* .button-Plus styles */
+.button-Plus {
+  transform:translate3D(10.5em, -.5em, -3.75em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-Plus .ft {
+  transform:translateZ(1.5em);
+}
+.button-Plus .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-Plus .rt, .button-Plus .lt {
+  width:3em;
+  height:1em;
+}
+.button-Plus .tp, .button-Plus .bm {
+  width:6em;
+  height:3em;
+}
+.button-Plus .face {
+  background-color:#FFFFFF;
+}
+.button-Plus .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-Plus .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-Plus .rt, .button-Plus .lt {
+  width:1.5em;
+}
+.button-Plus .tp, .button-Plus .bm, .button-Plus .tp .photon-shader, .button-Plus .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-Plus .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-Plus .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-Plus .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-Plus .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-Plus .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-Plus .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Plus .side {
+  width:0.42692378864668407em;
+}
+/* .button-6 styles */
+.button-6 {
+  transform:translate3D(3.5em, -0.5em, 0.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-6 .ft {
+  transform:translateZ(1.5em);
+}
+.button-6 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-6 .rt, .button-6 .lt {
+  width:3em;
+  height:1em;
+}
+.button-6 .tp, .button-6 .bm {
+  width:6em;
+  height:3em;
+}
+.button-6 .face {
+  background-color:#FFFFFF;
+}
+.button-6 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-6 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-6 .rt, .button-6 .lt {
+  width:1.5em;
+}
+.button-6 .tp, .button-6 .bm, .button-6 .tp .photon-shader, .button-6 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-6 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-6 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-6 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-6 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-6 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-6 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-6 .side {
+  width:0.42692378864668407em;
+}
+/* .button-3 styles */
+.button-3 {
+  transform:translate3D(3.5em, -0.5em, 4.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-3 .ft {
+  transform:translateZ(1.5em);
+}
+.button-3 .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-3 .rt, .button-3 .lt {
+  width:3em;
+  height:1em;
+}
+.button-3 .tp, .button-3 .bm {
+  width:6em;
+  height:3em;
+}
+.button-3 .face {
+  background-color:#FFFFFF;
+}
+.button-3 .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-3 .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-3 .rt, .button-3 .lt {
+  width:1.5em;
+}
+.button-3 .tp, .button-3 .bm, .button-3 .tp .photon-shader, .button-3 .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-3 .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-3 .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-3 .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-3 .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-3 .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-3 .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-3 .side {
+  width:0.42692378864668407em;
+}
+/* .button-Equals styles */
+.button-Equals {
+  transform:translate3D(3.5em, -0.5em, 8.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-Equals .ft {
+  transform:translateZ(1.5em);
+}
+.button-Equals .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-Equals .rt, .button-Equals .lt {
+  width:3em;
+  height:1em;
+}
+.button-Equals .tp, .button-Equals .bm {
+  width:6em;
+  height:3em;
+}
+.button-Equals .face {
+  background-color:#f1ff92;
+}
+.button-Equals .ft {
+  width:4.5em;
+  margin-left:0.75em;
+}
+.button-Equals .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-Equals .rt, .button-Equals .lt {
+  width:1.5em;
+}
+.button-Equals .tp, .button-Equals .bm, .button-Equals .tp .photon-shader, .button-Equals .bm .photon-shader {
+  border-radius:0.75em;
+}
+.button-Equals .cr {
+  width:0.75em;
+  left:0.375em;
+}
+.button-Equals .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-Equals .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-Equals .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-Equals .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-Equals .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Equals .side {
+  width:0.42692378864668407em;
+}
+/* .button-Minus styles */
+.button-Minus {
+  transform:translate3D(10.5em, -0.5em, 0.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-Minus .ft {
+  transform:translateZ(1.5em);
+}
+.button-Minus .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-Minus .rt, .button-Minus .lt {
+  width:3em;
+  height:1em;
+}
+.button-Minus .tp, .button-Minus .bm {
+  width:6em;
+  height:3em;
+}
+.button-Minus .face {
+  background-color:#FFFFFF;
+}
+.button-Minus .ft {
+  width:4.5em;
+  margin-left:.75em;
+}
+.button-Minus .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-Minus .rt, .button-Minus .lt {
+  width:1.5em;
+}
+.button-Minus .tp, .button-Minus .bm, .button-Minus .tp .photon-shader, .button-Minus .bm .photon-shader {
+  border-radius:.75em;
+}
+.button-Minus .cr {
+  width:.75em;
+  left:0.375em;
+}
+.button-Minus .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-Minus .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-Minus .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-Minus .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-Minus .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Minus .side {
+  width:0.42692378864668407em;
+}
+/* .button-Divide styles */
+.button-Divide {
+  transform:translate3D(10.5em, -0.5em, 8.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-Divide .ft {
+  transform:translateZ(1.5em);
+}
+.button-Divide .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-Divide .rt, .button-Divide .lt {
+  width:3em;
+  height:1em;
+}
+.button-Divide .tp, .button-Divide .bm {
+  width:6em;
+  height:3em;
+}
+.button-Divide .face {
+  background-color:#FFFFFF;
+}
+.button-Divide .ft {
+  width:4.5em;
+  margin-left:0.75em;
+}
+.button-Divide .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-Divide .rt, .button-Divide .lt {
+  width:1.5em;
+}
+.button-Divide .tp, .button-Divide .bm, .button-Divide .tp .photon-shader, .button-Divide .bm .photon-shader {
+  border-radius:0.75em;
+}
+.button-Divide .cr {
+  width:0.75em;
+  left:0.375em;
+}
+.button-Divide .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-Divide .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-Divide .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-Divide .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-Divide .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Divide .side {
+  width:0.42692378864668407em;
+}
+/* .button-Times styles */
+.button-Times {
+  transform:translate3D(10.5em, -0.5em, 4.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:6em;
+  height:1em;
+  margin:-0.5em 0 0 -3em;
+}
+.button-Times .ft {
+  transform:translateZ(1.5em);
+}
+.button-Times .bk {
+  transform:translateZ(-1.5em) rotateY(180deg);
+}
+.button-Times .rt, .button-Times .lt {
+  width:3em;
+  height:1em;
+}
+.button-Times .tp, .button-Times .bm {
+  width:6em;
+  height:3em;
+}
+.button-Times .face {
+  background-color:#FFFFFF;
+}
+.button-Times .ft {
+  width:4.5em;
+  margin-left:0.75em;
+}
+.button-Times .bk {
+  width:4.5em;
+  margin-left:-0.75em;
+}
+.button-Times .rt, .button-Times .lt {
+  width:1.5em;
+}
+.button-Times .tp, .button-Times .bm, .button-Times .tp .photon-shader, .button-Times .bm .photon-shader {
+  border-radius:0.75em;
+}
+.button-Times .cr {
+  width:0.75em;
+  left:0.375em;
+}
+.button-Times .cr-0 {
+  transform: translate3D(4.5em, 0, 0.75em);
+}
+.button-Times .cr-1 {
+  transform: translate3D(4.5em, 0, -0.75em);
+}
+.button-Times .cr-2 {
+  transform: translate3D(0, 0, -0.75em);
+}
+.button-Times .cr-3 {
+  transform: translate3D(0, 0, 0.75em);
+}
+.button-Times .cr-0 .s0 {
+  transform: rotateY(15deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-0 .s1 {
+  transform: rotateY(45deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-0 .s2 {
+  transform: rotateY(75deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-3 .s0 {
+  transform: rotateY(285deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-3 .s1 {
+  transform: rotateY(315deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .cr-3 .s2 {
+  transform: rotateY(345deg) translate3D(-50%, 0, 0.725em);
+}
+.button-Times .side {
+  width:0.42692378864668407em;
+}
+/* .Frame-Rotated styles */
+.Frame-Rotated {
+  transform:translate3D(0em, -1.45em, -8.25em) rotateX(-30deg) rotateY(0deg) rotateZ(0deg);
+  opacity:1;
+  width:31em;
+  height:1em;
+  margin:-0.5em 0 0 -15.5em;
+}
+.Frame-Rotated .ft {
+  transform:translateZ(3em);
+}
+.Frame-Rotated .bk {
+  transform:translateZ(-3em) rotateY(180deg);
+}
+.Frame-Rotated .rt, .Frame-Rotated .lt {
+  width:6em;
+  height:1em;
+}
+.Frame-Rotated .tp, .Frame-Rotated .bm {
+  width:31em;
+  height:6em;
+}
+.Frame-Rotated .face {
+  background-color:#9dd2ea;
+}
+.Frame-Rotated .bk {
+  width:29.5em;
+  margin-left:-0.75em;
+}
+.Frame-Rotated .rt, .Frame-Rotated .lt {
+  width:5.25em;
+}
+.Frame-Rotated .rt {
+  transform: rotateY(-90deg) translateX(-2.25em);
+}
+.Frame-Rotated .lt {
+  transform: rotateY(90deg) translateX(-3em);
+}
+.Frame-Rotated .tp, .Frame-Rotated .tp .photon-shader {
+  border-radius: .75em .75em 0 0;
+}
+.Frame-Rotated .bm, .Frame-Rotated .bm .photon-shader {
+  border-radius: 0 0 .75em .75em;
+}
+.Frame-Rotated .cr {
+  width:.75em;
+  left:0.375em;
+}
+.Frame-Rotated .cr-1 {
+  transform: translate3D(29.5em, 0, -2.25em);
+}
+.Frame-Rotated .cr-2 {
+  transform: translate3D(0, 0, -2.25em);
+}
+.Frame-Rotated .cr-1 .s0 {
+  transform: rotateY(105deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Rotated .cr-1 .s1 {
+  transform: rotateY(135deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Rotated .cr-1 .s2 {
+  transform: rotateY(165deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Rotated .cr-2 .s0 {
+  transform: rotateY(195deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Rotated .cr-2 .s1 {
+  transform: rotateY(225deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Rotated .cr-2 .s2 {
+  transform: rotateY(255deg) translate3D(-50%, 0, 0.725em);
+}
+.Frame-Rotated .side {
+  width:0.42692378864668407em;
+}
+
+body {
+	margin:0px;
+}
+.scene *{
+  transition: all 0.2s ease;
+}
+
+.button-anim:hover .face {
+  background-color:#9c89f6;
+}
+.button-anim:active .face {
+  background-color:#9c89f6;
+}
+.button-C:hover .face {
+  background-color:#f68991;
+}
+.button-C:active .face {
+  background-color:#f68991;
+}
+.button-Equals:hover .face {
+  background-color:#abb850;
+}
+.button-Equals:active .face {
+  background-color:#abb850;
+}
+.button-anim:hover, .button-C:hover, .button-Equals:hover, .button-operation:hover {
+  cursor:pointer;
+}
+
+.button-0:active {
+  transform:translate3D(-10.5em, -0.05em, 8.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.button-1:active {
+  transform:translate3D(-10.5em, -0.05em, 4.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.button-2:active {
+  transform:translate3D(-3.5em, -0.05em, 4.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.button-3:active {
+  transform:translate3D(3.5em, -0.05em, 4.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+} 
+.button-4:active {
+  transform:translate3D(-10.5em, -0.05em, 0.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.button-5:active {
+  transform:translate3D(-3.5em, -0.05em, 0.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.button-6:active {
+  transform:translate3D(3.5em, -0.05em, 0.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+} 
+.button-7:active {
+  transform:translate3D(-10.5em, -0.05em, -3.75em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.button-8:active {
+  transform:translate3D(-3.5em, -0.05em, -3.75em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.button-9:active {
+  transform:translate3D(3.5em, -0.05em, -3.75em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+} 
+.button-Decimal:active {
+  transform:translate3D(-3.5em, -0.05em, 8.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.button-Equals:active {
+  transform:translate3D(3.5em, -0.05em, 8.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+} 
+.button-C:active {
+  transform:translate3D(-10.5em, -1.36em, -7.975em) rotateX(-30deg) rotateY(0deg) rotateZ(0deg);
+} 
+.button-Plus:active {
+  transform:translate3D(10.5em, -0.05em, -3.75em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+} 
+.button-Minus:active {
+  transform:translate3D(10.5em, -0.05em, 0.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+} 
+.button-Times:active {
+  transform:translate3D(10.5em, -0.05em, 4.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+} 
+.button-Divide:active {
+  transform:translate3D(10.5em, -0.05em, 8.25em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+} 
+
+.button-text {
+  margin:0px;
+  text-align:center; 
+  font-family: Arial, Helvetica, sans-serif;
+  top:10px;
+  font-weight:bold;
+  font-size: 26px;
+  height:100%;
+  width:100%;
+  position:absolute;
+}
+.button-anim .button-text {
+  color:rgb(70,70,70);
+}
+.button-anim:hover .button-text, .button-anim:active .button-text{
+  color:rgb(255,255,255);
+}
+.button-C .button-text {
+  color:rgb(200,200,200);
+}
+.button-C:hover .button-text, .button-C:active .button-text {
+  color:rgb(255, 255, 255);
+}
+.button-Equals .button-text {
+  color:rgb(136,142,95);
+}
+.button-Equals:hover .button-text, .button-Equals:active .button-text {
+  color:rgb(255,255,255);
+}
+
+.screen-text {
+  font-family: digital, Helvetica, sans-serif;
+  font-size: 40px;
+  font-weight:100;
+  color:rgb(20,20,20);
+  text-align:right; 
+  height:100%;
+  width:100%;
+  position:absolute;
+  margin:8px 10px 8px 10px;
+  right:0px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow:hidden;
+}
+
+.Screen .tp {
+  background: #C1C8CB; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(#C1C8CB, #909da2); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#C1C8CB, #909da2); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#C1C8CB, #909da2); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#C1C8CB, #909da2); /* Standard syntax */
+}
+.hackerfund-logo {
+    width:21em;
+	margin-left:5em;
+	margin-top:1em;
+	-ms-transform: rotate(180deg); /* IE 9 */
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+	position:absolute;
+	display:block;
+}

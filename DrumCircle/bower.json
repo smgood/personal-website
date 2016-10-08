@@ -1,0 +1,19 @@
+{
+  "name": "DrumCircleWeb",
+  "version": "0.0.0",
+  "homepage": "https://github.com/EECS493-OculusDrumkit/DrumCircleWeb",
+  "authors": [
+    "russelltrupiano <russelltrupiano@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "BigVideo.js": "~1.1.5"
+  }
+}
