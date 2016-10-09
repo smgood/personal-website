@@ -2,7 +2,7 @@
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=windows-1252">
         <title>HIGHBROW</title>
-		<link rel="shortcut icon" type="image/x-icon" href="IMAGES/faviconEYE.ico"/>
+		<link rel="shortcut icon" type="image/x-icon" href="images/faviconEYE.ico"/>
 
 <link href="css/MainStyleSheet.css" rel="stylesheet" type="text/css" /> 
 <script type='text/javascript' src='http://code.jquery.com/jquery-1.4.2.js'></script>  
@@ -186,7 +186,7 @@ document.onmousemove = function(ev) {
     }
 
     #card .front {
-      background: url('IMAGES/art collective frontpage banner.png');
+      background: url('images/art collective frontpage banner.png');
      -webkit-transform: rotateY( 0deg );
          -moz-transform: rotateY( 0deg );
            -o-transform: rotateY( 0deg );
@@ -194,7 +194,7 @@ document.onmousemove = function(ev) {
     }
 
     #card .back {
-      background: url('IMAGES/art collective frontpage banner.png');
+      background: url('images/art collective frontpage banner.png');
       -webkit-transform: rotateY( 180deg );
          -moz-transform: rotateY( 180deg );
            -o-transform: rotateY( 180deg );
@@ -291,11 +291,11 @@ document.onmousemove = function(ev) {
         <section class="container" id="centerbox">
             <div class="flipped" id="card">
             <figure class="front">
-				<img class="centerTEXT" style="width:300px; top:420px;" src="IMAGES/shock the world highbrow w website.png"/>
+				<img class="centerTEXT" style="width:300px; top:420px;" src="images/shock the world highbrow w website.png"/>
 				
 				<div style="position:absolute; width:55px; height:55px; left:564px; top: 412px;">
-				<img  width="100%" style="position:absolute; left:0px;" src="IMAGES/sfce seal.png" alt="" />
-				<img width="100%" style="position:relative; left:1px; top:-3px;" class="spinning-overlay" src="IMAGES/spinning turbine.png" alt="" />
+				<img  width="100%" style="position:absolute; left:0px;" src="images/sfce seal.png" alt="" />
+				<img width="100%" style="position:relative; left:1px; top:-3px;" class="spinning-overlay" src="images/spinning turbine.png" alt="" />
 				</div>
 				
 				<div id="oval">
@@ -327,25 +327,26 @@ document.onmousemove = function(ev) {
 			</div>
 				
 			<div class="centerTEXT" style="top:412px;">
-				<script type="application/javascript">
-				var myCountdown1 = new Countdown({
-												year: 2018,
-												month:1,
-												day:8,
-												width:300, 
-												height:54,  
-												rangeHi:"month",
-												style:"flip",	// <- no comma on last item!
-												numbers		: 	{
-																font 	: "Arial",
-																rounded	: 0.15,				// percentage of size 
-																} // <- no comma on last
-												});
-
+				<script type="application/javascript">								
+					var myCountdown = new Countdown({
+						// I'm cheating here... so I don't have to update this every year!
+						// year : 2042, // <-- This is a better example of what to use.
+						year: (new Date().getFullYear() + 1),
+						month	: 4, 
+						day		: 1,
+						width	: 300, 
+						height	: 50,  
+						rangeHi:"month",
+						style:"flip",	// <- no comma on last item!
+						numbers		: 	{
+							font 	: "Arial",
+							rounded	: 0.15,				// percentage of size 
+						} // <- no comma on last
+					});
 				</script>
 			</div>
-			<img style="position:absolute; z-index:3;" src="IMAGES/art collective frontpage lines behind coleman.png"/>
-			<img style="position:absolute; z-index:5;" src="IMAGES/art collective frontpage coleman.png"/>
+			<img style="position:absolute; z-index:3;" src="images/art collective frontpage lines behind coleman.png"/>
+			<img style="position:absolute; z-index:5;" src="images/art collective frontpage coleman.png"/>
 			<canvas class='canvasEye' width='17' height='17' style="float:left; position:absolute; z-index:3; left:350px; top:154px;"></canvas>
 			<canvas class='canvasEye' width='17' height='17' style="float:left; position:absolute; z-index:3; left:395px; top:151px;"></canvas>
 			<div id="eyelids" style="left: 340px; top:155px; position:absolute; display:none; opacity:1; z-index:4; width:80px; height:15px; background-color:#efbda5"></div>
