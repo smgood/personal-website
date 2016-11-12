@@ -220,13 +220,16 @@
 						}
        				},
 					
-				'afterLoad': function(anchorLink, index)
-				 	{
+				'afterLoad': function(anchorLink, index){
 					scrolling = false;
 					current_page = index;
-       				}
 					
-
+					if (index == 2){
+						page2.mousePortfolio();
+					} else if (index == 3){
+						page2.mouseIcon();
+					}
+       			}	
 			});
 			
 			// Add actions to the arrows
@@ -357,7 +360,7 @@
 			var effectController = {
 				showDots: false,
 				showLines: true,
-				minDistance: 65,
+				minDistance: 60,
 				limitConnections: false,
 				maxConnections: 20,
 				particleCount: 500
@@ -420,7 +423,7 @@
 
 					// add it to the geometry
 					particlesData.push( {
-						velocity: new THREE.Vector3( -.5 + Math.random() * 1, -.5 + Math.random() * 1,  -.5 + Math.random() * 1 ),
+						velocity: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5,  Math.random() - 0.5),
 						numConnections: 0
 					} );
 
@@ -496,14 +499,14 @@
 				var colorpos = 0;
 				var numConnected = 0;
 				
-				if (particleCount < 500)
-					{
+				if (particleCount < 500){
 					particleCount+=10;	
 					particles.drawcalls[ 0 ].count = particleCount;
-					}
+				}
 					
-				for ( var i = 0; i < particleCount; i++ )
+				for ( var i = 0; i < particleCount; i++ ) {
 					particlesData[ i ].numConnections = 0;
+				}
 
 				for ( var i = 0; i < particleCount; i++ ) {
 
@@ -537,7 +540,7 @@
 						
 					else
 						{
-						if (Math.abs(xPos) > rHalf/2)
+						if (Math.abs(xPos) > rHalf/Math.PI)
 							particleData.velocity.x = -xVel;
 								
 						if (Math.abs(yPos) > rHalf)
@@ -568,7 +571,7 @@
 										particleData.velocity.x = dot_product * normal_x + xVel;
 										particleData.velocity.y = dot_product * normal_y + yVel;
 										
-										if (rad_quad > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+										if (rad_quad > (1.1 * collision_rad))
 											{
 											particlePositions[ i * 3] = estimated_width;
 											}	
@@ -596,7 +599,7 @@
 										particleData.velocity.x = dot_product * normal_x + xVel;
 										particleData.velocity.y = dot_product * normal_y + yVel;
 										
-										if (rad_quad > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+										if (rad_quad > (1.1 * collision_rad))
 											{
 											particlePositions[ i * 3] = estimated_width;
 											}	
@@ -620,7 +623,7 @@
 										particleData.velocity.x = dot_product * normal_x + xVel;
 										particleData.velocity.y = dot_product * normal_y + yVel;
 										
-										if (rad_sin > (1.1 * collision_rad) || Math.abs(zPos) > (1.1 * collision_rad))
+										if (rad_sin > (1.1 * collision_rad))
 											{
 											particlePositions[ i * 3] = expected_width;
 											}
@@ -828,6 +831,8 @@
 				
 				document.addEventListener( 'touchstart', touchIcon, false );
 				document.addEventListener( 'touchstart', touchPortfolio, false );
+				document.addEventListener( 'mousemove', mouseIcon, false );
+				document.addEventListener( 'mousemove', mousePortfolio, false );
 
 				renderer.setClearColor( 0x000000, 0 ); // the default
 			}
@@ -1046,11 +1051,9 @@
 			}
 
 			function onDocumentMouseOut( event ) {
-
 				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
 				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
-
 			}
 
 			function onDocumentTouchStart( event ) {
@@ -1090,17 +1093,7 @@
 			var current_link = null;
 			
 			function render() {
-				
-				document.body.style.cursor = "default";
-				
-				if (current_page == 2 && !scrolling) {
-					mousePortfolio();
-				}
-				
-				else if (current_page == 3 && !scrolling) {
-					mouseIcon ();
-				}
-				
+				 				
 				if (current_page == 2)
 					{
 					actualRotation += ( targetRotation - actualRotation ) * 0.05;
@@ -1119,6 +1112,7 @@
 			
 			function noHoverPortfolio()
 				{
+						document.body.style.cursor = "default";
 						if (current_mesh != null)
 							{
 							current_mesh.material.color.set( 0xAAAAAA );
@@ -1129,6 +1123,7 @@
 			
 			function noHoverLinks()
 				{
+						document.body.style.cursor = "default";
 						if (current_link != null)
 							{
 							current_link.rotation.y = 0;	
@@ -1138,33 +1133,35 @@
 							}
 				}
 				
-			function mousePortfolio() {
-				// update the picking ray with the camera and mouse position	
-				raycaster.setFromCamera( mouse, camera );	
-				
-				// calculate objects intersecting the picking ray
-				var intersects = raycaster.intersectObjects( portfolioClass.portfolio_container.children );
-				
-				if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0)
-						{
-						document.body.style.cursor = "pointer";
-						if (intersects[0].object != current_mesh)
+			function mousePortfolio(event) {
+				if (current_page == 2 && !scrolling) {
+					// update the picking ray with the camera and mouse position	
+					raycaster.setFromCamera( mouse, camera );	
+					
+					// calculate objects intersecting the picking ray
+					var intersects = raycaster.intersectObjects( portfolioClass.portfolio_container.children );
+					
+					if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0)
 							{
-							if (current_mesh != null)
+							document.body.style.cursor = "pointer";
+							if (intersects[0].object != current_mesh)
 								{
-								current_mesh.material.color.set( 0xAAAAAA );
-								current_mesh.video.pause();	
+								if (current_mesh != null)
+									{
+									current_mesh.material.color.set( 0xAAAAAA );
+									current_mesh.video.pause();	
+									}
+								
+								current_mesh = intersects[0].object;
+								current_mesh.material.color.set( 0xffffff );
+								current_mesh.video.play();
 								}
-							
-							current_mesh = intersects[0].object;
-							current_mesh.material.color.set( 0xffffff );
-							current_mesh.video.play();
 							}
-						}
-					else
-						{
-						noHoverPortfolio();
-						}
+						else
+							{
+							noHoverPortfolio();
+							}
+				}
 			}
 			
 			function touchPortfolio( event ) {
@@ -1247,49 +1244,52 @@
 				}
 			}
 			
-			function mouseIcon () {
-				// update the picking ray with the camera and mouse position	
-				raycaster.setFromCamera( mouse, camera );	
-				
-				var intersects = raycaster.intersectObjects(linksClass.links_container.children);
-				
-				if (intersects.length > 0)
-						{
-						document.body.style.cursor = "pointer";
-						if (intersects[0].object != current_link && linksClass.showLinks == true)
-										{
-										if (current_link != null)
+			function mouseIcon (event) {
+				if (current_page == 3 && !scrolling) {
+					// update the picking ray with the camera and mouse position	
+					raycaster.setFromCamera( mouse, camera );	
+					
+					var intersects = raycaster.intersectObjects(linksClass.links_container.children);
+					
+					if (intersects.length > 0 && linksClass.showLinks == true)
+							{
+							document.body.style.cursor = "pointer";
+							if (intersects[0].object != current_link)
 											{
-											current_link.rotation.y = 0;	
-											current_link.position.z = 0;
+											if (current_link != null)
+												{
+												current_link.rotation.y = 0;	
+												current_link.position.z = 0;
+												}
+											
+											current_link = intersects[0].object;
+			
+											if (current_link.position.x < 0)	
+												{					
+												current_link.rotation.y = Math.PI * 0.1;	
+												current_link.position.z = 100;	
+												}
+											else
+												{
+												current_link.rotation.y = Math.PI * -0.1;								
+												current_link.position.z = 250;	
+												}
 											}
-										
-										current_link = intersects[0].object;
-		
-										if (current_link.position.x < 0)	
-											{					
-											current_link.rotation.y = Math.PI * 0.1;	
-											current_link.position.z = 100;	
-											}
-										else
-											{
-											current_link.rotation.y = Math.PI * -0.1;								
-											current_link.position.z = 250;	
-											}
-										}
-						}
-				else
-						{
-						noHoverLinks();
-						}		
-				
+							}
+					else
+							{
+							noHoverLinks();
+							}
+				}
 			}
 			
 			return {
 				"init": init,
 				"animate":animate,
 				"noHoverLinks":noHoverLinks,
-				"noHoverPortfolio":noHoverPortfolio
+				"noHoverPortfolio":noHoverPortfolio,
+				"mousePortfolio": mousePortfolio,
+				"mouseIcon": mouseIcon
 			};
 		}	
 </script>

@@ -31,7 +31,7 @@
 		"date": "(Spring 2016)", 
 		"team": "NA",
 		"url": "http://smgoodrich.com/hackerfund_calculator/", 
-		"summary": "This calculator is used at Hacker Fund in a workshop to introduce programming to K-12 students. Students are responsible for coding the functions for the basic operations and then are able to program their own buttons.",
+		"summary": "This calculator is used at Hacker Fund in a workshop to introduce programming to K-12 students. Students are tought how to code the functions controlling the basic operations and then are given to freedom to program their own buttons.",
 		"role": "NA",
 		"skills": "HTML, CSS, Javascript, Tridiv",
 		"image": "calculator.png",
