@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-  <!--      
+  <!--
 
   Now that you're looking at this, do you want to grab a coffee and talk about future opportunities?
   Message me at sean@smgoodrich.com
@@ -11,37 +11,37 @@
 
   Thanks,
   Sean
-    ______     ______     ______     ______ 
+    ______     ______     ______     ______
    /\  ___\   /\  ___\   /\  __ \   /\   \ \
    \ \___  \  \ \  __\   \ \  __ \  \ \ \ \ \
     \/\_____\  \ \_____\  \ \_\ \_\  \ \_\___\
      \/_____/   \/_____/   \/_/\/_/   \/_/___/
-      
+
   -->
 
     <title>Sean Goodrich</title>
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
     <meta charset="utf-8">
-    <meta name="description" content="This is Sean's personal website. He is a Software Engineer based in Los Angeles.">
+    <meta name="description" content="Welcome to my personal website! I am a Software Engineer currently working at Amazon Web Services and living in Seattle.">
 	<meta name="author" content="Sean Goodrich">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="keywords" content="Sean, Goodrich, UM, Michigan, Computer, Science, Los, Angeles, LA">
-            
+
     <script type="text/javascript" src="projectInfo.js"></script>
     <script type="text/javascript" src="portfolio.js"></script>
     <script type="text/javascript" src="links.js"></script>
-            
+
     <link rel="stylesheet" type="text/css" href="css/MainStyleSheet.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
-    
+
     <script src="js/dat.gui.min.js"></script>
     <script src="js/three.min.js"></script>
-            
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
     <script type="text/javascript" src="js/jquery.fullPage.js"></script>
-            
+
     <script src="js/Detector.js"></script>
     <script src="js/tween.min.js"></script>
 
@@ -53,58 +53,58 @@
         <div id = "continue">
         	Scroll &#9661 Down
         </div>
-                
+
         <div id="fullpage">
-        
+
             <div class="section " id="section0">
             </div>
-        
+
             <div class="section" id="section1">
             </div>
-        
+
             <div class="section" id="section2">
                 <img id="signature" src="images/signature_white.png"/>
                 <div id ="bottom">
         		</div>
             </div>
-        
-        </div>   
-        
+
+        </div>
+
         <div id = "instructions">
         	Drag to spin projects. Hover to</br>play. Click for more info.
         </div>
-        
+
     	<div id = "opacity_page" >
 		</div>
-        
+
         <div id = "info_page">
-        
+
             <div id="close">
              	<img id="delete_box" src="images/close_box.png"/>
                 Close
-          	</div> 
-            
+          	</div>
+
             <div id = "gallery">
                 <img id = "photo"/>
             </div>
             <div id = "text">
                 <div id = "project_title"></div>
                     </br>
-               
+
                 <div id = "project_year"></div>
                     </br>
- 				
+
                 <p id = "project_team" class="paragraph">
-                </p> 
-               
+                </p>
+
                 <a id = "project_link" class = "title" target="_blank">Link</a>
-                    
+
                 <p id = "project_summary" class="paragraph">
                 </p>
-                    
+
  				<p id = "project_role" class="paragraph">
                 </p>
-                    
+
  				<p id = "project_skills" class="paragraph">
                 </p>
         	</div>
@@ -118,14 +118,14 @@
 		var explode = false;
 		var stop_logo = true;
 		var current_page;
-		
+
 		var touchScrollHeight;
 		var touchScrolled;
-		
+
 		var portfolio_loaded = false;
 		var loaded_pg2 = false;
 		var loaded_pg3 = false;
-		
+
 		var linksClass;
 		var portfolioClass;
 
@@ -142,46 +142,46 @@
 				navigation: true,
 
 				navigationPosition: 'right',
-	
+
 	        	scrollingSpeed: 1000,
-								
+
 				navigationTooltips: ['Logo', 'Portfolio', 'Connect'],
-				
+
 				 'onLeave': function(index, nextIndex, direction)
 				 	{
 					scrolling = true;
-					if (index == 1)  
-						{  
-						ExplodeFunction(); 
+					if (index == 1)
+						{
+						ExplodeFunction();
 						$("#continue").fadeOut(function()
 							{
 							if (nextIndex == 2)
 									$("#instructions").fadeIn();
 							});
-							
+
 							if (nextIndex == 2)
 								{
 								setTimeout(function(){ portfolioClass.portfolioAppear(250); }, 2000);
 								//actualRotation = targetRotation= = 0;
 								loaded_pg2 = true;
-								} 	
+								}
 							else if (nextIndex == 3)
 								{
 								linksClass.linksAppear(250);
-								loaded_pg3 = true;	
+								loaded_pg3 = true;
 								window.setTimeout(function(){linksClass.showLinks = true;}, 250 * 7);
 								}
 						}
 					else if (index == 2)
 						{
 						page2.noHoverPortfolio();
-							
+
 						$("#instructions").fadeOut(function()
 							{
 							if (nextIndex == 1)
 								$("#continue").fadeIn();
 							});
-								
+
 						if (nextIndex == 3 && loaded_pg3 == false)
 							{
 							loaded_pg3 = true;
@@ -192,7 +192,7 @@
 					else
 						{
 						page2.noHoverLinks();
-						
+
 						if (nextIndex == 1)
 							$("#continue").fadeIn();
 						else if (nextIndex == 2)
@@ -206,7 +206,7 @@
 								}
 							}
 						}
-							
+
 					if (nextIndex == 1)
 						{
 						create_Logo();
@@ -219,19 +219,19 @@
 						portfolio_loaded = true;
 						}
        				},
-					
+
 				'afterLoad': function(anchorLink, index){
 					scrolling = false;
 					current_page = index;
-					
+
 					if (index == 2){
 						page2.mousePortfolio();
 					} else if (index == 3){
 						page2.mouseIcon();
 					}
-       			}	
+       			}
 			});
-			
+
 			// Add actions to the arrows
 			$('#continue').on('click touchstart', function() {
 				$.fn.fullpage.moveSectionDown();
@@ -240,38 +240,38 @@
 			function create_Logo ()	{
 				explode = false;
 				$( "#container" ).empty();
-				
+
 				page1.init();
-						
+
 				if (stop_logo  == true)
 					{
 					stop_logo = false;
 					page1.animate();
 					}
-						
+
 				document.getElementById("container").style.top = "0px";
 				document.getElementById("continue").style.top = "93%";
 				}
-				
-				
+
+
 			function ExplodeFunction () {
 					explode = true;
 					portfolioClass.resetPortfolio();
-					setTimeout(function(){ 
+					setTimeout(function(){
 						if (explode == true)
 							{
-							stop_logo = true; 
+							stop_logo = true;
 							$( "#container" ).empty();
 							}
-					}, 2000);			
+					}, 2000);
 			}
 
-			setInterval(function () 
+			setInterval(function ()
 				{
 				var node = document.getElementById("fullpage");
-				scroll_height = -1 * node.getBoundingClientRect().top; //real offset top			
+				scroll_height = -1 * node.getBoundingClientRect().top; //real offset top
 				}, 20);
-			
+
 			function onDocumentTouchStart( event ) {
 				if ( event.touches.length === 1 ) {
 					event.preventDefault();
@@ -279,7 +279,7 @@
 					touchScrolled = false;
 				}
 			}
-			
+
 			function onDocumentTouchMove( event ) {
 				if ( event.touches.length === 1 && touchScrolled == false && $("#info_page").is(':hidden') ) {
 					event.preventDefault();
@@ -292,14 +292,14 @@
 					}
 				}
 			}
-			
-			document.addEventListener( 'touchstart', onDocumentTouchStart, false );	
+
+			document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 			document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-			
+
 			var doScroll = function (event) {
 				event.preventDefault();
 				event = window.event || event;
-				
+
 				var delta = event.wheelDeltaY;
 				if (Math.abs(delta) < 100 || $("#info_page").is(':visible') )
 					$.fn.fullpage.setMouseWheelScrolling(false);
@@ -308,7 +308,7 @@
 				/*
 				event.preventDefault();
 				event = window.event || event;
-				
+
 				var delta = event.wheelDeltaY;
 				console.log(delta);
 				if (delta > 100 && changePage == false) {
@@ -319,7 +319,7 @@
 					$.fn.fullpage.moveSectionDown();
 					changePage = true;
 				}
-				
+
 				clearTimeout(wheeling);
 				wheeling = setTimeout(function() {
 					console.log('stop wheeling!');
@@ -327,20 +327,20 @@
 					changePage = false;
 				}, 50);
 				*/
-				
+
 			};
-		
+
 			window.addEventListener('mousewheel', doScroll, false);
 			//window.addEventListener('DOMMouseScroll', doScroll, false);
-					
-			
+
+
 		});
 
 </script>
 
 
 <script>
-	var S_Logo = function(){ 
+	var S_Logo = function(){
 
 			var group;
 			var container;
@@ -372,9 +372,9 @@
 			function init() {
 				particlesData = [];
 				particleCount = 10;
-				
+
 				container = document.getElementById("container");
-				
+
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / (window.innerHeight), 1, 10000 );
 				camera.position.z = 1300;
 
@@ -382,7 +382,7 @@
 
 				group = new THREE.Group();
 				scene.add( group );
-				
+
 				var segments = maxParticleCount * maxParticleCount;
 
 				positions = new Float32Array( segments * 3 );
@@ -410,11 +410,11 @@
 					else if (y< -rHalf)
 						{
 						y = y + rHalf/3;
-						x = -15*Math.sqrt(rHalf+y) + (Math.random() * 2 * collision_rad - collision_rad);	
+						x = -15*Math.sqrt(rHalf+y) + (Math.random() * 2 * collision_rad - collision_rad);
 						}
 					else
 						x = (-Math.sin(y * Math.PI / rHalf) * rHalf/2) + (Math.random() * 2 * collision_rad - collision_rad);
-					
+
 					var z = Math.random() * collision_rad - collision_rad/2;
 
 					particlePositions[ i * 3     ] = x;
@@ -441,7 +441,7 @@
 				pointCloud = new THREE.PointCloud( particles, pMaterial );
 				group.add( pointCloud );
 				//pointCloud.visible = false;
-				
+
 				var geometry = new THREE.BufferGeometry();
 
 				geometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3 ) );
@@ -483,27 +483,27 @@
 				camera.aspect = window.innerWidth / (window.innerHeight);
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight);
-				
+
 				$(".section").height(window.innerHeight);
-				
+
 				var transform = 'translate3d(' + 0 + 'px, ' +((1-current_page) * window.innerHeight)+ 'px, 0)';
  				document.getElementById("fullpage").style.MozTransform = transform;
  				document.getElementById("fullpage").style.WebkitTransform = transform;
  				document.getElementById("fullpage").style.OTransform = transform;
- 				document.getElementById("fullpage").style.transform = transform;				
+ 				document.getElementById("fullpage").style.transform = transform;
 			}
-			
+
 			function animate() {
-					
+
 				var vertexpos = 0;
 				var colorpos = 0;
 				var numConnected = 0;
-				
+
 				if (particleCount < 500){
-					particleCount+=10;	
+					particleCount+=10;
 					particles.drawcalls[ 0 ].count = particleCount;
 				}
-					
+
 				for ( var i = 0; i < particleCount; i++ ) {
 					particlesData[ i ].numConnections = 0;
 				}
@@ -516,44 +516,44 @@
 					particlePositions[ i * 3     ] += particleData.velocity.x;
 					particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
 					particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
-				
+
 					xPos = particlePositions[ i * 3];
 					yPos = particlePositions[ i * 3 +1];
 					zPos = particlePositions[ i * 3 +2];
-					
-					xVel = particleData.velocity.x; 
+
+					xVel = particleData.velocity.x;
 					yVel = particleData.velocity.y;
 					zVel = particleData.velocity.z;
-					
+
 					if (explode == true)
 						{
-						particleData.velocity.x *= 1.07; 
+						particleData.velocity.x *= 1.07;
 						particleData.velocity.y *= 1.07;
 						particleData.velocity.z *= 1.07;
-						
+
 						if (scroll_height > window.innerHeight)
 							{
 							document.getElementById("container").style.top = window.innerHeight - scroll_height + "px";
 							document.getElementById("continue").style.top = 1.93 * window.innerHeight - scroll_height + "px" ;
 							}
 						}
-						
+
 					else
 						{
 						if (Math.abs(xPos) > rHalf/Math.PI)
 							particleData.velocity.x = -xVel;
-								
+
 						if (Math.abs(yPos) > rHalf)
 							particleData.velocity.y = -yVel;
-						
+
 						if (Math.abs(zPos) > collision_rad)
 							particleData.velocity.z = -zVel;
-						
-						// boundary conditions for top quadratic part of S 	
+
+						// boundary conditions for top quadratic part of S
 						if (xPos > 0 && yPos > rHalf/2 && yPos < 2*rHalf/3)
 									{
 									particleData.velocity.y = -yVel;
-									}	
+									}
 						else if (xPos > 0 && yPos > 2*rHalf/3)
 									{
 									var estimated_width = 15*Math.sqrt(rHalf-yPos);
@@ -565,23 +565,23 @@
 										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
 										normal_x = 1 / normal_norm;
 										normal_y = normal_vector / normal_norm;
-										
+
 										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
-										
+
 										particleData.velocity.x = dot_product * normal_x + xVel;
 										particleData.velocity.y = dot_product * normal_y + yVel;
-										
+
 										if (rad_quad > (1.1 * collision_rad))
 											{
 											particlePositions[ i * 3] = estimated_width;
-											}	
+											}
 										}
 									}
-							// boundary conditions for bottom quadratic part of S 
+							// boundary conditions for bottom quadratic part of S
 							else if (xPos < 0 && yPos < -rHalf/2 && yPos > -2*rHalf/3)
 									{
 									particleData.velocity.y = -yVel;
-									}		
+									}
 							else if (xPos < 0 && yPos < -2*rHalf/3)
 									{
 									var estimated_width = -15*Math.sqrt(rHalf+yPos);
@@ -593,19 +593,19 @@
 										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
 										normal_x = 1 / normal_norm;
 										normal_y = normal_vector / normal_norm;
-										
+
 										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
-										
+
 										particleData.velocity.x = dot_product * normal_x + xVel;
 										particleData.velocity.y = dot_product * normal_y + yVel;
-										
+
 										if (rad_quad > (1.1 * collision_rad))
 											{
 											particlePositions[ i * 3] = estimated_width;
-											}	
+											}
 										}
-									}		
-							// boundary conditions for middle Sin Wave part of S 			
+									}
+							// boundary conditions for middle Sin Wave part of S
 							else
 									{
 									var expected_width = -Math.sin(yPos * Math.PI / rHalf) * rHalf/2;
@@ -617,17 +617,17 @@
 										normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
 										normal_x = 1 / normal_norm;
 										normal_y = normal_vector / normal_norm;
-										
+
 										dot_product = -2 * (xVel * normal_x + yVel * normal_y);
-										
+
 										particleData.velocity.x = dot_product * normal_x + xVel;
 										particleData.velocity.y = dot_product * normal_y + yVel;
-										
+
 										if (rad_sin > (1.1 * collision_rad))
 											{
 											particlePositions[ i * 3] = expected_width;
 											}
-										}	
+										}
 									}
 						}
 
@@ -684,24 +684,24 @@
 				linesMesh.geometry.attributes.color.needsUpdate = true;
 
 				pointCloud.geometry.attributes.position.needsUpdate = true;
-				
+
 				if (stop_logo == false)
 					{
 					requestAnimationFrame( animate );
 					render();
 					}
 			}
-			
+
 			function render() {
 
 				var time = Date.now() * 0.00015;
-				
+
 				if (time%4 > 0.5 && time%4 < 2.5)
 					flipped = 1;
 				else
 					flipped = -1;
-					
-					
+
+
 				if (time%4 < 1)
 					{
 					group.rotation.y = (1-Math.pow(Math.sin(time%2 * Math.PI/2),2)) * Math.PI;
@@ -723,26 +723,26 @@
 				else
 					{
 					group.rotation.y = Math.PI;
-					group.rotation.x = Math.PI;	
+					group.rotation.x = Math.PI;
 					flipped = -1
 					}
-					
+
 				renderer.render( scene, camera );
 
 			}
-			
+
 			 return {
 				"init": init,
 				"animate":animate
 			 };
-		
+
 		}
 </script>
-      
-      
+
+
 <script>
 
-	var Portfolio = function(){ 
+	var Portfolio = function(){
 
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
@@ -750,23 +750,23 @@
 			var camera, scene, renderer;
 			var mouseX = 0;
 			var mouseY = 0;
-			
+
 			var controls;
 			var objects = [];
-			
+
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
-			
+
 			var raycaster = new THREE.Raycaster();
 			var mouse = new THREE.Vector2();
 			mouse.x = windowHalfX; //preset to big number so raycast doesn't initialize video onload
 			mouse.y = windowHalfY; //preset to big number so raycast doesn't initialize video onload
-			
+
 			var actualRotation = 0;
 			var targetRotation = 0;
 			var targetRotationOnMouseDown = 0;
 			var mouseXOnMouseDown = 0;
-						
+
 			function init() {
 
 				container = document.createElement('div');
@@ -779,12 +779,12 @@
 				camera.position.x = 0;
 
 				scene = new THREE.Scene();
-				
+
 				var light = new THREE.DirectionalLight( 0xffffff );
 				light.position.set(0.2, 0, 1 ).normalize();
 				scene.add( light );
-				
-				var ambient = new THREE.AmbientLight(0x222222); 
+
+				var ambient = new THREE.AmbientLight(0x222222);
 				scene.add( ambient );
 
 				portfolioClass = new lib_3D_portfolio(scene);
@@ -792,43 +792,31 @@
 				for ( var i = 0; i < project_info.length; i++ ) {
 					portfolioClass.createMesh(project_info[i], i);
 				}
-								
+
  				renderer = new THREE.WebGLRenderer( { alpha: true } );
 				renderer.setSize( window.innerWidth, window.innerHeight);
 				container.appendChild( renderer.domElement );
-			
-				linksClass = new lib_3D_links(scene);
-				
-				var linkedIn_geometry = linksClass.createLinkedInShape();
-				linksClass.createIcon(linkedIn_geometry, 0x007bb6, -500, 400 , 1000, "https://www.linkedin.com/in/smgoodrich");		
-	
-				var facebook_geometry = linksClass.createFacebookShape();	
-				linksClass.createIcon(facebook_geometry, 0x3B5998, -500, 0 , 1000, "https://www.facebook.com/sean.m.goodrich");		
-	
-				var google_geometry = linksClass.createGoogleShape();
-				linksClass.createIcon(google_geometry, 0xdd4b39, -500, -400 , 1000, "https://www.google.com/+SeanGoodrichMitchell");		
-	
-				var github_geometry = linksClass.createGithubShape();			
-				linksClass.createIcon(github_geometry, 0xffffff, 175, 400 , 1000, "https://github.com/smgood");		
-	
-				var email_geometry = linksClass.createEmailShape(); 
-				linksClass.createIcon(email_geometry, 0x42A883, 175, 0 , 1000, "mailto:sean@smgoodrich.com");		
-	
-				var resume_geometry = linksClass.createResumeShape();
-				linksClass.createIcon(resume_geometry, 0x759E4C, 175, -400 , 1000, "http://smgoodrich.com/resume/resume_sean_goodrich.pdf");		
 
-				
+				linksClass = new lib_3D_links(scene);
+
+        linksClass.createIcon(linksClass.facebookGeometry(), 0x3B5998, -500, 400 , 1000, "https://www.facebook.com/sean.m.goodrich");
+        linksClass.createIcon(linksClass.linkedInGeometry(), 0x007bb6, 175, 400 , 1000, "https://www.linkedin.com/in/smgoodrich");
+        linksClass.createIcon(linksClass.githubGeometry(), 0xffffff, -500, 0 , 1000, "https://github.com/smgood");
+        linksClass.createIcon(linksClass.spotifyGeometry(), 0x1DB954, 175, 0 , 1000, "https://open.spotify.com/user/smgoodrich");
+        linksClass.createIcon(linksClass.resumeGeometry(), 0xbda27e, -500, -400 , 1000, "./resume/resume_sean_goodrich.pdf");
+        linksClass.createIcon(linksClass.emailGeometry(), 0xff6666, 175, -400 , 1000, "mailto:sean@smgoodrich.com");
+
 				raycaster = new THREE.Raycaster();
 
 				renderer.autoClear = false;
-				
+
 				document.addEventListener( 'mousemove', onMouseMove, false );
 				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-				
+
 				window.addEventListener( 'resize', onWindowResize, false );
-				
+
 				document.addEventListener( 'touchstart', touchIcon, false );
 				document.addEventListener( 'touchstart', touchPortfolio, false );
 				document.addEventListener( 'mousemove', mouseIcon, false );
@@ -836,14 +824,14 @@
 
 				renderer.setClearColor( 0x000000, 0 ); // the default
 			}
-			
-			
+
+
 			var box_clicked = false;
 			var down_clicked;
 			var start_position;
-			
-			// stuff to do with the portfolio info 
-			$( document ).ready(function() {				
+
+			// stuff to do with the portfolio info
+			$( document ).ready(function() {
 				$( 'body' ).click(function(){
 						if (current_link != null)
 							{
@@ -860,9 +848,9 @@
 
 			function onMouseMove( event ) {
 				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;		
+				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 			}
-			
+
 			function onWindowResize() {
 
 				windowHalfX = window.innerWidth / 2;
@@ -872,11 +860,11 @@
 				camera.updateProjectionMatrix();
 
 				renderer.setSize( window.innerWidth, window.innerHeight);
-				
+
 				resizeInfo();
 			}
 
-			//	
+			//
 			function resizeInfo () {
 				var gallery_ratio;
 				if ($(window).height() + 20 > (1/0.85)*$(window).width())
@@ -889,66 +877,66 @@
 					{
 					$("#info_page").css( { width : "85vh" } );
 					var marginLeft = ($(window).width() - 0.85*$(window).height())/2;
-					$("#info_page").css( { marginLeft : marginLeft } );		
+					$("#info_page").css( { marginLeft : marginLeft } );
 					var gallery_ratio = (0.76 /  0.85);
 					}
-				
+
 				var photo = document.getElementById("photo");
 				var photo_ratio = photo.naturalHeight / photo.naturalWidth;
-				
+
 				if (photo_ratio > 1) // if photo height < gallery height then go back to vertical split
 					{
-					gallery_ratio *= 2; 
+					gallery_ratio *= 2;
 					if (photo_ratio > 0.75 * gallery_ratio)
 						{
 						$("#gallery").css( {height : "100%", width : "50%" } );
 						$("#text").css( {height : "100%", width: "50%", top : "0%", left : "50%" } );
-						$("#photo").height("auto").width("95%");	
-					
+						$("#photo").height("auto").width("95%");
+
 						$("#text").css( { marginLeft : "0" } );
 						$("#gallery").css( { marginLeft : "0" } );
 						$("#close").css( { marginLeft : "0" } );
 						}
 					else
-						{	
-						var info_width = ($(window).height() * 0.38) / photo_ratio;	
+						{
+						var info_width = ($(window).height() * 0.38) / photo_ratio;
 						$("#gallery").css( {height : "50%", width : info_width } );
 						$("#text").css( {height : "50%", width: info_width, top : "50%", left : "0%" } );
-						$("#photo").height("100%").width("auto");	
-						
+						$("#photo").height("100%").width("auto");
+
 						var marginLeft = ($("#info_page").width() - info_width) / 2;
 						$("#text").css( { marginLeft : marginLeft  + "px" } );
 						$("#gallery").css( { marginLeft : marginLeft  + "px" } );
-						$("#close").css( { marginLeft : marginLeft + "px" } );	
+						$("#close").css( { marginLeft : marginLeft + "px" } );
 						}
 					}
 				else
 					{
-					gallery_ratio /= 2; 
+					gallery_ratio /= 2;
 					$("#gallery").css( {height : "50%" } );
 					$("#text").css( {height : "50%", top : "50%", left : "0%" } );
-					
+
 					if (gallery_ratio > photo_ratio)
 						{
-						$("#photo").height("auto").width("100%");	
-						$("#text").width("100%");						
-						$("#gallery").width("100%");		
-						
+						$("#photo").height("auto").width("100%");
+						$("#text").width("100%");
+						$("#gallery").width("100%");
+
 						$("#text").css( { marginLeft : "0" } );
 						$("#gallery").css( { marginLeft : "0" } );
 						$("#close").css( { marginLeft : "0" } );
 						}
 					else
 						{
-						$("#photo").height("100%").width("auto");	
+						$("#photo").height("100%").width("auto");
 						var info_width = ($(window).height() * 0.38) / photo_ratio;
-						$("#text").width(info_width);							
-						$("#gallery").width(info_width);	
-						
+						$("#text").width(info_width);
+						$("#gallery").width(info_width);
+
 						var marginLeft = ($("#info_page").width() - info_width) / 2;
 						$("#text").css( { marginLeft : marginLeft  + "px" } );
 						$("#gallery").css( { marginLeft : marginLeft  + "px" } );
-						$("#close").css( { marginLeft : marginLeft + "px" } );						
+						$("#close").css( { marginLeft : marginLeft + "px" } );
 						}
 					}
 			}
@@ -963,7 +951,7 @@
 
 				mouseXOnMouseDown = event.clientX - windowHalfX;
 				targetRotationOnMouseDown = targetRotation;
-				
+
   				if (current_mesh != null)
 					{
 					box_clicked = true;
@@ -994,56 +982,56 @@
 				if (box_clicked == true)
 						{
 						clearInterval(timeout);
-						box_clicked = false;	
+						box_clicked = false;
 						document.removeEventListener( 'mousedown', onDocumentMouseDown, false );
-						
+
 						// 1st number represents number of inputs
-						var current_project = down_clicked.info;		
-						
-						$("#project_title").html(current_project.title);	
-						$("#project_year").html(current_project.date);	
-						
+						var current_project = down_clicked.info;
+
+						$("#project_title").html(current_project.title);
+						$("#project_year").html(current_project.date);
+
 						if (current_project.team == "NA")
-							$("#project_team").html("");	
+							$("#project_team").html("");
 						else
 							{
 							$("#project_team").html(
-								"<font class='title'>Team members: </font>" + 
-								current_project.team);	
+								"<font class='title'>Team members: </font>" +
+								current_project.team);
 							}
-							
+
 						if (current_project.url == "NA")
-							$("#project_link").hide();	
+							$("#project_link").hide();
 						else
 							{
 							$("#project_link").show();
 							$("#project_link").attr("href", current_project.url)
 							}
-						
+
 						$("#project_summary").html(
-								"<font class='title'>Summary: </font>" + 
-								current_project.summary);	
-						
+								"<font class='title'>Summary: </font>" +
+								current_project.summary);
+
 						if (current_project.role == "NA")
-							$("#project_role").html("");	
+							$("#project_role").html("");
 						else
 							{
 							$("#project_role").html(
-								"<font class='title'>Primary Role: </font>" + 
-								current_project.role);	
-							}	
-						
+								"<font class='title'>Primary Role: </font>" +
+								current_project.role);
+							}
+
 						$("#project_skills").html(
-								"<font class='title'>Skills: </font>" + 
-								current_project.skills);		
-						
-						$("#photo").one("load", function() 
+								"<font class='title'>Skills: </font>" +
+								current_project.skills);
+
+						$("#photo").one("load", function()
 							{
 								resizeInfo();
 								$("#opacity_page").fadeIn();
 								$("#info_page").fadeIn();
-							}).attr("src", "images/" + current_project.image); 
-						}	
+							}).attr("src", "images/" + current_project.image);
+						}
 
 				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
@@ -1057,29 +1045,19 @@
 			}
 
 			function onDocumentTouchStart( event ) {
-
 				if ( event.touches.length === 1 ) {
-
 					event.preventDefault();
-
 					mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
 					targetRotationOnMouseDown = targetRotation;
-
 				}
-
 			}
 
 			function onDocumentTouchMove( event ) {
-
 				if ( event.touches.length === 1 ) {
-
 					event.preventDefault();
-
 					mouseX = event.touches[ 0 ].pageX - windowHalfX;
 					targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.008;
-
 				}
-
 			}
 
 		function animate() {
@@ -1088,12 +1066,12 @@
 				TWEEN.update();
 				render();
 			}
-			
-			var current_mesh = null;				
+
+			var current_mesh = null;
 			var current_link = null;
-			
+
 			function render() {
-				 				
+
 				if (current_page == 2)
 					{
 					actualRotation += ( targetRotation - actualRotation ) * 0.05;
@@ -1104,12 +1082,12 @@
 					actualRotation = actualRotation%(2*Math.PI);
 					targetRotation = 0;
 					}
-					
-				
+
+
 				renderer.clear();
-				renderer.render( scene, camera );		
+				renderer.render( scene, camera );
 			}
-			
+
 			function noHoverPortfolio()
 				{
 						document.body.style.cursor = "default";
@@ -1120,27 +1098,27 @@
 							current_mesh = null;
 							}
 				}
-			
+
 			function noHoverLinks()
 				{
 						document.body.style.cursor = "default";
 						if (current_link != null)
 							{
-							current_link.rotation.y = 0;	
+							current_link.rotation.y = 0;
 							current_link.position.z = 0;
-	
+
 							current_link = null;
 							}
 				}
-				
+
 			function mousePortfolio(event) {
 				if (current_page == 2 && !scrolling) {
-					// update the picking ray with the camera and mouse position	
-					raycaster.setFromCamera( mouse, camera );	
-					
+					// update the picking ray with the camera and mouse position
+					raycaster.setFromCamera( mouse, camera );
+
 					// calculate objects intersecting the picking ray
 					var intersects = raycaster.intersectObjects( portfolioClass.portfolio_container.children );
-					
+
 					if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0)
 							{
 							document.body.style.cursor = "pointer";
@@ -1149,9 +1127,9 @@
 								if (current_mesh != null)
 									{
 									current_mesh.material.color.set( 0xAAAAAA );
-									current_mesh.video.pause();	
+									current_mesh.video.pause();
 									}
-								
+
 								current_mesh = intersects[0].object;
 								current_mesh.material.color.set( 0xffffff );
 								current_mesh.video.play();
@@ -1163,17 +1141,17 @@
 							}
 				}
 			}
-			
+
 			function touchPortfolio( event ) {
 				if ( event.touches.length === 1 ) {
 					event.preventDefault();
 					var touchPos = new THREE.Vector2();
 					touchPos.x = ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1;
-					touchPos.y =  - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1;		
-					raycaster.setFromCamera(touchPos, camera );		
-				
+					touchPos.y =  - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1;
+					raycaster.setFromCamera(touchPos, camera );
+
 					var intersects = raycaster.intersectObjects( portfolioClass.portfolio_container.children );
-					
+
 					if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0)
 						{
 						if (intersects[0].object != current_mesh)
@@ -1181,9 +1159,9 @@
 							if (current_mesh != null)
 								{
 								current_mesh.material.color.set( 0xAAAAAA );
-								current_mesh.video.pause();	
+								current_mesh.video.pause();
 								}
-								
+
 							current_mesh = intersects[0].object;
 							current_mesh.material.color.set( 0xffffff );
 							current_mesh.video.play();
@@ -1195,39 +1173,39 @@
 						}
 				}
 			}
-			
+
 			function touchIcon( event ) {
 				if ( event.touches.length === 1 ) {
 					event.preventDefault();
 					var touchPos = new THREE.Vector2();
 					touchPos.x = ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1;
-					touchPos.y =  - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1;		
-					raycaster.setFromCamera(touchPos, camera );	
-				
-					// calculate objects intersecting the picking ray			
+					touchPos.y =  - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1;
+					raycaster.setFromCamera(touchPos, camera );
+
+					// calculate objects intersecting the picking ray
 					var intersects = raycaster.intersectObjects(linksClass.links_container.children);
-					
+
 					if (intersects.length > 0 && linksClass.showLinks == true)
 							{
 							if (intersects[0].object != current_link)
 								{
 								if (current_link != null)
 									{
-									current_link.rotation.y = 0;	
+									current_link.rotation.y = 0;
 									current_link.position.z = 0;
 									}
-											
+
 								current_link = intersects[0].object;
-			
-								if (current_link.position.x < 0)	
-									{					
-									current_link.rotation.y = Math.PI * 0.1;	
-									current_link.position.z = 100;	
+
+								if (current_link.position.x < 0)
+									{
+									current_link.rotation.y = Math.PI * 0.1;
+									current_link.position.z = 100;
 									}
 								else
 									{
-									current_link.rotation.y = Math.PI * -0.1;								
-									current_link.position.z = 250;	
+									current_link.rotation.y = Math.PI * -0.1;
+									current_link.position.z = 250;
 									}
 								}
 							else
@@ -1240,17 +1218,17 @@
 					else
 							{
 							noHoverLinks();
-							}	
+							}
 				}
 			}
-			
+
 			function mouseIcon (event) {
 				if (current_page == 3 && !scrolling) {
-					// update the picking ray with the camera and mouse position	
-					raycaster.setFromCamera( mouse, camera );	
-					
+					// update the picking ray with the camera and mouse position
+					raycaster.setFromCamera( mouse, camera );
+
 					var intersects = raycaster.intersectObjects(linksClass.links_container.children);
-					
+
 					if (intersects.length > 0 && linksClass.showLinks == true)
 							{
 							document.body.style.cursor = "pointer";
@@ -1258,21 +1236,21 @@
 											{
 											if (current_link != null)
 												{
-												current_link.rotation.y = 0;	
+												current_link.rotation.y = 0;
 												current_link.position.z = 0;
 												}
-											
+
 											current_link = intersects[0].object;
-			
-											if (current_link.position.x < 0)	
-												{					
-												current_link.rotation.y = Math.PI * 0.1;	
-												current_link.position.z = 100;	
+
+											if (current_link.position.x < 0)
+												{
+												current_link.rotation.y = Math.PI * 0.1;
+												current_link.position.z = 100;
 												}
 											else
 												{
-												current_link.rotation.y = Math.PI * -0.1;								
-												current_link.position.z = 250;	
+												current_link.rotation.y = Math.PI * -0.1;
+												current_link.position.z = 250;
 												}
 											}
 							}
@@ -1282,7 +1260,7 @@
 							}
 				}
 			}
-			
+
 			return {
 				"init": init,
 				"animate":animate,
@@ -1291,7 +1269,7 @@
 				"mousePortfolio": mousePortfolio,
 				"mouseIcon": mouseIcon
 			};
-		}	
+		}
 </script>
 
 </body>

@@ -1,12 +1,12 @@
 // JavaScript Document
 // create 3D links shapes
 function lib_3D_links (sceneOrigin) {
-	
+
 	this.createIcon = function (geometry, color, x, y, z, url){
 		var transparentBox = createTransparentBox (boxGeometry);
 		transparentBox.link = url;
 		this.links_container.add( transparentBox );
-		
+
 		transparentBox.scale.x = transparentBox.scale.y = 1.5;
 		transparentBox.position.set( x, y, z);
 		transparentBox.rotation.x = Math.PI;
@@ -18,28 +18,28 @@ function lib_3D_links (sceneOrigin) {
 
 		link3d = createLink3D (geometry, color);
 		transparentBox.add( link3d );
-		
+
 		links.push(transparentBox);
 	};
 
 	var createLink3D = function (geometry, color) {
 		var material = new THREE.MeshLambertMaterial({
 			color: color,
-		});	
-		
+		});
+
 		var Link3D = new THREE.Mesh( geometry, material );
 		return Link3D;
 	};
-	
+
 	var createTransparentBox = function (geometry) {
-		var material = new THREE.MeshLambertMaterial( );	
+		var material = new THREE.MeshLambertMaterial( );
 		material.transparent = true;
 		material.opacity = 0;
-		
+
 		var box = new THREE.Mesh( geometry, material );
 		return box;
-	};		
-				
+	};
+
 	var createBoxShape = function (){
 		var Box = new THREE.Shape();
 		Box.moveTo(200.0, 0.0);
@@ -51,14 +51,14 @@ function lib_3D_links (sceneOrigin) {
 		Box.bezierCurveTo(208.8, 216.0, 216.0, 209.0, 216.0, 200.4);
 		Box.lineTo(216.0, 15.6);
 		Box.bezierCurveTo(216.0, 7.0, 208.8, 0.0, 200.0, 0.0);
-		
-		var box_geometry = new THREE.ExtrudeGeometry( Box, extrusionSettings );	
+
+		var box_geometry = new THREE.ExtrudeGeometry( Box, extrusionSettings );
 		return box_geometry;
 	};
-		
-	this.createLinkedInShape = function (){
+
+	this.linkedInGeometry = function (){
 		var ctx_linkedIn = new THREE.Shape();
-				   
+
 		// layer1/Compound Path/Path
 		ctx_linkedIn.moveTo(200.0, 0.0);
 		ctx_linkedIn.lineTo(15.9, 0.0);
@@ -69,16 +69,16 @@ function lib_3D_links (sceneOrigin) {
 		ctx_linkedIn.bezierCurveTo(208.8, 216.0, 216.0, 209.0, 216.0, 200.4);
 		ctx_linkedIn.lineTo(216.0, 15.6);
 		ctx_linkedIn.bezierCurveTo(216.0, 7.0, 208.8, 0.0, 200.0, 0.0);
-				  
+
 		// bottom part of letter i
 		var hole1 = new THREE.Path();
 		hole1.moveTo(64.1, 184.1);
 		hole1.lineTo(32.0, 184.1);
-		hole1.lineTo(32.0, 81.0);	
+		hole1.lineTo(32.0, 81.0);
 		hole1.lineTo(64.1, 81.0);
 		hole1.lineTo(64.1, 184.1);
 		ctx_linkedIn.holes.push( hole1 );
-				  
+
 		// top part of letter i
 		var hole2 = new THREE.Path();
 		hole2.moveTo(48.0, 66.9);
@@ -87,7 +87,7 @@ function lib_3D_links (sceneOrigin) {
 		hole2.bezierCurveTo(58.2, 29.7, 66.6, 38.0, 66.6, 48.3);
 		hole2.bezierCurveTo(66.6, 58.6, 58.3, 66.9, 48.0, 66.9);
 		ctx_linkedIn.holes.push( hole2 );
-				  
+
 		// letter n
 		var hole3 = new THREE.Path();
 		hole3.moveTo(184.0, 184.1);
@@ -106,14 +106,14 @@ function lib_3D_links (sceneOrigin) {
 		hole3.bezierCurveTo(178.0, 78.5, 184.0, 99.8, 184.0, 127.6);
 		hole3.lineTo(184.0, 184.1);
 		ctx_linkedIn.holes.push( hole3 );
-		
+
 		var linkedIn_geometry = new THREE.ExtrudeGeometry( ctx_linkedIn, extrusionSettings );
 		return linkedIn_geometry;
 	};
-	
-	this.createFacebookShape = function (){
+
+	this.facebookGeometry = function (){
 		var ctx_facebook = new THREE.Shape();
-		
+
 		ctx_facebook.moveTo(204.1, 0.0);
 		ctx_facebook.lineTo(11.9, 0.0);
 		ctx_facebook.bezierCurveTo(5.3, 0.0, 0.0, 5.3, 0.0, 11.9);
@@ -139,68 +139,79 @@ function lib_3D_links (sceneOrigin) {
 		ctx_facebook.bezierCurveTo(210.7, 216.0, 216.0, 210.7, 216.0, 204.1);
 		ctx_facebook.lineTo(216.0, 11.9);
 		ctx_facebook.bezierCurveTo(216.0, 5.3, 210.7, 0.0, 204.1, 0.0);
-		
+
 		var facebook_geometry = new THREE.ExtrudeGeometry( ctx_facebook, extrusionSettings );
 		return facebook_geometry;
 	};
-	
-	this.createGoogleShape = function (){
-		var ctx_google = new THREE.Shape();
-		
-		ctx_google.moveTo(204.1, 0.0);
-		ctx_google.lineTo(11.9, 0.0);
-		ctx_google.bezierCurveTo(5.3, 0.0, 0.0, 5.3, 0.0, 11.9);
-		ctx_google.lineTo(0.0, 204.1);
-		ctx_google.bezierCurveTo(0.0, 210.7, 5.3, 216.0, 11.9, 216.0);
-		ctx_google.lineTo(204.1, 216.0);
-		ctx_google.bezierCurveTo(210.7, 216.0, 216.0, 210.7, 216.0, 204.1);
-		ctx_google.lineTo(216.0, 11.9);
-		ctx_google.bezierCurveTo(216.0, 5.3, 210.7, 0.0, 204.1, 0.0);
-		ctx_google.closePath();
-				
-		var ctx_googleG = new THREE.Shape();
-		ctx_googleG.moveTo(76.0, 174.2);
-		ctx_googleG.bezierCurveTo(40.5, 174.2, 11.8, 145.5, 11.8, 110.0);
-		ctx_googleG.bezierCurveTo(11.8, 74.6, 40.5, 45.8, 76.0, 45.8);
-		ctx_googleG.bezierCurveTo(93.3, 45.8, 107.8, 52.2, 118.9, 62.6);
-		ctx_googleG.lineTo(100.8, 80.7);
-		ctx_googleG.lineTo(100.8, 80.6);
-		ctx_googleG.bezierCurveTo(94.1, 74.2, 85.6, 70.9, 76.0, 70.9);
-		ctx_googleG.bezierCurveTo(54.8, 70.9, 37.6, 88.8, 37.6, 110.0);
-		ctx_googleG.bezierCurveTo(37.6, 131.2, 54.8, 149.1, 76.0, 149.1);
-		ctx_googleG.bezierCurveTo(95.2, 149.1, 108.3, 138.1, 111.0, 123.0);
-		ctx_googleG.lineTo(76.0, 123.0);
-		ctx_googleG.lineTo(76.0, 98.0);
-		ctx_googleG.lineTo(136.4, 98.0);
-		ctx_googleG.bezierCurveTo(137.2, 102.3, 137.6, 106.8, 137.6, 111.5);
-		ctx_googleG.bezierCurveTo(137.6, 148.1, 113.1, 174.2, 76.0, 174.2);
-		ctx_googleG.closePath();
-		ctx_google.holes.push( ctx_googleG );
-				
-		var ctx_googlePlus = new THREE.Shape();
-		ctx_googlePlus.moveTo(204.4, 118.0);
-		ctx_googlePlus.lineTo(184.3, 118.0);
-		ctx_googlePlus.lineTo(184.3, 138.1);
-		ctx_googlePlus.lineTo(168.3, 138.1);
-		ctx_googlePlus.lineTo(168.3, 118.0);
-		ctx_googlePlus.lineTo(148.2, 118.0);
-		ctx_googlePlus.lineTo(148.2, 102.0);
-		ctx_googlePlus.lineTo(168.3, 102.0);
-		ctx_googlePlus.lineTo(168.3, 81.9);
-		ctx_googlePlus.lineTo(184.3, 81.9);
-		ctx_googlePlus.lineTo(184.3, 102.0);
-		ctx_googlePlus.lineTo(204.4, 102.0);
-		ctx_googlePlus.lineTo(204.4, 118.0);
-		ctx_googlePlus.closePath();
-		ctx_google.holes.push( ctx_googlePlus );
-		
-		var google_geometry = new THREE.ExtrudeGeometry( ctx_google, extrusionSettings );
-		return google_geometry;
+
+	this.spotifyGeometry = function (){
+		var ctx_Spotify = new THREE.Shape();
+		ctx_Spotify.moveTo(204.1, 0.0);
+		ctx_Spotify.lineTo(11.9, 0.0);
+		ctx_Spotify.bezierCurveTo(5.3, 0.0, 0.0, 5.3, 0.0, 11.9);
+		ctx_Spotify.lineTo(0.0, 204.1);
+		ctx_Spotify.bezierCurveTo(0.0, 210.7, 5.3, 216.0, 11.9, 216.0);
+		ctx_Spotify.lineTo(204.1, 216.0);
+		ctx_Spotify.bezierCurveTo(210.7, 216.0, 216.0, 210.7, 216.0, 204.1);
+		ctx_Spotify.lineTo(216.0, 11.9);
+		ctx_Spotify.bezierCurveTo(216.0, 5.3, 210.7, 0.0, 204.1, 0.0);
+		ctx_Spotify.closePath();
+
+		var ctx_Spotify_Circle = new THREE.Shape();
+		ctx_Spotify_Circle.moveTo(108,200.42);
+		ctx_Spotify_Circle.bezierCurveTo(60.27,200.42,21.58,159,21.58,108);
+		ctx_Spotify_Circle.bezierCurveTo(21.58,57,60.27,15.58,108,15.58);
+		ctx_Spotify_Circle.bezierCurveTo(155.73,15.58,194.42,57,194.42,108);
+		ctx_Spotify_Circle.bezierCurveTo(194.42,159,155.73,200.42,108,200.42);
+		ctx_Spotify_Circle.closePath();
+		ctx_Spotify.holes.push( ctx_Spotify_Circle );
+
+		var ctx_Spotify_A1 = new THREE.Shape();
+		ctx_Spotify_A1.moveTo(145.85,141);
+		ctx_Spotify_A1.bezierCurveTo(123.07,126.11,94.85,122.65,61.91,130.7);
+		ctx_Spotify_A1.absarc(63.47100893338245,136.2548313304636,5.77,-1.8447489952541736,-3.3768893175196,1);
+		ctx_Spotify_A1.absarc(63.167826187616896,136.662406718215,5.39,2.966752717583773,1.3572713973156674,1);
+		ctx_Spotify_A1.bezierCurveTo(94.39,134.58,119.94,137.58,140.23000000000002,150.84);
+		ctx_Spotify_A1.absarc(143.05576670440618,146.48670899981755,5.19,2.1465459543997927,0.4879795241934324,1);
+		ctx_Spotify_A1.absarc(142.4358392024187,145.93391386713014,6,0.5209231140995654,-0.9654744397037816,1);
+		ctx_Spotify_A1.closePath();
+
+		var ctx_Spotify_A2 = new THREE.Shape();
+		ctx_Spotify_A2.moveTo(156,113.81);
+		ctx_Spotify_A2.bezierCurveTo(129.32,96.28,90.3,91.35,58.91,101.53);
+		ctx_Spotify_A2.absarc(61.41230139291299,108.39837591713105,7.31,-1.920172880114071,-3.4374957768476135,1);
+		ctx_Spotify_A2.absarc(60.90629002676113,108.93298976561228,6.68,2.9001811992650213,1.2786789615036163,1);
+		ctx_Spotify_A2.bezierCurveTo(90.31,106.41,125.72,110.83,148.95,126.1);
+		ctx_Spotify_A2.absarc(152.49872643670176,120.66615783469433,6.49,2.1493327736886156,0.49165626637311743,1);
+		ctx_Spotify_A2.absarc(151.72802641303477,119.97443360514747,7.5,0.5244559903777892,-0.9647815026093431,1);
+		ctx_Spotify_A2.closePath();
+
+		var ctx_Spotify_A3 = new THREE.Shape();
+		ctx_Spotify_A3.moveTo(54,70.28);
+		ctx_Spotify_A3.absarc(56.99164927703476,78.51332463851739,8.76,-1.9193219804433563,-3.436568108734618,1);
+		ctx_Spotify_A3.absarc(56.381198666125584,79.16040233428023,8,2.9018530265641376,1.2780318555187025,1);
+		ctx_Spotify_A3.bezierCurveTo(85.28,78.19000000000001,131.23000000000002,79.82000000000001,159.09,97.51);
+		ctx_Spotify_A3.absarc(163.25345088445115,90.92594526657298,7.79,2.134666174778947,0.4780898580608315,1);
+		ctx_Spotify_A3.absarc(162.3138348585289,90.1190241096159,9,0.5096665579623544,-0.9769247394387391,1);
+		ctx_Spotify_A3.bezierCurveTo(135.3,62.29,84.55,60.37,54,70.28);
+		ctx_Spotify_A3.closePath();
+
+		var Spotify_geometry = new THREE.ExtrudeGeometry( ctx_Spotify, extrusionSettings );
+
+		var Spotify_A1_geometry = new THREE.ExtrudeGeometry( ctx_Spotify_A1, extrusionSettings );
+		var Spotify_A2_geometry = new THREE.ExtrudeGeometry( ctx_Spotify_A2, extrusionSettings );
+		var Spotify_A3_geometry = new THREE.ExtrudeGeometry( ctx_Spotify_A3, extrusionSettings );
+
+		Spotify_geometry.merge( Spotify_A1_geometry );
+		Spotify_geometry.merge( Spotify_A2_geometry );
+		Spotify_geometry.merge( Spotify_A3_geometry );
+
+		return Spotify_geometry;
 	};
-	
-	this.createGithubShape = function (){
+
+	this.githubGeometry = function (){
 		var ctx_github = new THREE.Shape();
-		
+
 		ctx_github.moveTo(204.1, 0.0);
 		ctx_github.lineTo(11.9, 0.0);
 		ctx_github.bezierCurveTo(5.3, 0.0, 0.0, 5.3, 0.0, 11.9);
@@ -233,12 +244,12 @@ function lib_3D_links (sceneOrigin) {
 		ctx_github.lineTo(216.0, 11.9);
 		ctx_github.bezierCurveTo(216.0, 5.3, 210.7, 0.0, 204.1, 0.0);
 		ctx_github.closePath();
-		
+
 		var github_geometry = new THREE.ExtrudeGeometry( ctx_github, extrusionSettings );
 		return github_geometry;
 	};
-	
-	this.createEmailShape = function (){
+
+	this.emailGeometry = function (){
 		ctx_email1 = new THREE.Shape();
 		ctx_email1.moveTo(213.1, 211.9);
 		ctx_email1.lineTo(146.0, 118.6);
@@ -249,14 +260,14 @@ function lib_3D_links (sceneOrigin) {
 		ctx_email1.lineTo(204.1, 216.0);
 		ctx_email1.bezierCurveTo(207.7, 216.0, 210.9, 214.4, 213.1, 211.9);
 		ctx_email1.closePath();
-				
+
 		var ctx_email2 = new THREE.Shape();
 		ctx_email2.moveTo(0.0, 65.7);
 		ctx_email2.lineTo(0.0, 183.7);
 		ctx_email2.lineTo(54.8, 107.4);
 		ctx_email2.lineTo(0.0, 65.7);
 		ctx_email2.closePath();
-				  
+
 		var ctx_email3 = new THREE.Shape();
 		ctx_email3.moveTo(204.1, 0.0);
 		ctx_email3.lineTo(11.9, 0.0);
@@ -267,28 +278,28 @@ function lib_3D_links (sceneOrigin) {
 		ctx_email3.lineTo(216.0, 11.9);
 		ctx_email3.bezierCurveTo(216.0, 5.3, 210.7, 0.0, 204.1, 0.0);
 		ctx_email3.closePath();
-				  
+
 		var ctx_email4 = new THREE.Shape();
 		ctx_email4.moveTo(216.0, 183.7);
 		ctx_email4.lineTo(216.0, 65.7);
 		ctx_email4.lineTo(161.2, 107.4);
 		ctx_email4.lineTo(216.0, 183.7);
 		ctx_email4.closePath();
-		
+
 		var geometry_email1 = new THREE.ExtrudeGeometry( ctx_email1, extrusionSettings );
 		var geometry_email2 = new THREE.ExtrudeGeometry( ctx_email2, extrusionSettings );
 		var geometry_email3 = new THREE.ExtrudeGeometry( ctx_email3, extrusionSettings );
 		var geometry_email4 = new THREE.ExtrudeGeometry( ctx_email4, extrusionSettings );
-			
-		geometry_email1.merge( geometry_email2 ); 
-		geometry_email1.merge( geometry_email3 ); 
+
+		geometry_email1.merge( geometry_email2 );
+		geometry_email1.merge( geometry_email3 );
 		geometry_email1.merge( geometry_email4 );
-		
+
 		return geometry_email1;
 	};
-	
-	this.createResumeShape = function (){
-		var ctx_resume = new THREE.Shape();	
+
+	this.resumeGeometry = function (){
+		var ctx_resume = new THREE.Shape();
 		ctx_resume.moveTo(204.1, 0.0);
 		ctx_resume.lineTo(11.9, 0.0);
 		ctx_resume.bezierCurveTo(5.3, 0.0, 0.0, 5.3, 0.0, 11.9);
@@ -311,7 +322,7 @@ function lib_3D_links (sceneOrigin) {
 		ctx_resume.lineTo(216.0, 11.9);
 		ctx_resume.bezierCurveTo(216.0, 5.3, 210.7, 0.0, 204.1, 0.0);
 		ctx_resume.closePath();
-			
+
 		var resumeLine1 = new THREE.Shape();
 		resumeLine1.moveTo(153.1, 190.8);
 		resumeLine1.lineTo(63.8, 190.8);
@@ -320,7 +331,7 @@ function lib_3D_links (sceneOrigin) {
 		resumeLine1.lineTo(153.1, 190.8);
 		resumeLine1.closePath();
 		ctx_resume.holes.push( resumeLine1 );
-				  
+
 		var resumeLine2 = new THREE.Shape();
 		resumeLine2.moveTo(153.1, 152.2);
 		resumeLine2.lineTo(63.8, 152.2);
@@ -329,7 +340,7 @@ function lib_3D_links (sceneOrigin) {
 		resumeLine2.lineTo(153.1, 152.2);
 		resumeLine2.closePath();
 		ctx_resume.holes.push( resumeLine2 );
-				  
+
 		var resumeLine3 = new THREE.Shape();
 		resumeLine3.moveTo(153.1, 114.7);
 		resumeLine3.lineTo(63.8, 114.7);
@@ -338,7 +349,7 @@ function lib_3D_links (sceneOrigin) {
 		resumeLine3.lineTo(153.1, 114.7);
 		resumeLine3.closePath();
 		ctx_resume.holes.push( resumeLine3 );
-			
+
 		var resumeClipboard = new THREE.Shape();
 		resumeClipboard.moveTo(160.4, 65.3);
 		resumeClipboard.bezierCurveTo(160.4, 67.8, 158.3, 69.8, 155.9, 69.8);
@@ -356,8 +367,8 @@ function lib_3D_links (sceneOrigin) {
 		resumeClipboard.lineTo(160.4, 65.3);
 		resumeClipboard.closePath();
 		ctx_resume.holes.push( resumeClipboard );
-				  
-		var ctx_resume_circle = new THREE.Shape();	
+
+		var ctx_resume_circle = new THREE.Shape();
 		ctx_resume_circle.moveTo(99.9, 41.7);
 		ctx_resume_circle.bezierCurveTo(99.9, 41.8, 99.9, 41.8, 100.0, 41.8);
 		ctx_resume_circle.bezierCurveTo(100.1, 42.0, 100.3, 42.2, 100.5, 42.4);
@@ -400,14 +411,14 @@ function lib_3D_links (sceneOrigin) {
 		ctx_resume_circle.bezierCurveTo(96.8, 34.5, 96.8, 35.0, 96.9, 35.5);
 		ctx_resume_circle.bezierCurveTo(97.2, 37.9, 98.3, 40.1, 99.9, 41.7);
 		ctx_resume_circle.closePath();
-		
+
 		var resume_geometry = new THREE.ExtrudeGeometry( ctx_resume, extrusionSettings );
 		var circle_geometry = new THREE.ExtrudeGeometry( ctx_resume_circle, extrusionSettings );
-		resume_geometry.merge( circle_geometry ); 
-		return resume_geometry;	
+		resume_geometry.merge( circle_geometry );
+		return resume_geometry;
 	};
 
-	this.linksAppear = function (duration) {		
+	this.linksAppear = function (duration) {
 		for (var i = 0; i < links.length; i++)
 		{
 			var object = links[i];
@@ -416,15 +427,15 @@ function lib_3D_links (sceneOrigin) {
 				.easing(TWEEN.Easing.Cubic.Out)
 				.delay(duration * 3)
 				.start();
-						
+
 			new TWEEN.Tween( object.rotation )
 				.to( { x: Math.PI, y: 0, z: 0 }, duration*4)
 				.easing(TWEEN.Easing.Cubic.Out)
 				.delay(duration * 3)
 				.start();
-		}	
+		}
 	};
-			
+
 	var scene = sceneOrigin;
 	var extrusionSettings = {
 		amount: 125,
@@ -439,7 +450,7 @@ function lib_3D_links (sceneOrigin) {
 	var links = [];
 	this.showLinks = false;
 	this.links_container = new THREE.Group();
-	
+
 	this.links_container.position.x = 0;
 	this.links_container.position.y = -800;
 	this.links_container.position.z = 0;
