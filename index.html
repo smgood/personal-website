@@ -23,7 +23,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
     <meta charset="utf-8">
     <meta name="description" content="Welcome to my personal website! I am a Software Engineer currently working at Amazon Web Services and living in Seattle.">
-	<meta name="author" content="Sean Goodrich">
+    <meta name="author" content="Sean Goodrich">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="keywords" content="Sean, Goodrich, UM, Michigan, Computer, Science, Los, Angeles, LA">
 
@@ -34,16 +34,14 @@
     <link rel="stylesheet" type="text/css" href="css/MainStyleSheet.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
 
-    <script src="js/dat.gui.min.js"></script>
     <script src="js/three.min.js"></script>
+    <script src="js/Detector.js"></script>
+    <script src="js/tween.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
     <script type="text/javascript" src="js/jquery.fullPage.js"></script>
-
-    <script src="js/Detector.js"></script>
-    <script src="js/tween.min.js"></script>
 
 </head>
 <body>
@@ -338,9 +336,8 @@
 
 </script>
 
-
 <script>
-	var S_Logo = function(){
+    var S_Logo = function(){
 
 			var group;
 			var container;
@@ -349,25 +346,15 @@
 			var positions,colors;
 			var pointCloud;
 			var particlePositions;
-			var linesMesh;
+            var linesMesh;
+            var particleCount;
 
 			var maxParticleCount = 500;
-			var particleCount = 500;
 			var sHeight = 800;
 			var rHalf = sHeight / 2;
 			var collision_rad = 100;
-
-			var effectController = {
-				showDots: false,
-				showLines: true,
-				minDistance: 60,
-				limitConnections: false,
-				maxConnections: 20,
-				particleCount: 500
-			}
-
+			var minDistance = 60;
 			var flipped = 1;
-
 
 			function init() {
 				particlesData = [];
@@ -440,7 +427,6 @@
 				// create the particle system
 				pointCloud = new THREE.PointCloud( particles, pMaterial );
 				group.add( pointCloud );
-				//pointCloud.visible = false;
 
 				var geometry = new THREE.BufferGeometry();
 
@@ -484,13 +470,7 @@
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight);
 
-				$(".section").height(window.innerHeight);
-
-				var transform = 'translate3d(' + 0 + 'px, ' +((1-current_page) * window.innerHeight)+ 'px, 0)';
- 				document.getElementById("fullpage").style.MozTransform = transform;
- 				document.getElementById("fullpage").style.WebkitTransform = transform;
- 				document.getElementById("fullpage").style.OTransform = transform;
- 				document.getElementById("fullpage").style.transform = transform;
+                $.fn.fullpage.reBuild();
 			}
 
 			function animate() {
@@ -499,7 +479,7 @@
 				var colorpos = 0;
 				var numConnected = 0;
 
-				if (particleCount < 500){
+				if (particleCount < maxParticleCount){
 					particleCount+=10;
 					particles.drawcalls[ 0 ].count = particleCount;
 				}
@@ -631,27 +611,22 @@
 									}
 						}
 
-					if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
-						continue;
-
 					// Check collision
 					for ( var j = i + 1; j < particleCount; j++ ) {
 
 						var particleDataB = particlesData[ j ];
-						if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
-							continue;
 
 						var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
 						var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
 						var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
 						var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
 
-						if ( dist < effectController.minDistance ) {
+						if ( dist < minDistance ) {
 
 							particleData.numConnections++;
 							particleDataB.numConnections++;
 
-							var alpha = 1.0 - dist / effectController.minDistance;
+							var alpha = 1.0 - dist / minDistance;
 
 							positions[ vertexpos++ ] = particlePositions[ i * 3     ];
 							positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
@@ -799,12 +774,12 @@
 
 				linksClass = new lib_3D_links(scene);
 
-        linksClass.createIcon(linksClass.facebookGeometry(), 0x3B5998, -500, 400 , 1000, "https://www.facebook.com/sean.m.goodrich");
-        linksClass.createIcon(linksClass.linkedInGeometry(), 0x007bb6, 175, 400 , 1000, "https://www.linkedin.com/in/smgoodrich");
-        linksClass.createIcon(linksClass.githubGeometry(), 0xffffff, -500, 0 , 1000, "https://github.com/smgood");
-        linksClass.createIcon(linksClass.spotifyGeometry(), 0x1DB954, 175, 0 , 1000, "https://open.spotify.com/user/smgoodrich");
-        linksClass.createIcon(linksClass.resumeGeometry(), 0xbda27e, -500, -400 , 1000, "./resume/resume_sean_goodrich.pdf");
-        linksClass.createIcon(linksClass.emailGeometry(), 0xff6666, 175, -400 , 1000, "mailto:sean@smgoodrich.com");
+                linksClass.createIcon(linksClass.facebookGeometry(), 0x3B5998, -500, 400 , 1000, "https://www.facebook.com/sean.m.goodrich");
+                linksClass.createIcon(linksClass.linkedInGeometry(), 0x007bb6, 175, 400 , 1000, "https://www.linkedin.com/in/smgoodrich");
+                linksClass.createIcon(linksClass.githubGeometry(), 0xffffff, -500, 0 , 1000, "https://github.com/smgood");
+                linksClass.createIcon(linksClass.spotifyGeometry(), 0x1DB954, 175, 0 , 1000, "https://open.spotify.com/user/smgoodrich");
+                linksClass.createIcon(linksClass.resumeGeometry(), 0xbda27e, -500, -400 , 1000, "./resume/resume_sean_goodrich.pdf");
+                linksClass.createIcon(linksClass.emailGeometry(), 0xff6666, 175, -400 , 1000, "mailto:sean@smgoodrich.com");
 
 				raycaster = new THREE.Raycaster();
 
@@ -852,19 +827,17 @@
 			}
 
 			function onWindowResize() {
-
-				windowHalfX = window.innerWidth / 2;
-				windowHalfY = window.innerHeight / 2;
-
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
-
 				renderer.setSize( window.innerWidth, window.innerHeight);
 
-				resizeInfo();
+                $.fn.fullpage.reBuild();
+
+                windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+                resizeInfo();
 			}
 
-			//
 			function resizeInfo () {
 				var gallery_ratio;
 				if ($(window).height() + 20 > (1/0.85)*$(window).width())
