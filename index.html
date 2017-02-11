@@ -28,7 +28,8 @@
     <meta name="keywords" content="Sean, Goodrich, UM, Michigan, Computer, Science, Los, Angeles, LA">
 
     <script type="text/javascript" src="projectInfo.js"></script>
-    <script type="text/javascript" src="portfolio.js"></script>
+    <script type="text/javascript" src="portfolioVideo.js"></script>
+    <script type="text/javascript" src="portfolioPopover.js"></script>
     <script type="text/javascript" src="links.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/MainStyleSheet.css" />
@@ -85,27 +86,8 @@
             <div id = "gallery">
                 <img id = "photo"/>
             </div>
-            <div id = "text">
-                <div id = "project_title"></div>
-                    </br>
 
-                <div id = "project_year"></div>
-                    </br>
-
-                <p id = "project_team" class="paragraph">
-                </p>
-
-                <a id = "project_link" class = "title" target="_blank">Link</a>
-
-                <p id = "project_summary" class="paragraph">
-                </p>
-
- 				<p id = "project_role" class="paragraph">
-                </p>
-
- 				<p id = "project_skills" class="paragraph">
-                </p>
-        	</div>
+            <div id = "text"></div>
         </div>
 
 
@@ -375,13 +357,13 @@
 				positions = new Float32Array( segments * 3 );
 				colors = new Float32Array( segments * 3 );
 
-				var pMaterial = new THREE.PointCloudMaterial( {
+				var pMaterial = new THREE.PointCloudMaterial({
 					color: 0xFFFFFF,
-					size: 3,
+					size: window.innerHeight / 200,
 					blending: THREE.AdditiveBlending,
 					transparent: true,
 					sizeAttenuation: false
-				} );
+				});
 
 				particles = new THREE.BufferGeometry();
 				particlePositions = new Float32Array( maxParticleCount * 3 );
@@ -450,8 +432,6 @@
 				linesMesh = new THREE.Line( geometry, material, THREE.LinePieces );
 				group.add( linesMesh );
 
-				//
-
 				renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
 				renderer.setClearColor( 0xffffff, 0 ); // the default
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -469,6 +449,8 @@
 				camera.aspect = window.innerWidth / (window.innerHeight);
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight);
+
+                pointCloud.material.size = window.innerHeight / 200;
 
                 $.fn.fullpage.reBuild();
 			}
@@ -712,10 +694,6 @@
 			 };
 
 		}
-</script>
-
-
-<script>
 
 	var Portfolio = function(){
 
@@ -961,42 +939,8 @@
 						// 1st number represents number of inputs
 						var current_project = down_clicked.info;
 
-						$("#project_title").html(current_project.title);
-						$("#project_year").html(current_project.date);
-
-						if (current_project.team == "NA")
-							$("#project_team").html("");
-						else
-							{
-							$("#project_team").html(
-								"<font class='title'>Team members: </font>" +
-								current_project.team);
-							}
-
-						if (current_project.url == "NA")
-							$("#project_link").hide();
-						else
-							{
-							$("#project_link").show();
-							$("#project_link").attr("href", current_project.url)
-							}
-
-						$("#project_summary").html(
-								"<font class='title'>Summary: </font>" +
-								current_project.summary);
-
-						if (current_project.role == "NA")
-							$("#project_role").html("");
-						else
-							{
-							$("#project_role").html(
-								"<font class='title'>Primary Role: </font>" +
-								current_project.role);
-							}
-
-						$("#project_skills").html(
-								"<font class='title'>Skills: </font>" +
-								current_project.skills);
+                        portfolioPopover = new lib_portfolio_popover();
+                        portfolioPopover.createDescription(current_project);
 
 						$("#photo").one("load", function()
 							{
