@@ -115,9 +115,9 @@ var project_info = [
 	"date": "(Winter 2015)",
 	"team": "Nathan Riley, Xiaoshi Wang",
 	"url": "NA",
-	"summary": "MarketU is a cross platform app to serve as a marketplace tailored to the needs of Michigan students. It guarantees security to its customers by requiring all transactions take place between users who have provided authenticated University of Michigan addresses.",
-	"role": "Develop MySQL database and PHP processes and create assets",
-	"skills": "iOS, PHP, MySQL, AWS, Graphic Design",
+	"summary": "MarketU is a cross platform app to serve as a marketplace tailored to the needs of Michigan students. It guarantees security to customers by requiring all transactions take place between users who have provided authenticated University of Michigan addresses.",
+	"role": "Develop MySQL database, PHP processes and assets",
+	"skills": "PHP, MySQL, AWS, Graphic Design",
 	"image": "marketU.png",
 	"video": "MarketU.mp4"
 	},

@@ -49,7 +49,7 @@
 
 		<div id ="container"></div>
 
-        <div id = "continue">
+        <div id = "continue" class="footer">
         	Scroll &#9661 Down
         </div>
 
@@ -69,27 +69,9 @@
 
         </div>
 
-        <div id = "instructions">
-        	Drag to spin projects. Hover to</br>play. Click for more info.
+        <div id = "instructions" class="footer">
+        	Drag to spin projects. Hover to play. Click for more info.
         </div>
-
-    	<div id = "opacity_page" >
-		</div>
-
-        <div id = "info_page">
-
-            <div id="close">
-             	<img id="delete_box" src="images/close_box.png"/>
-                Close
-          	</div>
-
-            <div id = "gallery">
-                <img id = "photo"/>
-            </div>
-
-            <div id = "text"></div>
-        </div>
-
 
 <script type="text/javascript">
 
@@ -106,8 +88,9 @@
 		var loaded_pg2 = false;
 		var loaded_pg3 = false;
 
-		var linksClass;
 		var portfolioClass;
+        var portfolioPopover;
+        var linksClass;
 
 		$(document).ready(function() {
 			page1 = new S_Logo();
@@ -230,7 +213,7 @@
 					}
 
 				document.getElementById("container").style.top = "0px";
-				document.getElementById("continue").style.top = "93%";
+				document.getElementById("continue").style.bottom = "2%";
 				}
 
 
@@ -496,7 +479,7 @@
 						if (scroll_height > window.innerHeight)
 							{
 							document.getElementById("container").style.top = window.innerHeight - scroll_height + "px";
-							document.getElementById("continue").style.top = 1.93 * window.innerHeight - scroll_height + "px" ;
+							document.getElementById("continue").style.bottom = -0.98 * window.innerHeight + scroll_height + "px" ;
 							}
 						}
 
@@ -722,6 +705,12 @@
 
 			function init() {
 
+                scene = new THREE.Scene();
+
+                portfolioClass = new lib_3D_portfolio(scene);
+                portfolioPopover = new lib_portfolio_popover();
+                linksClass = new lib_3D_links(scene);
+
 				container = document.createElement('div');
 				container.id = "container2";
 				document.body.appendChild( container );
@@ -731,16 +720,12 @@
 				camera.position.y = 2050*(1.5 - scroll_height/window.innerHeight);
 				camera.position.x = 0;
 
-				scene = new THREE.Scene();
-
 				var light = new THREE.DirectionalLight( 0xffffff );
 				light.position.set(0.2, 0, 1 ).normalize();
 				scene.add( light );
 
 				var ambient = new THREE.AmbientLight(0x222222);
 				scene.add( ambient );
-
-				portfolioClass = new lib_3D_portfolio(scene);
 
 				for ( var i = 0; i < project_info.length; i++ ) {
 					portfolioClass.createMesh(project_info[i], i);
@@ -749,8 +734,6 @@
  				renderer = new THREE.WebGLRenderer( { alpha: true } );
 				renderer.setSize( window.innerWidth, window.innerHeight);
 				container.appendChild( renderer.domElement );
-
-				linksClass = new lib_3D_links(scene);
 
                 linksClass.createIcon(linksClass.facebookGeometry(), 0x3B5998, -500, 400 , 1000, "https://www.facebook.com/sean.m.goodrich");
                 linksClass.createIcon(linksClass.linkedInGeometry(), 0x007bb6, 175, 400 , 1000, "https://www.linkedin.com/in/smgoodrich");
@@ -813,83 +796,7 @@
 
                 windowHalfX = window.innerWidth / 2;
 				windowHalfY = window.innerHeight / 2;
-                resizeInfo();
-			}
-
-			function resizeInfo () {
-				var gallery_ratio;
-				if ($(window).height() + 20 > (1/0.85)*$(window).width())
-					{
-					$("#info_page").css( { width : $(window).width() - 20 } );
-					$("#info_page").css( { marginLeft : "10px" } );
-					var gallery_ratio = ($(window).height() * 0.76) / ($(window).width() - 20);
-					}
-				else
-					{
-					$("#info_page").css( { width : "85vh" } );
-					var marginLeft = ($(window).width() - 0.85*$(window).height())/2;
-					$("#info_page").css( { marginLeft : marginLeft } );
-					var gallery_ratio = (0.76 /  0.85);
-					}
-
-				var photo = document.getElementById("photo");
-				var photo_ratio = photo.naturalHeight / photo.naturalWidth;
-
-				if (photo_ratio > 1) // if photo height < gallery height then go back to vertical split
-					{
-					gallery_ratio *= 2;
-					if (photo_ratio > 0.75 * gallery_ratio)
-						{
-						$("#gallery").css( {height : "100%", width : "50%" } );
-						$("#text").css( {height : "100%", width: "50%", top : "0%", left : "50%" } );
-						$("#photo").height("auto").width("95%");
-
-						$("#text").css( { marginLeft : "0" } );
-						$("#gallery").css( { marginLeft : "0" } );
-						$("#close").css( { marginLeft : "0" } );
-						}
-					else
-						{
-						var info_width = ($(window).height() * 0.38) / photo_ratio;
-						$("#gallery").css( {height : "50%", width : info_width } );
-						$("#text").css( {height : "50%", width: info_width, top : "50%", left : "0%" } );
-						$("#photo").height("100%").width("auto");
-
-						var marginLeft = ($("#info_page").width() - info_width) / 2;
-						$("#text").css( { marginLeft : marginLeft  + "px" } );
-						$("#gallery").css( { marginLeft : marginLeft  + "px" } );
-						$("#close").css( { marginLeft : marginLeft + "px" } );
-						}
-					}
-				else
-					{
-					gallery_ratio /= 2;
-					$("#gallery").css( {height : "50%" } );
-					$("#text").css( {height : "50%", top : "50%", left : "0%" } );
-
-					if (gallery_ratio > photo_ratio)
-						{
-						$("#photo").height("auto").width("100%");
-						$("#text").width("100%");
-						$("#gallery").width("100%");
-
-						$("#text").css( { marginLeft : "0" } );
-						$("#gallery").css( { marginLeft : "0" } );
-						$("#close").css( { marginLeft : "0" } );
-						}
-					else
-						{
-						$("#photo").height("100%").width("auto");
-						var info_width = ($(window).height() * 0.38) / photo_ratio;
-						$("#text").width(info_width);
-						$("#gallery").width(info_width);
-
-						var marginLeft = ($("#info_page").width() - info_width) / 2;
-						$("#text").css( { marginLeft : marginLeft  + "px" } );
-						$("#gallery").css( { marginLeft : marginLeft  + "px" } );
-						$("#close").css( { marginLeft : marginLeft + "px" } );
-						}
-					}
+                portfolioPopover.resize();
 			}
 
 			function onDocumentMouseDown( event ) {
@@ -939,12 +846,11 @@
 						// 1st number represents number of inputs
 						var current_project = down_clicked.info;
 
-                        portfolioPopover = new lib_portfolio_popover();
-                        portfolioPopover.createDescription(current_project);
+                        portfolioPopover.projectDescription(current_project);
 
 						$("#photo").one("load", function()
 							{
-								resizeInfo();
+								portfolioPopover.resize();
 								$("#opacity_page").fadeIn();
 								$("#info_page").fadeIn();
 							}).attr("src", "images/" + current_project.image);
