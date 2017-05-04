@@ -15,10 +15,22 @@ var project_info = [
 	},
 
 	{
+	"title": "Milk Face",
+	"date": "(Sprint 2017 - Present)",
+	"team": "Kyle Goodrich",
+	"url": "http://www.milkface.store",
+	"summary": "A website to promote 3D printed vinyl toys.",
+	"role": "Web Developer",
+	"skills": "Javascript, Three.js",
+	"image": "milkFace.png",
+	"video": "milkFace.mp4"
+	},
+
+	{
 	"title": "Text 2 Scene",
 	"date": "(Spring 2016)",
 	"team": "Eric Wang",
-	"url": "54.149.167.114",
+	"url": "NA",
 	"summary": "Using a syntax net, this project allows people to enter instructions that are reproduced on a Unity 3d Scene. The project is intended to inspire and introduce kids to game design that may not have coding experience.",
 	"role": "NA",
 	"skills": "Unity, Parsey McParceface, Amazon EC2",
@@ -159,18 +171,6 @@ var project_info = [
 	},
 
 	{
-	"title": "Command Game",
-	"date": "(Winter 2014)",
-	"team": "NA",
-	"url": "http://www.smgoodrich.com/javascript_games/theGame.html",
-	"summary": "Experimental mobile game that requires user to rotate phone as directed. Inspiration from childrens games such as Bop It and Brain Warp. Play on smart phone.",
-	"role": "NA",
-	"skills": "Mobile Web, Javascript, Accelerameter",
-	"image": "command.png",
-	"video": "CommndGame.mp4"
-	},
-
-	{
 	"title": "Mobile Game",
 	"date": "(Winter 2014)",
 	"team": "NA",
@@ -193,6 +193,7 @@ var project_info = [
 	"image": "coalman.png",
 	"video": "Coalman.mp4"
 	}
+];
 
 /*
 	{
@@ -205,6 +206,18 @@ var project_info = [
 	"skills": "WebGL",
 	"image": "personal3D.png",
 	"video": "3dwebsite.mp4"
+	},
+
+	{
+	"title": "Command Game",
+	"date": "(Winter 2014)",
+	"team": "NA",
+	"url": "http://www.smgoodrich.com/javascript_games/theGame.html",
+	"summary": "Experimental mobile game that requires user to rotate phone as directed. Inspiration from childrens games such as Bop It and Brain Warp. Play on smart phone.",
+	"role": "NA",
+	"skills": "Mobile Web, Javascript, Accelerameter",
+	"image": "command.png",
+	"video": "CommndGame.mp4"
 	},
 
 	{
@@ -243,5 +256,3 @@ var project_info = [
 	"video": "artwork.mp4"
 	}
 */
-
-];
