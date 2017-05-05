@@ -342,10 +342,10 @@
 
 				var pMaterial = new THREE.PointCloudMaterial({
 					color: 0xFFFFFF,
-					size: window.innerHeight / 200,
+					size: 5,
 					blending: THREE.AdditiveBlending,
 					transparent: true,
-					sizeAttenuation: false
+					sizeAttenuation: true
 				});
 
 				particles = new THREE.BufferGeometry();
@@ -432,8 +432,6 @@
 				camera.aspect = window.innerWidth / (window.innerHeight);
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight);
-
-                pointCloud.material.size = window.innerHeight / 200;
 
                 $.fn.fullpage.reBuild();
 			}
@@ -720,7 +718,7 @@
 				camera.position.y = 2050*(1.5 - scroll_height/window.innerHeight);
 				camera.position.x = 0;
 
-				var light = new THREE.DirectionalLight( 0xffffff );
+				var light = new THREE.DirectionalLight( 0xffffff, 0.8 );
 				light.position.set(0.2, 0, 1 ).normalize();
 				scene.add( light );
 
@@ -741,6 +739,10 @@
                 linksClass.createIcon(linksClass.spotifyGeometry(), 0x1DB954, 175, 0 , 1000, "https://open.spotify.com/user/smgoodrich");
                 linksClass.createIcon(linksClass.resumeGeometry(), 0xbda27e, -500, -400 , 1000, "./resume/resume_sean_goodrich.pdf");
                 linksClass.createIcon(linksClass.emailGeometry(), 0xff6666, 175, -400 , 1000, "mailto:sean@smgoodrich.com");
+
+                var pointLight = new THREE.PointLight( 0xffffff, 0.3, 2500 );
+                pointLight.position.set(-162.5, -800 , 0);
+                scene.add( pointLight );
 
 				raycaster = new THREE.Raycaster();
 
