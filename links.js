@@ -24,7 +24,7 @@ function lib_3D_links (sceneOrigin) {
 
 	var createLink3D = function (geometry, color) {
 		var material = new THREE.MeshLambertMaterial({
-			color: color,
+			color: color
 		});
 
 		var Link3D = new THREE.Mesh( geometry, material );
