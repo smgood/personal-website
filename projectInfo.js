@@ -3,6 +3,18 @@
 
 var project_info = [
 	{
+	"title": "Cryptocurrency Bot",
+	"date": "(Summer 2017 - Present)",
+	"team": "NA",
+	"url": "NA",
+	"summary": "A python script that compares cryptocurrency prices across multiple exchanges and performs an arbitrage on profitable opportunities.",
+	"role": "NA",
+	"skills": "Python, Design Patterns",
+	"image": "crypto.png",
+	"video": "crypto.mp4"
+	},
+
+	{
 	"title": "IllusionGenerator",
 	"date": "(Spring 2016 - Present)",
 	"team": "NA",
@@ -16,7 +28,7 @@ var project_info = [
 
 	{
 	"title": "Milk Face",
-	"date": "(Sprint 2017 - Present)",
+	"date": "(Spring 2017 - Summer 2017)",
 	"team": "Kyle Goodrich",
 	"url": "http://www.milkface.store",
 	"summary": "A website to promote 3D printed vinyl toys.",
@@ -123,18 +135,6 @@ var project_info = [
 	},
 
 	{
-	"title": "MarketU",
-	"date": "(Winter 2015)",
-	"team": "Nathan Riley, Xiaoshi Wang",
-	"url": "NA",
-	"summary": "MarketU is a cross platform app to serve as a marketplace tailored to the needs of Michigan students. It guarantees security to customers by requiring all transactions take place between users who have provided authenticated University of Michigan addresses.",
-	"role": "Develop MySQL database, PHP processes and assets",
-	"skills": "PHP, MySQL, AWS, Graphic Design",
-	"image": "marketU.png",
-	"video": "MarketU.mp4"
-	},
-
-	{
 	"title": "Burst",
 	"date": "(Fall 2014)",
 	"team": "Jonah Scheinerman, Yu-Chen Lee",
@@ -196,6 +196,18 @@ var project_info = [
 ];
 
 /*
+	{
+	"title": "MarketU",
+	"date": "(Winter 2015)",
+	"team": "Nathan Riley, Xiaoshi Wang",
+	"url": "NA",
+	"summary": "MarketU is a cross platform app to serve as a marketplace tailored to the needs of Michigan students. It guarantees security to customers by requiring all transactions take place between users who have provided authenticated University of Michigan addresses.",
+	"role": "Develop MySQL database, PHP processes and assets",
+	"skills": "PHP, MySQL, AWS, Graphic Design",
+	"image": "marketU.png",
+	"video": "MarketU.mp4"
+	},
+
 	{
 	"title": "3d web prototype",
 	"date": "(Summer 2014)",
