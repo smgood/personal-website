@@ -50,7 +50,7 @@
 		<div id ="container"></div>
 
         <div id = "continue" class="footer">
-        	Scroll &#9661 Down
+            0% Ready
         </div>
 
         <div id="fullpage">
@@ -91,6 +91,25 @@
 		var portfolioClass;
         var portfolioPopover;
         var linksClass;
+
+        loadingFinished = {
+            execute: function (setting) {
+                $.fn.fullpage.setAllowScrolling(setting);
+                $.fn.fullpage.setKeyboardScrolling(setting);
+                if (setting) {
+                    $("#fp-nav").fadeIn(750);
+
+                    $('#continue').addClass('continue');
+        			$('#continue').on('click touchstart', function() {
+        				$.fn.fullpage.moveSectionDown();
+        			});
+                } else {
+                    $('#fp-nav').hide();
+
+                    $('#continue').removeClass('continue');
+                }
+            }
+        };
 
 		$(document).ready(function() {
 			page1 = new S_Logo();
@@ -195,10 +214,7 @@
        			}
 			});
 
-			// Add actions to the arrows
-			$('#continue').on('click touchstart', function() {
-				$.fn.fullpage.moveSectionDown();
-			});
+            loadingFinished.execute(false);
 
 			function create_Logo ()	{
 				explode = false;
@@ -705,7 +721,7 @@
 
                 scene = new THREE.Scene();
 
-                portfolioClass = new lib_3D_portfolio(scene);
+                portfolioClass = new lib_3D_portfolio(scene, loadingFinished);
                 portfolioPopover = new lib_portfolio_popover();
                 linksClass = new lib_3D_links(scene);
 
@@ -905,6 +921,9 @@
 				else
 					{
 					actualRotation = actualRotation%(2*Math.PI);
+                    if (Math.abs(actualRotation) > Math.PI) {
+                        actualRotation = actualRotation - (Math.sign(actualRotation) * 2 * Math.PI) ;
+                    }
 					targetRotation = 0;
 					}
 
