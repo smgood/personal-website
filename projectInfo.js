@@ -3,6 +3,18 @@
 
 var project_info = [
 	{
+	"title": "Cubism.js",
+	"date": "(Spring 2018 - Present)",
+	"team": "NA",
+	"url": "http://smgoodrich.com/cubes/",
+	"summary": "An easy to use, open source javascript library. Use it to create full-screen, 3D scrolling websites, composed entirely of cubes! (Improved version of earlier project)",
+	"role": "NA",
+	"skills": "Javascript, Three.js",
+	"image": "cubism.png",
+	"video": "cubism.mp4"
+	},
+
+	{
 	"title": "Cryptocurrency Bot",
 	"date": "(Summer 2017 - Present)",
 	"team": "NA",
@@ -19,7 +31,7 @@ var project_info = [
 	"date": "(Spring 2016 - Present)",
 	"team": "NA",
 	"url": "NA",
-	"summary": "This project utilizes perspective and linear algebra to develop optical illusions. Using vector images, a python script creates 3D printable objects in Maya. Viewers will experience the image morphing optical illusion as they move around the object.",
+	"summary": "A project that utilizes perspective and linear algebra to develop optical illusions. Using vector images, a python script creates 3D printable objects in Maya. Viewers will experience the image morphing optical illusion as they move around the object.",
 	"role": "NA",
 	"skills": "Python, Maya",
 	"image": "illusionRotations.jpg",
@@ -43,7 +55,7 @@ var project_info = [
 	"date": "(Spring 2016)",
 	"team": "Eric Wang",
 	"url": "NA",
-	"summary": "Using a syntax net, this project allows people to enter instructions that are reproduced on a Unity 3d Scene. The project is intended to inspire and introduce kids to game design that may not have coding experience.",
+	"summary": "A hackathon project that uses a syntax net to translate basic instructions entered online into a Unity3D scene. To support collaboration, an EC2 instance replicates the scene across all computers with the project open. It is intended to introduce kids to game design and computer science that may not have coding experience.",
 	"role": "NA",
 	"skills": "Unity, Parsey McParceface, Amazon EC2",
 	"image": "textToScene.jpg",
@@ -55,7 +67,7 @@ var project_info = [
 	"date": "(Spring 2016)",
 	"team": "NA",
 	"url": "http://smgoodrich.com/hackerfund_calculator/",
-	"summary": "This calculator is used at Hacker Fund in a workshop to introduce programming to K-12 students. Students are tought how to code the functions controlling the basic operations and then are given to freedom to program their own buttons.",
+	"summary": "A calculator used at Hacker Fund in a workshop to introduce programming to K-12 students. Students are tought how to code the functions controlling the basic operations and then are given to freedom to program their own buttons.",
 	"role": "NA",
 	"skills": "HTML, CSS, Javascript, Tridiv",
 	"image": "calculator.png",
@@ -67,7 +79,7 @@ var project_info = [
 	"date": "(Winter 2016)",
 	"team": "NA",
 	"url": "http://nflhackathon.com/",
-	"summary": "This project allows users to analyze how a play in football would have unfolded had the tail back chosen a different direction to run. An interface allows the user to choose the direction they would like the tail back to run. Real in-game tracking data is used to determine the position of each player at the moment the ball is handed off.",
+	"summary": "A project that allows users to analyze how a play in football would have unfolded had the tail back chosen a different direction to run. An interface allows the user to choose the direction they would like the tail back to run. Real in-game tracking data is used to determine the position of each player at the moment the ball is handed off.",
 	"role": "NA",
 	"skills": "Unity, C#, JSON",
 	"image": "nflPresentation.jpg",
@@ -127,7 +139,7 @@ var project_info = [
 	"date": "(Winter 2015)",
 	"team": "NA",
 	"url": "http://www.smgoodrich.com/SmartArt/",
-	"summary": "SmartArt is a project to assist visitors while viewing art shows. It has an intuitive user interface allowing art curators to easily upload the information they would like to share. It simplifies the task of displaying the information to the visitor and adds novelty to the service by implementing art recognition technology.",
+	"summary": "A project to assist visitors while viewing art shows. It has an intuitive user interface allowing art curators to easily upload the information they would like to share. It simplifies the task of displaying the information to the visitor and adds novelty to the service by implementing art recognition technology.",
 	"role": "NA",
 	"skills": "Computer Vision, HTML, CSS, Javascript",
 	"image": "SmartArtScreenShot.jpg",
@@ -139,7 +151,7 @@ var project_info = [
 	"date": "(Fall 2014)",
 	"team": "Jonah Scheinerman, Yu-Chen Lee",
 	"url": "http://www.smgoodrich.com/Burst/",
-	"summary": "Burst was created in the Fall of 2014 as the final project for Computer Game Design (EECS 494) at University of Michigan. Burst is a 1st person puzzle game. As a construction worker in the future, you must use the original beam spawning game mechanic to create bridges, to block lasers, to hide from enemies, and much more!",
+	"summary": "A 1st person puzzle game. As a construction worker in the future, you must use the original beam spawning game mechanic to create bridges, to block lasers, to hide from enemies, and much more!",
 	"role": "Creation of enemies, and level design",
 	"skills": "Unity, C#, Game Design",
 	"image": "burst.png",
@@ -147,11 +159,11 @@ var project_info = [
 	},
 
 	{
-	"title": "Previous Personal Website",
+	"title": "Deprecated Personal Website",
 	"date": "(Fall 2014)",
 	"team": "NA",
 	"url": "http://www.smgoodrich.com/circle",
-	"summary": "My personal website to share my portfolio, resume, and interests. I used canvas and SVG objects in order to experiment developing a circle based website.",
+	"summary": "A website to share my portfolio, resume, and interests. I used canvas and SVG objects in order to experiment developing a circle based website.",
 	"role": "NA",
 	"skills": "HTML, CSS, Javascript, PHP, AJAX, Wordpress, Canvas, SVG",
 	"image": "circle.png",
@@ -159,23 +171,11 @@ var project_info = [
 	},
 
 	{
-	"title": "Woven CMS",
-	"date": "(Summer 2014)",
-	"team": "Eric Armas",
-	"url": "NA",
-	"summary": "CMS for online publishing company Woven Digital. The CMS was customized in order to streamline the company’s marketing campaigns. Relevant information was displayed depending on the phase of the campaign and department of the particular user.",
-	"role": "Fullstack Web Development",
-	"skills": "HTML, CSS, Javascript, PHP, MySQL, Wordpress",
-	"image": "woven.png",
-	"video": "Woven.mp4"
-	},
-
-	{
 	"title": "Mobile Game",
 	"date": "(Winter 2014)",
 	"team": "NA",
 	"url": "http://www.smgoodrich.com/javascript_games/brickbreaker.html",
-	"summary": "Basic javascript game that explores use of acceleramter, physics, spin, and other game mechanics. Play on smart phone.",
+	"summary": "A basic javascript game that explores use of acceleramter, physics, spin, and other game mechanics. Play on smart phone.",
 	"role": "NA",
 	"skills": "Mobile Web, Javascript, Accelerameter",
 	"image": "brickbreaker.png",
@@ -187,7 +187,7 @@ var project_info = [
 	"date": "(Summer 2013)",
 	"team": "NA",
 	"url": "http://smgoodrich.com/coalman/raisingEYEBROWS.html",
-	"summary": "Interactive artwork that challenges the assumption University of Michigan is sustainable",
+	"summary": "An interactive artwork that challenges the assumption University of Michigan is sustainable",
 	"role": "NA",
 	"skills": "HTML, CSS, Javascript, Graphic design",
 	"image": "coalman.png",
@@ -209,18 +209,6 @@ var project_info = [
 	},
 
 	{
-	"title": "3d web prototype",
-	"date": "(Summer 2014)",
-	"team": "NA",
-	"url": "http://www.smgoodrich.com/circle/3d.html",
-	"summary": "Recreation of personal website in 3d to explore three.JS and WebGl",
-	"role": "NA",
-	"skills": "WebGL",
-	"image": "personal3D.png",
-	"video": "3dwebsite.mp4"
-	},
-
-	{
 	"title": "Command Game",
 	"date": "(Winter 2014)",
 	"team": "NA",
@@ -230,6 +218,30 @@ var project_info = [
 	"skills": "Mobile Web, Javascript, Accelerameter",
 	"image": "command.png",
 	"video": "CommndGame.mp4"
+	},
+
+	{
+	"title": "Woven CMS",
+	"date": "(Summer 2014)",
+	"team": "Eric Armas",
+	"url": "NA",
+	"summary": "CMS for online publishing company Woven Digital. The CMS was customized in order to streamline the company’s marketing campaigns. Relevant information was displayed depending on the phase of the campaign and department of the particular user.",
+	"role": "Fullstack Web Development",
+	"skills": "HTML, CSS, Javascript, PHP, MySQL, Wordpress",
+	"image": "woven.png",
+	"video": "Woven.mp4"
+	},
+
+	{
+	"title": "3d web prototype",
+	"date": "(Summer 2014)",
+	"team": "NA",
+	"url": "http://www.smgoodrich.com/circle/3d.html",
+	"summary": "Recreation of personal website in 3d to explore three.JS and WebGl",
+	"role": "NA",
+	"skills": "WebGL",
+	"image": "personal3D.png",
+	"video": "3dwebsite.mp4"
 	},
 
 	{
