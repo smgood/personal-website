@@ -52,6 +52,10 @@
 				background-color:white !important;
 			}
 
+			#fp-nav {
+				display: none;
+			}
+
 			.footer {
 				z-index:2;
 				position: absolute;

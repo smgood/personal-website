@@ -419,8 +419,7 @@ function lib_3D_links (sceneOrigin) {
 	};
 
 	this.linksAppear = function (duration) {
-		for (var i = 0; i < links.length; i++)
-		{
+		for (var i = 0; i < links.length; i++) {
 			var object = links[i];
 			new TWEEN.Tween( object.position )
 				.to( { x: object.position.x, y: object.position.y, z: 0 }, duration*4)

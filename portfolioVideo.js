@@ -78,7 +78,7 @@ function lib_3D_portfolio (sceneOrigin, loadingFinished) {
 		loaded_videos++;
 		if (loaded_videos == total_videos) {
 			$('#continue').html('Scroll &#9661 Down');
-			loadingFinished.execute(true);
+			loadingFinished.execute();
 		} else {
 			$('#continue').html(Math.round(loaded_videos/total_videos * 100) + '% Ready');
 		}
