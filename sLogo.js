@@ -5,7 +5,7 @@ function sLogo (container) {
     var scene, camera, group, renderer;
     var animationRequest;
 
-    var particlesData;
+    var particleVelocities;
     var positions,colors;
     var pointCloud;
     var particlePositions;
@@ -34,7 +34,6 @@ function sLogo (container) {
         renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
         renderer.setClearColor( 0xffffff, 0 ); // the default
         renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( window.innerWidth, window.innerHeight);
 
         renderer.gammaInput = true;
         renderer.gammaOutput = true;
@@ -44,7 +43,7 @@ function sLogo (container) {
 
     var instantiateLogo = function() {
         explode = false;
-        particlesData = [];
+        particleVelocities = [];
         particleCount = 10;
 
         var segments = maxParticleCount * maxParticleCount;
@@ -63,19 +62,19 @@ function sLogo (container) {
         particles = new THREE.BufferGeometry();
         particlePositions = new Float32Array( maxParticleCount * 3 );
 
-        for ( var i = 0; i < maxParticleCount; i++ ) {
+        for ( var i = 0; i < maxParticleCount; i++ ){
             var x;
             var y = sHeight * 4/3 * (Math.random() - 0.5);
-            var z = collision_rad * (Math.random() - 0.5);
+            var z = 2 * collision_rad * (Math.random() - 0.5);
 
             if (y>rHalf){
                 y = y - rHalf/3;
-                x = 15*Math.sqrt(rHalf-y) + (Math.random() * 2 * collision_rad - collision_rad);
+                x = 15*Math.sqrt(rHalf-y) + ((Math.random() * 2 - 1) * collision_rad);
             } else if (y< -rHalf){
                 y = y + rHalf/3;
-                x = -15*Math.sqrt(rHalf+y) + (Math.random() * 2 * collision_rad - collision_rad);
+                x = -15*Math.sqrt(rHalf+y) + ((Math.random() * 2 - 1) * collision_rad);
             } else {
-                x = (-Math.sin(y * Math.PI / rHalf) * rHalf/2) + (Math.random() * 2 * collision_rad - collision_rad);
+                x = (-Math.sin(y * Math.PI / rHalf) * rHalf/2) + ((Math.random() * 2 - 1) * collision_rad);
             }
 
             particlePositions[ i * 3     ] = x;
@@ -83,17 +82,16 @@ function sLogo (container) {
             particlePositions[ i * 3 + 2 ] = z;
 
             // add it to the geometry
-            particlesData.push( {
-                velocity: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5,  Math.random() - 0.5),
-                numConnections: 0
-            } );
+            particleVelocities.push(
+                new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5,  Math.random() - 0.5)
+            );
         }
 
-        particles.drawcalls.push( {
+        particles.drawcalls.push({
             start: 0,
             count: particleCount,
             index: 0
-        } );
+        });
 
         particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3 ) );
 
@@ -108,17 +106,17 @@ function sLogo (container) {
 
         geometry.computeBoundingSphere();
 
-        geometry.drawcalls.push( {
+        geometry.drawcalls.push({
             start: 0,
             count: 0,
             index: 0
-        } );
+        });
 
-        var material = new THREE.LineBasicMaterial( {
+        var material = new THREE.LineBasicMaterial({
             vertexColors: THREE.VertexColors,
             blending: THREE.AdditiveBlending,
             transparent: true
-        } );
+        });
 
         linesMesh = new THREE.Line( geometry, material, THREE.LinePieces );
         group.add( linesMesh );
@@ -136,60 +134,43 @@ function sLogo (container) {
         }
 
         for ( var i = 0; i < particleCount; i++ ) {
-            particlesData[ i ].numConnections = 0;
-        }
-
-        for ( var i = 0; i < particleCount; i++ ) {
 
             // get the particle
-            var particleData = particlesData[i];
+            var particleVelocity = particleVelocities[i];
 
-            particlePositions[ i * 3     ] += particleData.velocity.x;
-            particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
-            particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+            particlePositions[ i * 3     ] += particleVelocity.x;
+            particlePositions[ i * 3 + 1 ] += particleVelocity.y;
+            particlePositions[ i * 3 + 2 ] += particleVelocity.z;
 
             xPos = particlePositions[ i * 3];
             yPos = particlePositions[ i * 3 +1];
             zPos = particlePositions[ i * 3 +2];
 
-            xVel = particleData.velocity.x;
-            yVel = particleData.velocity.y;
-            zVel = particleData.velocity.z;
-
             if (explode){
-                particleData.velocity.x *= 1.07;
-                particleData.velocity.y *= 1.07;
-                particleData.velocity.z *= 1.07;
+                particleVelocity.x *= 1.07;
+                particleVelocity.y *= 1.07;
+                particleVelocity.z *= 1.07;
             }
 
             else {
-                if (Math.abs(xPos) > rHalf/Math.PI)
-                    particleData.velocity.x = -xVel;
-
-                if (Math.abs(yPos) > rHalf)
-                    particleData.velocity.y = -yVel;
-
                 if (Math.abs(zPos) > collision_rad)
-                    particleData.velocity.z = -zVel;
+                    particleVelocity.z *= -1;
 
-                // boundary conditions for top quadratic part of S
-                if (xPos > 0 && yPos > rHalf/2 && yPos < 2*rHalf/3){
-                    particleData.velocity.y = -yVel;
+                if (Math.abs(yPos) > rHalf){
+                    particleVelocity.y *= -1;
                 }
-                else if (xPos > 0 && yPos > 2*rHalf/3){
+                // boundary conditions for top quadratic part of S
+                else if (xPos > 0 && yPos > rHalf/2 && yPos < 2*rHalf/3){
+                    particleVelocity.y *= -1;
+                } else if (xPos > 0 && yPos > 2*rHalf/3){
                     var estimated_width = 15*Math.sqrt(rHalf-yPos);
                     var rad_quad = Math.abs(xPos - estimated_width);
                     if (rad_quad > collision_rad){
-                        parallel_vector = -15/(2*Math.sqrt(rHalf-yPos));
-                        normal_vector = -1 / parallel_vector;
-                        normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
-                        normal_x = 1 / normal_norm;
-                        normal_y = normal_vector / normal_norm;
-
-                        dot_product = -2 * (xVel * normal_x + yVel * normal_y);
-
-                        particleData.velocity.x = dot_product * normal_x + xVel;
-                        particleData.velocity.y = dot_product * normal_y + yVel;
+                        var surfaceVector = new THREE.Vector2(
+                            -15/(2*Math.sqrt(rHalf-yPos)),
+                            1
+                        );
+                        particleVelocity = getVectorDeflection (particleVelocity, surfaceVector);
 
                         if (rad_quad > (1.1 * collision_rad)){
                             particlePositions[ i * 3] = estimated_width;
@@ -198,22 +179,16 @@ function sLogo (container) {
                 }
                 // boundary conditions for bottom quadratic part of S
                 else if (xPos < 0 && yPos < -rHalf/2 && yPos > -2*rHalf/3){
-                    particleData.velocity.y = -yVel;
-                }
-                else if (xPos < 0 && yPos < -2*rHalf/3){
+                    particleVelocity.y *= -1;
+                } else if (xPos < 0 && yPos < -2*rHalf/3){
                     var estimated_width = -15*Math.sqrt(rHalf+yPos);
                     var rad_quad = Math.abs(xPos - estimated_width);
                     if (rad_quad > collision_rad){
-                        parallel_vector = -15/(2*Math.sqrt(rHalf+yPos));
-                        normal_vector = -1 / parallel_vector;
-                        normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
-                        normal_x = 1 / normal_norm;
-                        normal_y = normal_vector / normal_norm;
-
-                        dot_product = -2 * (xVel * normal_x + yVel * normal_y);
-
-                        particleData.velocity.x = dot_product * normal_x + xVel;
-                        particleData.velocity.y = dot_product * normal_y + yVel;
+                        var surfaceVector = new THREE.Vector2(
+                            -15/(2*Math.sqrt(rHalf+yPos)),
+                            1
+                        );
+                        particleVelocity = getVectorDeflection (particleVelocity, surfaceVector);
 
                         if (rad_quad > (1.1 * collision_rad)){
                             particlePositions[ i * 3] = estimated_width;
@@ -225,16 +200,11 @@ function sLogo (container) {
                     var expected_width = -Math.sin(yPos * Math.PI / rHalf) * rHalf/2;
                     var rad_sin = Math.abs(xPos - expected_width);
                     if (rad_sin > collision_rad){
-                        parallel_vector = -Math.cos(yPos * Math.PI / rHalf);
-                        normal_vector = -1 / parallel_vector;
-                        normal_norm = Math.sqrt(Math.pow(normal_vector,2) + 1);
-                        normal_x = 1 / normal_norm;
-                        normal_y = normal_vector / normal_norm;
-
-                        dot_product = -2 * (xVel * normal_x + yVel * normal_y);
-
-                        particleData.velocity.x = dot_product * normal_x + xVel;
-                        particleData.velocity.y = dot_product * normal_y + yVel;
+                        var surfaceVector = new THREE.Vector2(
+                            -Math.cos(yPos * Math.PI / rHalf),
+                            1
+                        );
+                        particleVelocity = getVectorDeflection (particleVelocity, surfaceVector);
 
                         if (rad_sin > (1.1 * collision_rad)){
                             particlePositions[ i * 3] = expected_width;
@@ -245,19 +215,12 @@ function sLogo (container) {
 
             // Check collision
             for ( var j = i + 1; j < particleCount; j++ ) {
-
-                var particleDataB = particlesData[ j ];
-
                 var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
                 var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
                 var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
                 var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
 
                 if ( dist < minDistance ) {
-
-                    particleData.numConnections++;
-                    particleDataB.numConnections++;
-
                     var alpha = 1.0 - dist / minDistance;
 
                     positions[ vertexpos++ ] = particlePositions[ i * 3     ];
@@ -296,6 +259,25 @@ function sLogo (container) {
         animationRequest = requestAnimationFrame( animate );
     };
 
+    var getVectorDeflection = function (particleVelocity, surfaceVector) {
+        var magnitude = Math.sqrt(
+            Math.pow(surfaceVector.x,2) +
+            Math.pow(surfaceVector.y,2)
+        );
+        var surfaceNormal = new THREE.Vector2(
+            -1 * surfaceVector.y / magnitude,
+            surfaceVector.x / magnitude
+        );
+        var dotProduct = (
+            particleVelocity.x * surfaceNormal.x +
+            particleVelocity.y * surfaceNormal.y
+        );
+
+        particleVelocity.x -= 2 * dotProduct * surfaceNormal.x;
+        particleVelocity.y -= 2 * dotProduct * surfaceNormal.y;
+        return particleVelocity;
+    }
+
     var dispose = function () {
         group.remove( pointCloud );
         group.remove( linesMesh );
@@ -311,7 +293,7 @@ function sLogo (container) {
         camera.updateProjectionMatrix();
         renderer.setSize( window.innerWidth, window.innerHeight);
 
-        $.fn.fullpage.reBuild();
+        //$.fn.fullpage.reBuild();
     };
 
     var rotate = function() {
@@ -337,6 +319,7 @@ function sLogo (container) {
     this.play = function () {
         dispose();
         instantiateLogo();
+        onWindowResize();
 
         if (!animationRequest) {
             animationRequest = requestAnimationFrame( animate );
