@@ -35,7 +35,7 @@
 				position:absolute;
 				top:0px;
 				z-index:1;
-				/* pointer-events: none; */
+				pointer-events: none;
 			}
 
 			#container2 {
@@ -45,7 +45,7 @@
 				top:0;
 				left:0;
 				position:fixed;
-				/* pointer-events: none; */
+				pointer-events: none;
 			}
 
 			#fp-nav ul li a span {

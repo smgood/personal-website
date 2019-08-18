@@ -77,9 +77,6 @@
   var scrolling = false;
   var current_page;
 
-  var touchScrollHeight;
-  var touchScrolled;
-
   var portfolio_loaded = false;
   var loaded_pg2 = false;
   var loaded_pg3 = false;
@@ -95,7 +92,7 @@
       $("#fp-nav").fadeIn(750);
 
       $('#continue').addClass('continue');
-      $('#continue').on('click touchstart', function() {
+      $('#continue').on('click', function() {
         $.fn.fullpage.moveSectionDown();
       });
     }
@@ -177,12 +174,6 @@
       'afterLoad': function(anchorLink, index){
         scrolling = false;
         current_page = index;
-
-        if (index == 2){
-          page2.mousePortfolio();
-        } else if (index == 3){
-          page2.mouseIcon();
-        }
       }
     });
 
@@ -200,30 +191,6 @@
       var node = document.getElementById("fullpage");
       scroll_height = -1 * node.getBoundingClientRect().top; //real offset top
     }, 20);
-
-    function onDocumentTouchStart(event){
-      if ( event.touches.length === 1 ){
-        event.preventDefault();
-        touchScrollHeight = event.touches[ 0 ].pageY;
-        touchScrolled = false;
-      }
-    }
-
-    function onDocumentTouchMove(event){
-      if ( event.touches.length === 1 && touchScrolled == false && $("#info_page").is(':hidden') ) {
-        event.preventDefault();
-        if(touchScrollHeight - event.touches[ 0 ].pageY > 50) {
-          $.fn.fullpage.moveSectionDown();
-          touchScrolled = true;
-        } else if (touchScrollHeight - event.touches[ 0 ].pageY < -50) {
-          $.fn.fullpage.moveSectionUp();
-          touchScrolled = true;
-        }
-      }
-    }
-
-    document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
     var doScroll = function (event) {
       event = window.event || event;
@@ -317,7 +284,7 @@
 
       window.addEventListener( 'resize', onWindowResize, false );
 
-      document.addEventListener( 'touchstart', touchIcon, false );
+      document.addEventListener( 'touchstart', touchIcon, { passive: false });
       document.addEventListener( 'touchstart', touchPortfolio, false );
       document.addEventListener( 'mousemove', mouseIcon, false );
       document.addEventListener( 'mousemove', mousePortfolio, false );
@@ -332,7 +299,7 @@
 
     // stuff to do with the portfolio info
     $( document ).ready(function() {
-      $( 'body' ).click(function(){
+      $( document ).click(function(){
         if (current_link != null){
           window.open(current_link.link, '_blank');
         }
@@ -421,7 +388,6 @@
 
     function onDocumentTouchStart( event ) {
       if ( event.touches.length === 1 ) {
-        event.preventDefault();
         mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
         targetRotationOnMouseDown = targetRotation;
       }
@@ -506,7 +472,6 @@
 
     function touchPortfolio(event){
       if ( event.touches.length === 1 ) {
-        event.preventDefault();
         var touchPos = new THREE.Vector2();
         touchPos.x = ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1;
         touchPos.y =  - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1;
@@ -532,70 +497,49 @@
     }
 
     function touchIcon(event){
-      if ( event.touches.length === 1 ) {
-        event.preventDefault();
-        var touchPos = new THREE.Vector2();
-        touchPos.x = ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1;
-        touchPos.y =  - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1;
+      if (current_page == 3 && !scrolling && event.touches.length === 1){
+        var touchPos = new THREE.Vector2(
+          ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1,
+          - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1
+        );
+
         raycaster.setFromCamera(touchPos, camera );
-
-        // calculate objects intersecting the picking ray
-        var intersects = raycaster.intersectObjects(linksClass.links_container.children);
-
-        if (intersects.length > 0 && linksClass.showLinks == true){
-          if (intersects[0].object != current_link){
-            if (current_link != null){
-              current_link.rotation.y = 0;
-              current_link.position.z = 0;
-            }
-
-            current_link = intersects[0].object;
-            if (current_link.position.x < 0){
-              current_link.rotation.y = Math.PI * 0.1;
-              current_link.position.z = 100;
-            } else{
-              current_link.rotation.y = Math.PI * -0.1;
-              current_link.position.z = 250;
-            }
-          } else {
-            var open = window.open(current_link.link, '_blank');
-            if (open == null || typeof(open)=='undefined'){
-              alert("New window blocked. Please visit:\n" + current_link.link);
-            }
-          }
-        } else{
-          noHoverLinks();
-        }
+        hoverIcons(event)
       }
     }
 
-    function mouseIcon (event) {
+    function mouseIcon(event){
       if (current_page == 3 && !scrolling) {
         // update the picking ray with the camera and mouse position
         raycaster.setFromCamera( mouse, camera );
+        hoverIcons(event);
+      }
+    }
 
-        var intersects = raycaster.intersectObjects(linksClass.links_container.children);
+    function hoverIcons(event){
+      var intersects = raycaster.intersectObjects(linksClass.links_container.children);
 
-        if (intersects.length > 0 && linksClass.showLinks == true){
-          document.body.style.cursor = "pointer";
-          if (intersects[0].object != current_link){
-            if (current_link != null){
-              current_link.rotation.y = 0;
-              current_link.position.z = 0;
-            }
-            current_link = intersects[0].object;
+      if (intersects.length > 0 && linksClass.showLinks == true){
+        document.body.style.cursor = "pointer";
+        if (intersects[0].object != current_link){
+          event.preventDefault();
 
-            if (current_link.position.x < 0){
-              current_link.rotation.y = Math.PI * 0.1;
-              current_link.position.z = 100;
-            } else{
-              current_link.rotation.y = Math.PI * -0.1;
-              current_link.position.z = 250;
-            }
+          if (current_link != null){
+            current_link.rotation.y = 0;
+            current_link.position.z = 0;
           }
-        } else{
-          noHoverLinks();
+          current_link = intersects[0].object;
+
+          if (current_link.position.x < 0){
+            current_link.rotation.y = Math.PI * 0.1;
+            current_link.position.z = 100;
+          } else{
+            current_link.rotation.y = Math.PI * -0.1;
+            current_link.position.z = 250;
+          }
         }
+      } else{
+        noHoverLinks();
       }
     }
 
@@ -604,8 +548,6 @@
       "animate":animate,
       "noHoverLinks":noHoverLinks,
       "noHoverPortfolio":noHoverPortfolio,
-      "mousePortfolio": mousePortfolio,
-      "mouseIcon": mouseIcon
     };
   }
 </script>
