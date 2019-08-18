@@ -221,7 +221,6 @@
     var windowHalfX = window.innerWidth / 2;
     var windowHalfY = window.innerHeight / 2;
 
-    var raycaster = new THREE.Raycaster();
     var mouse = new THREE.Vector2();
     mouse.x = windowHalfX; //preset to big number so raycast doesn't initialize video onload
     mouse.y = windowHalfY; //preset to big number so raycast doesn't initialize video onload
@@ -273,8 +272,6 @@
       pointLight.position.set(-162.5, -800 , 0);
       scene.add( pointLight );
 
-      raycaster = new THREE.Raycaster();
-
       renderer.autoClear = false;
 
       document.addEventListener( 'mousemove', onMouseMove, false );
@@ -289,6 +286,9 @@
       document.addEventListener( 'mousemove', mouseIcon, false );
       document.addEventListener( 'mousemove', mousePortfolio, false );
 
+      document.addEventListener( 'click', openLink, false );
+      document.getElementById("close").addEventListener( 'click', closePortfolioInfo, false );
+
       renderer.setClearColor( 0x000000, 0 ); // the default
     }
 
@@ -297,19 +297,17 @@
     var down_clicked;
     var start_position;
 
-    // stuff to do with the portfolio info
-    $( document ).ready(function() {
-      $( document ).click(function(){
-        if (current_link != null){
-          window.open(current_link.link, '_blank');
-        }
-      });
-      $("#close").click(function(){
-        $("#opacity_page").fadeOut();
-        $("#info_page").fadeOut();
-        document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-      });
-    });
+    function openLink() {
+      if (current_link != null){
+        window.open(current_link.link, '_blank');
+      }
+    };
+
+    function closePortfolioInfo() {
+      $("#opacity_page").fadeOut();
+      $("#info_page").fadeOut();
+      document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    }
 
     function onMouseMove( event ) {
       mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -444,79 +442,64 @@
       }
     }
 
+    function getTouchPosition(event) {
+      return new THREE.Vector2(
+        ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1,
+        - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1
+      );
+    }
+
+    function getRaycaster(coords) {
+      let raycaster = new THREE.Raycaster();
+      raycaster.setFromCamera(coords, camera)
+      return raycaster;
+    }
+
     function mousePortfolio(event){
       if (current_page == 2 && !scrolling) {
-        // update the picking ray with the camera and mouse position
-        raycaster.setFromCamera( mouse, camera );
-
-        // calculate objects intersecting the picking ray
-        var intersects = raycaster.intersectObjects( portfolioClass.portfolio_container.children );
-
-        if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0){
-          document.body.style.cursor = "pointer";
-          if (intersects[0].object != current_mesh){
-            if (current_mesh != null){
-              current_mesh.material.color.set( 0xAAAAAA );
-              current_mesh.video.pause();
-            }
-
-            current_mesh = intersects[0].object;
-            current_mesh.material.color.set( 0xffffff );
-            current_mesh.video.play();
-          }
-        } else{
-          noHoverPortfolio();
-        }
+        hoverPortfolio(event, getRaycaster(mouse));
       }
     }
 
     function touchPortfolio(event){
-      if ( event.touches.length === 1 ) {
-        var touchPos = new THREE.Vector2();
-        touchPos.x = ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1;
-        touchPos.y =  - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1;
-        raycaster.setFromCamera(touchPos, camera );
+      if (current_page == 2 && !scrolling && event.touches.length === 1 ) {
+        hoverPortfolio(event, getRaycaster(getTouchPosition(event)));
+      }
+    }
 
-        var intersects = raycaster.intersectObjects( portfolioClass.portfolio_container.children );
+    function hoverPortfolio(event, raycaster) {
+      var intersects = raycaster.intersectObjects( portfolioClass.portfolio_container.children );
 
-        if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0){
-          if (intersects[0].object != current_mesh){
-            if (current_mesh != null){
-              current_mesh.material.color.set( 0xAAAAAA );
-              current_mesh.video.pause();
-            }
-
-            current_mesh = intersects[0].object;
-            current_mesh.material.color.set( 0xffffff );
-            current_mesh.video.play();
+      if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0){
+        document.body.style.cursor = "pointer";
+        if (intersects[0].object != current_mesh){
+          if (current_mesh != null){
+            current_mesh.material.color.set( 0xAAAAAA );
+            current_mesh.video.pause();
           }
-        } else{
-          noHoverPortfolio();
+
+          current_mesh = intersects[0].object;
+          current_mesh.material.color.set( 0xffffff );
+          current_mesh.video.play();
         }
+      } else{
+        noHoverPortfolio();
       }
     }
 
     function touchIcon(event){
       if (current_page == 3 && !scrolling && event.touches.length === 1){
-        var touchPos = new THREE.Vector2(
-          ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1,
-          - ( event.touches[ 0 ].pageY / window.innerHeight ) * 2 + 1
-        );
-
-        raycaster.setFromCamera(touchPos, camera );
-        hoverIcons(event)
+        hoverIcons(event, getRaycaster(getTouchPosition(event)))
       }
     }
 
     function mouseIcon(event){
       if (current_page == 3 && !scrolling) {
-        // update the picking ray with the camera and mouse position
-        raycaster.setFromCamera( mouse, camera );
-        hoverIcons(event);
+        hoverIcons(event, getRaycaster(mouse));
       }
     }
 
-    function hoverIcons(event){
+    function hoverIcons(event, raycaster){
       var intersects = raycaster.intersectObjects(linksClass.links_container.children);
 
       if (intersects.length > 0 && linksClass.showLinks == true){
