@@ -2,6 +2,18 @@
 // create 3D portfolio
 
 var project_info = [
+  {
+ 	"title": "< Brickbreaker />",
+ 	"date": "(Summer 2019)",
+ 	"team": "NA",
+ 	"url": "https://docs.google.com/presentation/d/1NREzjMMfoUxXnf0WPVCPT0yQKXatl2C-zhoD26zsw2U/edit#slide=id.g5f670d5e7a_2_0",
+ 	"summary": "A workshop used to introduce HTML and CSS to students by allowing them to customize the game and its targets. Used at Hacker Fund supported events.",
+ 	"role": "Mentor",
+ 	"skills": "HTML, CSS, Javascript",
+ 	"image": "hackerfund_brickbreaker.png",
+ 	"video": "hackerfund_brickbreaker.mp4"
+ 	},
+
 	{
 	"title": "Cubism.js",
 	"date": "(Spring 2018 - Present)",
@@ -171,18 +183,6 @@ var project_info = [
 	},
 
 	{
-	"title": "Mobile Game",
-	"date": "(Winter 2014)",
-	"team": "NA",
-	"url": "http://www.smgoodrich.com/javascript_games/brickbreaker.html",
-	"summary": "A basic javascript game that explores use of acceleramter, physics, spin, and other game mechanics. Play on smart phone.",
-	"role": "NA",
-	"skills": "Mobile Web, Javascript, Accelerameter",
-	"image": "brickbreaker.png",
-	"video": "Brickbreaker.mp4"
-	},
-
-	{
 	"title": "Mary Sue Coalman",
 	"date": "(Summer 2013)",
 	"team": "NA",
@@ -196,6 +196,19 @@ var project_info = [
 ];
 
 /*
+
+  {
+  "title": "Mobile Game",
+  "date": "(Winter 2014)",
+  "team": "NA",
+  "url": "http://www.smgoodrich.com/javascript_games/brickbreaker.html",
+  "summary": "A basic javascript game that explores use of acceleramter, physics, spin, and other game mechanics. Play on smart phone.",
+  "role": "NA",
+  "skills": "Mobile Web, Javascript, Accelerameter",
+  "image": "brickbreaker.png",
+  "video": "Brickbreaker.mp4"
+  },
+
 	{
 	"title": "MarketU",
 	"date": "(Winter 2015)",
