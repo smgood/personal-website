@@ -6,15 +6,15 @@ class portfolioVideos {
     this.loadingCallback = this.loadingCallback.bind(this);
     this.errorCallback = this.errorCallback.bind(this);
 
-  	this.videos = [];
-  	this.portfolioInvisible = true;
+    this.videos = [];
+    this.portfolioInvisible = true;
 
-  	this.loadedVideos = 0;
-  	this.totalVideos = projectInfo.length;
+    this.loadedVideos = 0;
+    this.totalVideos = projectInfo.length;
 
-  	this.portfolioContainer = new THREE.Group();
-  	this.portfolioContainer.position.set(0, 1050, 0);
-  	this.scene.add(this.portfolioContainer);
+    this.portfolioContainer = new THREE.Group();
+    this.portfolioContainer.position.set(0, 1050, 0);
+    this.scene.add(this.portfolioContainer);
 
     for (let i = 0; i < this.totalVideos; i++ ){
       let portfolioVideo = new PortfolioVideo(projectInfo[i], i, this.loadingCallback, this.errorCallback);

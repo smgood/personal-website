@@ -1,6 +1,4 @@
 // JavaScript Document
-// create 3D portfolio
-
 var projectInfo = [
   {
  	"title": "< Brickbreaker />",
@@ -196,7 +194,6 @@ var projectInfo = [
 ];
 
 /*
-
   {
   "title": "Mobile Game",
   "date": "(Winter 2014)",
