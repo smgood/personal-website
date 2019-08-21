@@ -1,7 +1,7 @@
 // JavaScript Document
 // create 3D portfolio
 
-var project_info = [
+var projectInfo = [
   {
  	"title": "< Brickbreaker />",
  	"date": "(Summer 2019)",

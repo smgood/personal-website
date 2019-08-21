@@ -27,7 +27,7 @@ function portfolio_scene(){
   function init() {
     scene = new THREE.Scene();
 
-    portfolioClass = new lib_3D_portfolio(scene, loadingFinished);
+    portfolioClass = new portfolioVideos(scene, loadingFinished);
     portfolioPopover = new lib_portfolio_popover();
     linksClass = new lib_3D_links(scene);
 
@@ -200,7 +200,7 @@ function portfolio_scene(){
   function render() {
     if (current_page == 2){
       actualRotation += ( targetRotation - actualRotation ) * 0.05;
-      portfolioClass.portfolio_container.rotation.y = actualRotation;
+      portfolioClass.portfolioContainer.rotation.y = actualRotation;
     } else{
       actualRotation = actualRotation%(2*Math.PI);
       if (Math.abs(actualRotation) > Math.PI) {
@@ -256,7 +256,7 @@ function portfolio_scene(){
   }
 
   function hoverPortfolio(event, raycaster) {
-    var intersects = raycaster.intersectObjects( portfolioClass.portfolio_container.children );
+    var intersects = raycaster.intersectObjects(portfolioClass.portfolioContainer.children);
 
     if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0){
       document.body.style.cursor = "pointer";
