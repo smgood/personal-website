@@ -6,7 +6,7 @@ class portfolioVideos {
     this.loadingCallback = this.loadingCallback.bind(this);
     this.errorCallback = this.errorCallback.bind(this);
 
-  	this.meshes = [];
+  	this.videos = [];
   	this.portfolioInvisible = true;
 
   	this.loadedVideos = 0;
@@ -18,51 +18,38 @@ class portfolioVideos {
 
     for (let i = 0; i < this.totalVideos; i++ ){
       let portfolioVideo = new PortfolioVideo(projectInfo[i], i, this.loadingCallback, this.errorCallback);
-  		this.meshes.push(portfolioVideo.mesh);
+  		this.videos.push(portfolioVideo);
   		this.portfolioContainer.add(portfolioVideo.mesh);
   	}
   }
 
-  portfolioAppear(duration){
+  showPortfolio(duration){
     this.portfolioInvisible = false;
-    for(let i = 0; i < this.meshes.length; i++){
-      let object = this.meshes[i];
-      let objectDelay = duration * Math.floor((15-i)/2);
-      this.delayShow(object, objectDelay);
-      new TWEEN.Tween(object.position)
-        .to({x: object.targetX, z: object.targetZ }, duration*4)
-        .easing(TWEEN.Easing.Elastic.Out)
-        .delay(objectDelay)
-        .start();
+    for(let i = 0; i < this.videos.length; i++){
+      let animationDelay = duration * Math.floor((15-i)/2);
+      this.delayShow(this.videos[i], animationDelay);
+      this.videos[i].show(animationDelay, 4 * duration);
     }
   }
 
   hidePortfolio(duration){
-    for (let i = 0; i < this.meshes.length; i++){
-      let object = this.meshes[i];
-      new TWEEN.Tween(object.position)
-        .to({x: 0, z: 0}, duration*40)
-        .easing(TWEEN.Easing.Elastic.Out)
-        .delay(0)
-        .start();
+    for (let i = 0; i < this.videos.length; i++){
+      this.videos[i].hide(duration);
     }
   }
 
   resetPortfolio(){
-    TWEEN.removeAll();
-    for (let i = 0; i < this.meshes.length; i++){
-      let object = this.meshes[i];
-      object.position.setX(0);
-      object.position.setZ(0);
-      object.visible = false;
-    }
     this.portfolioInvisible = true;
+    TWEEN.removeAll();
+    for (let i = 0; i < this.videos.length; i++){
+      this.videos[i].reset();
+    }
   }
 
-  delayShow(object, duration){
+  delayShow(video, duration){
     window.setTimeout(function (){
       if (!this.portfolioInvisible){
-        object.visible = true;
+        video.setVisibility(true);
       }
     }, duration);
   }

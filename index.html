@@ -125,7 +125,7 @@
           });
 
           if (nextIndex == 2){
-            setTimeout(function(){ portfolioClass.portfolioAppear(250); }, 2000);
+            setTimeout(function(){portfolioClass.showPortfolio(250);}, 2000);
             loaded_pg2 = true;
           } else if (nextIndex == 3){
             linksClass.linksAppear(250);
@@ -157,7 +157,7 @@
             $("#instructions").fadeIn();
             if (loaded_pg2 == false){
               loaded_pg2 = true;
-              portfolioClass.portfolioAppear(250);
+              portfolioClass.showPortfolio(250);
             }
           }
         }
@@ -165,7 +165,7 @@
         if (nextIndex == 1){
           page1.play();
           loaded_pg2 = false;
-          portfolioClass.hidePortfolio(250);
+          portfolioClass.hidePortfolio(10000);
         } else if (portfolio_loaded == false){
           page2.animate();
           portfolio_loaded = true;

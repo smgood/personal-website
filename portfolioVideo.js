@@ -26,7 +26,7 @@ class PortfolioVideo {
       vertexColors: THREE.FaceColors
     };
 
-    geometry = new THREE.BoxGeometry(xsize, ysize, xsize/12);
+    let geometry = new THREE.BoxGeometry(xsize, ysize, xsize/12);
     geometry.faces[10].color.setHex(0x4C4C4C);
     geometry.faces[11].color.setHex(0x4C4C4C);
 
@@ -133,5 +133,31 @@ class PortfolioVideo {
         uv.y = (uv.y * unity) + offsety;
       }
     }
+  }
+
+  reset(){
+    this.mesh.position.setX(0);
+    this.mesh.position.setZ(0);
+    this.mesh.visible = false;
+  }
+
+  show(delay, duration) {
+    new TWEEN.Tween(this.mesh.position)
+      .to({x: this.mesh.targetX, z: this.mesh.targetZ }, duration)
+      .easing(TWEEN.Easing.Elastic.Out)
+      .delay(delay)
+      .start();
+  }
+
+  hide(duration){
+    new TWEEN.Tween(this.mesh.position)
+      .to({x: 0, z: 0}, duration)
+      .easing(TWEEN.Easing.Elastic.Out)
+      .delay(0)
+      .start();
+  }
+
+  setVisibility(setting){
+    this.mesh.visible = setting;
   }
 }
