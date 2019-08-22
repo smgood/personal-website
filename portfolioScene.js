@@ -51,12 +51,12 @@ function portfolio_scene(){
     renderer.setSize( window.innerWidth, window.innerHeight);
     container.appendChild( renderer.domElement );
 
-    linksClass.createIcon(linksClass.facebookGeometry(), 0x3B5998, -500, 400 , 1000, "https://www.facebook.com/sean.m.goodrich");
-    linksClass.createIcon(linksClass.linkedInGeometry(), 0x007bb6, 175, 400 , 1000, "https://www.linkedin.com/in/smgoodrich");
-    linksClass.createIcon(linksClass.githubGeometry(), 0xffffff, -500, 0 , 1000, "https://github.com/smgood");
-    linksClass.createIcon(linksClass.spotifyGeometry(), 0x1DB954, 175, 0 , 1000, "https://open.spotify.com/user/smgoodrich");
-    linksClass.createIcon(linksClass.resumeGeometry(), 0xbda27e, -500, -400 , 1000, "./resume/resume_sean_goodrich.pdf");
-    linksClass.createIcon(linksClass.emailGeometry(), 0xff6666, 175, -400 , 1000, "mailto:sean@smgoodrich.com");
+    linksClass.createIcon(Geometries.facebookGeometry(), 0x3B5998, -500, 400 , 1000, "https://www.facebook.com/sean.m.goodrich");
+    linksClass.createIcon(Geometries.linkedInGeometry(), 0x007bb6, 175, 400 , 1000, "https://www.linkedin.com/in/smgoodrich");
+    linksClass.createIcon(Geometries.githubGeometry(), 0xffffff, -500, 0 , 1000, "https://github.com/smgood");
+    linksClass.createIcon(Geometries.spotifyGeometry(), 0x1DB954, 175, 0 , 1000, "https://open.spotify.com/user/smgoodrich");
+    linksClass.createIcon(Geometries.resumeGeometry(), 0xbda27e, -500, -400 , 1000, "./resume/resume_sean_goodrich.pdf");
+    linksClass.createIcon(Geometries.emailGeometry(), 0xff6666, 175, -400 , 1000, "mailto:sean@smgoodrich.com");
 
     var pointLight = new THREE.PointLight( 0xffffff, 0.3, 2500 );
     pointLight.position.set(-162.5, -800 , 0);
