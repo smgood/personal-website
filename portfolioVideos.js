@@ -1,5 +1,5 @@
 // JavaScript Document
-class portfolioVideos {
+class PortfolioVideos {
   constructor(scene, loadingFinished){
     this.scene = scene;
     this.loadingFinished = loadingFinished;
@@ -18,9 +18,9 @@ class portfolioVideos {
 
     for (let i = 0; i < this.totalVideos; i++ ){
       let portfolioVideo = new PortfolioVideo(projectInfo[i], i, this.loadingCallback, this.errorCallback);
-  		this.videos.push(portfolioVideo);
-  		this.portfolioContainer.add(portfolioVideo.mesh);
-  	}
+      this.videos.push(portfolioVideo);
+      this.portfolioContainer.add(portfolioVideo.mesh);
+    }
   }
 
   showPortfolio(duration){

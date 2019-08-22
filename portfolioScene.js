@@ -27,7 +27,7 @@ function portfolio_scene(){
   function init() {
     scene = new THREE.Scene();
 
-    portfolioClass = new portfolioVideos(scene, loadingFinished);
+    portfolioClass = new PortfolioVideos(scene, loadingFinished);
     portfolioPopover = new lib_portfolio_popover();
     linksClass = new lib_3D_links(scene);
 
