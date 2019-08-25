@@ -16,7 +16,7 @@ class Links{
       -500,
       400,
       1000,
-      "https://www.facebook.com/sean.m.goodrich"
+      'https://www.facebook.com/sean.m.goodrich'
     );
 
     this.createIcon(
@@ -25,7 +25,7 @@ class Links{
       175,
       400,
       1000,
-      "https://www.linkedin.com/in/smgoodrich"
+      'https://www.linkedin.com/in/smgoodrich'
     );
 
     this.createIcon(
@@ -34,7 +34,7 @@ class Links{
       -500,
       0,
       1000,
-      "https://github.com/smgood"
+      'https://github.com/smgood'
     );
 
     this.createIcon(
@@ -43,7 +43,7 @@ class Links{
       175,
       0,
       1000,
-      "https://open.spotify.com/user/smgoodrich"
+      'https://open.spotify.com/user/smgoodrich'
     );
 
     this.createIcon(
@@ -52,7 +52,7 @@ class Links{
       -500,
       -400,
       1000,
-      "./resume/resume_sean_goodrich.pdf"
+      './resume/resume_sean_goodrich.pdf'
     );
 
     this.createIcon(
@@ -61,7 +61,7 @@ class Links{
       175,
       -400,
       1000,
-      "mailto:sean@smgoodrich.com"
+      'mailto:sean@smgoodrich.com'
     );
   }
 

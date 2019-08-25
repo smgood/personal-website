@@ -11,7 +11,7 @@ class PortfolioVideo {
   }
 
   createMesh(projectInfo, projectNumber){
-    let video = this.createVideo("textures/" + projectInfo.video);
+    let video = this.createVideo('textures/' + projectInfo.video);
     let texture = new THREE.VideoTexture(video);
     texture.minFilter = THREE.LinearFilter;
     texture.magFilter = THREE.LinearFilter;
@@ -30,7 +30,7 @@ class PortfolioVideo {
     geometry.faces[10].color.setHex(0x4C4C4C);
     geometry.faces[11].color.setHex(0x4C4C4C);
 
-    this.changeUvs(geometry, xsize, ysize);
+    this.changeUvs(geometry);
 
     let material = new THREE.MeshLambertMaterial(parameters);
     let mesh = new THREE.Mesh(geometry, material);
@@ -72,14 +72,14 @@ class PortfolioVideo {
     video.setAttribute('crossorigin', 'anonymous');
     $(video).attr('playsinline','');
 
-    source.type = "video/mp4";
+    source.type = 'video/mp4';
     source.src = videoURL;
 
-    video.addEventListener("loadeddata", this.loadingManager);
-    video.addEventListener("error", this.errorManager);
+    video.addEventListener('loadeddata', this.loadingManager);
+    video.addEventListener('error', this.errorManager);
 
     return video;
-  };
+  }
 
   loadingManager(){
     this.loadedCallback();
@@ -89,7 +89,7 @@ class PortfolioVideo {
     this.errorCallback();
   }
 
-  changeUvs(geometry, width, height){
+  changeUvs(geometry){
     let faceVertexUvs = geometry.faceVertexUvs[0];
 
     for (let i = 0; i < faceVertexUvs.length; i++){
@@ -104,7 +104,7 @@ class PortfolioVideo {
         unitx = 1/14;
         offsetx = 13/14;
       }
-       //left
+      //left
       else if (i === 2 || i === 3){
         unitx = 1/14;
         offsetx = 0;
