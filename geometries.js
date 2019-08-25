@@ -1,6 +1,6 @@
 // JavaScript Document
-class Geometries{
-  static extrusionSettings = {
+const Geometries = {
+  extrusionSettings: {
     amount: 125,
     bevelEnabled: true,
     bevelThickness: 0.5,
@@ -8,9 +8,9 @@ class Geometries{
     bevelSegments: 8,
     material: 0,
     extrudeMaterial: 1
-  };
+  },
 
-  static boxGeometry(){
+  boxGeometry(){
     var Box = new THREE.Shape();
     Box.moveTo(200.0, 0.0);
     Box.lineTo(15.9, 0.0);
@@ -24,9 +24,9 @@ class Geometries{
 
     var box_geometry = new THREE.ExtrudeGeometry( Box, this.extrusionSettings );
     return box_geometry;
-  };
+  },
 
-  static linkedInGeometry(){
+  linkedInGeometry(){
     var ctx_linkedIn = new THREE.Shape();
 
     // layer1/Compound Path/Path
@@ -79,9 +79,9 @@ class Geometries{
 
     var linkedIn_geometry = new THREE.ExtrudeGeometry( ctx_linkedIn, this.extrusionSettings );
     return linkedIn_geometry;
-  }
+  },
 
-  static facebookGeometry(){
+  facebookGeometry(){
     var ctx_facebook = new THREE.Shape();
 
     ctx_facebook.moveTo(204.1, 0.0);
@@ -112,9 +112,9 @@ class Geometries{
 
     var facebook_geometry = new THREE.ExtrudeGeometry( ctx_facebook, this.extrusionSettings );
     return facebook_geometry;
-  }
+  },
 
-  static spotifyGeometry(){
+  spotifyGeometry(){
     var ctx_Spotify = new THREE.Shape();
     ctx_Spotify.moveTo(204.1, 0.0);
     ctx_Spotify.lineTo(11.9, 0.0);
@@ -177,9 +177,9 @@ class Geometries{
     Spotify_geometry.merge( Spotify_A3_geometry );
 
     return Spotify_geometry;
-  }
+  },
 
-  static githubGeometry(){
+  githubGeometry(){
     var ctx_github = new THREE.Shape();
 
     ctx_github.moveTo(204.1, 0.0);
@@ -217,9 +217,9 @@ class Geometries{
 
     var github_geometry = new THREE.ExtrudeGeometry( ctx_github, this.extrusionSettings );
     return github_geometry;
-  }
+  },
 
-  static emailGeometry(){
+  emailGeometry(){
     var ctx_email1 = new THREE.Shape();
     ctx_email1.moveTo(213.1, 211.9);
     ctx_email1.lineTo(146.0, 118.6);
@@ -266,9 +266,9 @@ class Geometries{
     geometry_email1.merge( geometry_email4 );
 
     return geometry_email1;
-  }
+  },
 
-  static resumeGeometry(){
+  resumeGeometry(){
     var ctx_resume = new THREE.Shape();
     ctx_resume.moveTo(204.1, 0.0);
     ctx_resume.lineTo(11.9, 0.0);
@@ -387,4 +387,4 @@ class Geometries{
     resume_geometry.merge( circle_geometry );
     return resume_geometry;
   }
-}
+};
