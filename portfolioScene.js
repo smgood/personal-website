@@ -281,7 +281,7 @@ function portfolio_scene(){
   }
 
   function hoverIcons(event, raycaster){
-    var intersects = raycaster.intersectObjects(linksClass.links_container.children);
+    var intersects = raycaster.intersectObjects(linksClass.linksContainer.children);
 
     if (intersects.length > 0 && linksClass.showLinks == true){
       document.body.style.cursor = "pointer";
