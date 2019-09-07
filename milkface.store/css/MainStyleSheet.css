@@ -1,0 +1,206 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    background-color: #ffffff;
+    margin: 0px;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.bananaLoader {
+    position: absolute;
+    height: 15vh;
+    width: auto;
+    top: calc((100% - 15vh)/2);
+    left: calc((100% - 15vh)/2);
+}
+
+/* Defining each section background and styles
+* --------------------------------------- */
+#section0{
+    background: -webkit-gradient(linear, top left, bottom left, from(#ff6ef0), to(#ffc0f8));
+    background: -webkit-linear-gradient(#ff6ef0, #ffc0f8);
+    background: linear-gradient(#ff6ef0,#ffc0f8);
+}
+
+#section1{
+    background: -webkit-gradient(linear, top left, bottom left, from(#ffc0f8), to(#ffe4fc));
+    background: -webkit-linear-gradient(#ffc0f8, #ffe4fc);
+    background: linear-gradient(#ffc0f8,#ffe4fc);
+}
+
+#section2{
+    background: -webkit-gradient(linear, top left, bottom left, from(#ffe4fc), to(#fffeff));
+    background: -webkit-linear-gradient(#ffe4fc, #fffeff);
+    background: linear-gradient(#ffe4fc,#fffeff);
+}
+
+/* Overwriting fullPage.js tooltip color
+* --------------------------------------- */
+.fp-tooltip{
+    color: #333 !important;
+}
+
+.milkFaceContainer {
+    position: absolute;
+    top: 0px;
+    pointer-events: none;
+}
+
+.header {
+    position: absolute;
+    top: 0px;
+    width: calc(100vh * 1280/1525);
+    max-width: calc(100vw - 130px);
+}
+
+/* default fullPage CSS ruls is vertical-align:middle */
+/* When height of page is 1525 px, video is 1280 x 720 */
+.infoContainerHorizontal {
+    position:relative;;
+    margin: auto;
+
+    width: calc(100vh * 1280/1525);
+    max-width: calc(100vw - 130px);
+}
+
+.videoContainer {
+    height: calc(100vh * 720/1525);
+    max-height: calc((100vw - 130px) * 720/1280);
+}
+
+.videoVimeoIframe {
+    position:absolute;
+    height:100%;
+    width:100%;
+    z-index: 2;
+}
+
+.videoHalftone {
+    position:absolute;
+    height: calc(100% * 901/720);
+    width:auto;
+    z-index: 1;
+    top: calc(100% * 120/720);
+    left: calc(100% * -160/1280)
+}
+
+/* photo gallery */
+.photoGallery {
+    width: calc(50% - 4px);
+    display: inline-grid;
+    position:relative;
+}
+
+.photoText {
+    width: calc(50% - 10px);
+    display: inline-block;
+    position: absolute;
+    height: 100%;
+    right: 0px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: justify;
+    line-height: 150%;
+    vertical-align: middle;
+    margin-top: 6%;
+
+}
+
+.photoText span {
+    background-color: #FFFFFF;
+}
+
+.photoGallery .zoom {
+    margin-bottom:4px;
+}
+
+.photoGallery .selectedImage {
+    width: 100%;
+    height: auto;
+    display:block;
+}
+
+.photoGallery .zoomIcon {
+    display:block;
+    width:33px;
+    height:33px;
+    position:absolute;
+    top:0;
+    right:0;
+    z-index:2;
+}
+
+.photoGallery p {
+    position:absolute;
+    top:3px;
+    right:28px;
+    color:#555;
+    font:bold 13px sans-serif;
+    margin:0;
+}
+
+.photoGallery .previewImage {
+    width: calc((100% - (8px * 4))/5);
+    height: auto;
+    float:left;
+    margin: 4px 4px 0px 4px;
+
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+
+}
+
+.photoGallery .previewImage:hover {
+    -webkit-filter: none; /* Safari 6.0 - 9.0 */
+    filter: none;
+
+    cursor: pointer;
+}
+
+.photoGallery .previewImage:first-child {
+    margin-left: 0px;
+}
+
+.photoGallery .previewImage:last-child {
+    margin-right: 0px;
+}
+
+.roundButton {
+    background: #ff00e4;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	color: #FFFFFF;
+	font-style: oblique;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#buy1 {
+    display:none;
+    position: absolute;
+    bottom: 13%;
+    left: calc((100% - 24.38vh)/2);
+    width: 20vh;
+    padding: 2.19vh;
+    border-radius: 2.19vh;
+    line-height: 5.81vh;
+}
+
+.footer {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	right: 0;
+	position: absolute;
+	bottom: 14px;
+	left: 0;
+	text-align: center;
+	width: 100%;
+	height: 20px;
+	color: #ff00e4;
+}

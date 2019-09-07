@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Milk Face</title>
+		<meta charset="utf-8">
+		<meta name="generator" content="Three.js Editor">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+		<!--fav icon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="images/fav_icon.ico/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="images/fav_icon.ico/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="images/fav_icon.ico/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="images/fav_icon.ico/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="images/fav_icon.ico/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="images/fav_icon.ico/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="images/fav_icon.ico/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="images/fav_icon.ico/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="images/fav_icon.ico/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="images/fav_icon.ico/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="images/fav_icon.ico/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="images/fav_icon.ico/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="images/fav_icon.ico/favicon-16x16.png">
+		<link rel="manifest" href="images/fav_icon.ico/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<!--fullpage.js -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+		<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+
+		<!--three.js -->
+		<script src="js/three.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/rotateToMouse.js"></script>
+		<script src="js/rotateDefmech.js"></script>
+		<script src="js/DeviceOrientationControls.js"></script>
+		<script src="js/milkFace.js"></script>
+		<script src="js/OBJLoader.js"></script>
+
+		<!--Photo Gallery -->
+		<script src='js/jquery.zoom.js'></script>
+		<script src="js/milkFacePhotos.js"></script>
+
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="css/MainStyleSheet.css" />
+
+		<script type="text/javascript">
+
+			var milkFace;
+			var previousIndex;
+
+			$(document).ready(function() {
+				$('#fullpage').fullpage({
+					navigation: true,
+					navigationPosition: 'right',
+					navigationTooltips: ['Milkface', 'Video', 'Info'],
+					scrollingSpeed: 1000,
+					'onLeave': function(index, nextIndex, direction){
+						previousIndex = index;
+						if (nextIndex == 1) {
+							milkFace.play();
+						} else if (nextIndex == 3) {
+							photoGallery.play();
+						}
+					},
+					'afterLoad': function(anchorLink, index){
+						if (previousIndex == 1){
+							milkFace.stop();
+						} else if (previousIndex == 3){
+							photoGallery.stop();
+						}
+					}
+				});
+
+				setScrolling.execute(false);
+
+				var milkFaceParent = document.body;
+				var loadingGif = document.createElement("IMG");
+				loadingGif.src = "./images/banana_loader.gif";
+				loadingGif.className = "bananaLoader";
+
+				milkFace = new milkFacePlayer();
+				milkFace.loadPlayer(milkFaceParent, loadingGif, setScrolling);
+
+				var photoGalleryParent = $(".photoGallery");
+				photoGallery = new milkFacePhotos(photoGalleryParent);
+
+				resizeFont();
+				window.addEventListener("resize", resizeFont);
+
+				resizeHeader();
+				window.addEventListener("resize", resizeHeader);
+			});
+
+			function resizeFont () {
+				var buyBox1 = $("#buy1");
+				buyBox1FontSize = 5.1 * window.innerHeight / 100;
+				buyBox1.css({
+					fontSize: buyBox1FontSize
+				});
+			}
+
+			function resizeHeader () {
+				var headers = $(".header");
+				if ((window.innerHeight * 1280/1525) > (window.innerWidth - 130)) {
+					var margin = 130/2;
+				} else {
+					var margin = (window.innerWidth - window.innerHeight * 1280/1525) / 2;
+				}
+				headers.css({
+					margin: '0px ' + margin + 'px'
+				});
+			}
+
+			setScrolling = {
+				execute: function (setting) {
+					$.fn.fullpage.setAllowScrolling(setting);
+					$.fn.fullpage.setKeyboardScrolling(setting);
+					if (setting) {
+						$("#fp-nav").fadeIn(750);
+					} else {
+						$('#fp-nav').hide();
+					}
+				}
+			}
+
+		</script>
+	</head>
+
+	<body>
+
+		<div id="fullpage">
+
+			<div class="section " id="section0">
+				<a href="https://www.etsy.com/listing/529897780/milkface-toy?ref=shop_home_active_1">
+					<div class="roundButton" id="buy1">
+						BUY ME
+					</div>
+				</a>
+			</div>
+
+			<div class="section" id="section1">
+				<div class="header">Video</div>
+				<div class="infoContainerHorizontal videoContainer">
+					<img class="videoHalftone" src="images/halftone.png" alt="halftone">
+					<iframe class="videoVimeoIframe" src="https://player.vimeo.com/video/219336335?color=ff70c1&portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+					</iframe>
+				</div>
+			</div>
+
+			<div class="section" id="section2">
+				<div class="header">Photos</div>
+				<div class="infoContainerHorizontal">
+					<div class="photoGallery"/>
+					</div>
+					<div class="photoText"><span>
+							Meet Milkface, a handmade resin cast designer toy created and produced in Los
+							Angeles by artist Kyle Goodrich. Each toy is a rare, one-of-a-kind edition of
+							50 collectable pieces.
+							</span>
+						<p>
+						<span>
+							Bagged and tagged for $55 with sticker included!
+						</span>
+						</p>
+						<p>
+						<span>
+							Measurements: 2.25” x 3.5” x 3”
+						</span>
+						</p>
+						<a href="https://www.etsy.com/listing/529897780/milkface-toy?ref=shop_home_active_1">
+							<div class="roundButton" id="buy2">
+								BUY ME
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="footer">
+					2017 Kyle Goodrich | <a href="http://kyle-goodrich.com/?page_id=33">contact</a> | <a href="https://www.instagram.com/kyle__goodrich/">instagram</a> | <a href="http://kyle-goodrich.tumblr.com/">tumblr</a> | <a href="https://vimeo.com/user2315211/videos">vimeo</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
