@@ -32,7 +32,7 @@ var projectInfo = [
     'summary': 'A python script that compares cryptocurrency prices across multiple exchanges and performs an arbitrage on profitable opportunities.',
     'role': 'NA',
     'skills': 'Python, Design Patterns',
-    'image': 'crypto.png',
+    'image': 'crypto.jpg',
     'video': 'crypto.mp4'
   },
 
