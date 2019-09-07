@@ -52,7 +52,7 @@ var projectInfo = [
     'title': 'Milk Face',
     'date': '(Spring 2017 - Summer 2017)',
     'team': 'Kyle Goodrich',
-    'url': 'http://www.milkface.store',
+    'url': '/milkface.store',
     'summary': 'A website to promote 3D printed vinyl toys.',
     'role': 'Web Developer',
     'skills': 'Javascript, Three.js',
