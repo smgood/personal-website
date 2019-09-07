@@ -88,7 +88,7 @@ var projectInfo = [
     'title': 'NFL Hackathon',
     'date': '(Winter 2016)',
     'team': 'NA',
-    'url': 'http://nflhackathon.com/',
+    'url': 'NA',
     'summary': 'A project that allows users to analyze how a play in football would have unfolded had the tail back chosen a different direction to run. An interface allows the user to choose the direction they would like the tail back to run. Real in-game tracking data is used to determine the position of each player at the moment the ball is handed off.',
     'role': 'NA',
     'skills': 'Unity, C#, JSON',
