@@ -14,7 +14,7 @@ var projectInfo = [
 
   {
     'title': 'Cubism.js',
-    'date': '(Spring 2018 - Present)',
+    'date': '(Spring 2018 - Summer 2018)',
     'team': 'NA',
     'url': 'http://smgoodrich.com/cubes/',
     'summary': 'An easy to use, open source javascript library. Use it to create full-screen, 3D scrolling websites, composed entirely of cubes! (Improved version of earlier project)',
@@ -26,7 +26,7 @@ var projectInfo = [
 
   {
     'title': 'Cryptocurrency Bot',
-    'date': '(Summer 2017 - Present)',
+    'date': '(Summer 2017 - Winter 2018)',
     'team': 'NA',
     'url': 'https://github.com/smgood/cryptobot',
     'summary': 'A python script that compares cryptocurrency prices across multiple exchanges and performs an arbitrage on profitable opportunities.',
@@ -38,7 +38,7 @@ var projectInfo = [
 
   {
     'title': 'IllusionGenerator',
-    'date': '(Spring 2016 - Present)',
+    'date': '(Spring 2016 - Fall 2016)',
     'team': 'NA',
     'url': 'NA',
     'summary': 'A project that utilizes perspective and linear algebra to develop optical illusions. Using vector images, a python script creates 3D printable objects in Maya. Viewers will experience the image morphing optical illusion as they move around the object.',
