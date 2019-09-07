@@ -28,7 +28,7 @@ var projectInfo = [
     'title': 'Cryptocurrency Bot',
     'date': '(Summer 2017 - Present)',
     'team': 'NA',
-    'url': 'NA',
+    'url': 'https://github.com/smgood/cryptobot',
     'summary': 'A python script that compares cryptocurrency prices across multiple exchanges and performs an arbitrage on profitable opportunities.',
     'role': 'NA',
     'skills': 'Python, Design Patterns',
