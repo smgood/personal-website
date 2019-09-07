@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+
+Like what you see? Message me at sean@smgoodrich.com
+
+Thanks,
+Sean
+ ______     ______     ______     ______
+/\  ___\   /\  ___\   /\  __ \   /\   \ \
+\ \___  \  \ \  __\   \ \  __ \  \ \ \ \ \
+ \/\_____\  \ \_____\  \ \_\ \_\  \ \_\___\
+  \/_____/   \/_____/   \/_/\/_/   \/_/___/
+
+-->
+
+    <title>Cubism.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Cubism is an easy to use, open source javascript library. Use it to create full-screen, 3D scrolling websites, composed entirely of cubes!">
+    <meta name="author" content="Sean Goodrich">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="keywords" content="Sean, Goodrich, webGL, cubes">
+
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="css/MainStyleSheet.css" />
+
+    <!-- favicon -->
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon/favicon.ico">
+
+    <!-- public libraries -->
+    <script src="js/libraries/three.min.js"></script>
+    <script src="js/libraries/jquery-3.3.1.min.js"></script>
+    <script src="js/libraries/stats.min.js"></script>
+
+    <!-- scene -->
+    <script src="js/cubism.js"></script>
+    <script src="js/textureLoader.js"></script>
+    <script src="js/parameterReader.js"></script>
+    <script src="js/mousewheel.js"></script>
+    <script src="js/animation.js"></script>
+    <script src="js/wall.js"></script>
+    <script src="js/cube.js"></script>
+    <script src="js/secondaryImageInfo.js"></script>
+    <script src="js/face.js"></script>
+    <script src="js/constants.js"></script>
+
+    <!-- animations -->
+    <script src="js/animations/gravity.js"></script>
+    <script src="js/animations/scroll.js"></script>
+    <script src="js/animations/slideshow.js"></script>
+    <script src="js/animations/spiral.js"></script>
+    <script src="js/animations/swap.js"></script>
+    <script src="js/animations/tetris.js"></script>
+
+    <style>
+        body {
+            background-color:PaleTurquoise;
+            color: #404040;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        h1 {
+            font-size: 3vh;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.25vh;
+        }
+
+        li {
+            font-size: 1vh;
+            margin-left:3vh;
+        }
+
+        p, a {
+            font-size: 1vh;
+            color: #404040;
+        }
+
+        .column {
+            height: 100%;
+            width: 50%;
+            float:left;
+        }
+
+        .indent {
+            margin: 0 3vh;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+
+            var parameters  = [
+                {
+                    rows: 12,
+                    columns: 11,
+                    depth: 0.25,
+                    animation: 'gravity',
+                    image: './images/glassBlocks.jpg',
+                    transition: 'exit',
+                    start: 0,
+                    end: 20,
+                    colorType: 'extrude',
+                    opacity: 0.75
+                },
+                {
+                    rows: 10,
+                    columns: 10,
+                    depth: 1,
+                    animation: 'tetris',
+                    image: './images/stingray.mp4',
+                    transition: 'enter',
+                    start: 20,
+                    end: 80,
+                    colorType: 'rainbow',
+                    opacity: 0.2
+                },
+                {
+                    rows: 10,
+                    columns: 10,
+                    animation: 'slideshow',
+                    image: './images/stingray.mp4',
+                    secondaryImage: './images/picasso.jpg',
+                    start: 80,
+                    end: 100,
+                    colorType: 'sample'
+                }
+            ];
+            var cubism = new Cubism(parameters);
+
+            // fps ui
+            var stats = new Stats();
+            $(document.body).append( stats.dom );
+            updateStats();
+            function updateStats() {
+                stats.update();
+                requestAnimationFrame( updateStats );
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div style="height: 100vh; width: 100vw; position: fixed;">
+        <div style="position: relative; height: 100vh; width: 91vh; max-width: 100vw; margin: auto;">
+
+            <div class="column">
+                <div style="margin: 3vh;">
+                    <h1>Documentation</h1>
+
+                    <h2>Animation: (default scroll)</h2>
+                    <li><b>String</b>: gravity, scroll, slideshow, spiral, swap, tetris</li>
+
+                    <h2>Transition*: (default exit)</h2>
+                    <li><b>String</b>: enter, exit</li>
+
+                    <h2>Columns: (default 10)</h2>
+                    <li><b>Int</b></li>
+
+                    <h2>Rows: (default 10)</h2>
+                    <li><b>Int</b></li>
+
+                    <h2>Depth: (default 1)</h2>
+                    <li><b>Float</b></li>
+
+                    <h2>Image: (default ./images/picasso.jpg)</h2>
+                    <li><b>String</b>: (img or video file path)</li>
+
+                    <h2>Secondary Image: (default ./images/picasso.jpg)</h2>
+                    <li><b>String</b>: (img or video file path)</li>
+
+                    <h2>Start: (default 0)</h2>
+                    <li><b>Float</b></li>
+
+                    <h2>End: (default 10)</h2>
+                    <li><b>Float</b></li>
+
+                    <h2>Color Type: (default rainbow)</h2>
+                    <li><b>String</b>: extrude, rainbow, sample, solid</li>
+
+                    <h2>Color Value**: (default blue)</h2>
+                    <li><b>String</b>: (RGB, HSL, X11 name)</li>
+                    <li><b>Hexadecimal</b></li>
+
+                    <h2>Opacity: (default 1)</h2>
+                    <li><b>Float</b>: [0, 1]</li>
+
+                    <p>* Only applies to animations: gravity, scroll, & tetris</p>
+                    <p>** Only applies to color type: solid</p>
+
+                </div>
+            </div>
+
+            <div class="column">
+                <div style="margin: 3vh;">
+                    <h1>Example</h1>
+                    <p>var cubism = new Cubism([{</p>
+                        <p class="indent">
+                            rows: 10,</br>
+                            columns: 10,</br>
+                            depth: 1,</br>
+                            animation: 'tetris',</br>
+                            image: './images/stingray.mp4',</br>
+                            transition: 'enter',</br>
+                            start: 20,</br>
+                            end: 80,</br>
+                            colorType: 'rainbow',</br>
+                            opacity: 0.2</br>
+                        </p>
+                    <p>}, {</p>
+                        <p class="indent">
+                            rows: 10,</br>
+                            columns: 10,</br>
+                            animation: 'slideshow',</br>
+                            image: './images/stingray.mp4',</br>
+                            secondaryImage: './images/picasso.jpg',</br>
+                            start: 80,</br>
+                            end: 100,</br>
+                            colorType: 'sample'</br>
+                        </p>
+                    <p>}]);</p>
+                </div>
+
+                <div style="margin: 3vh;">
+                    <h1>Links</h1>
+                    <a href="https://github.com/smgood/CubeWebsite">Github</a>
+                    </br>
+                    <a href="http://www.smgoodrich.com/cubes/">Demo</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
