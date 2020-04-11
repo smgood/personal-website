@@ -9,30 +9,75 @@
 	<body>
 		<script src="./three.js"></script>
 		<script>
-			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+			let scene = new THREE.Scene();
 
-			var renderer = new THREE.WebGLRenderer();
+      let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 );
+      camera.position.z = 5;
+
+      // White directional light at half intensity shining from the top.
+      var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+      scene.add( light );
+
+      let directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+      scene.add( directionalLight );
+
+			let renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			var geometry = new THREE.BoxGeometry();
-			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			var cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+      let spheres = [];
 
-			camera.position.z = 5;
-
-			var animate = function () {
+			let animate = function () {
 				requestAnimationFrame( animate );
-
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
-
 				renderer.render( scene, camera );
+
+        for (let i = 0; i < spheres.length; i++) {
+          spheres[i].position.x += spheres[i].velocity.x;
+          spheres[i].position.y += spheres[i].velocity.y;
+          spheres[i].position.z -= spheres[i].velocity.z;
+
+          spheres[i].velocity.y -= .002;
+          spheres[i].rotation.x += .1;
+
+        }
 			};
 
 			animate();
+
+      window.addEventListener("mousedown", shoot);
+
+      function shoot(event) {
+        let screenWidth = window.innerWidth/2;
+        let screenHeight = window.innerHeight/2;
+
+        let horizontalDirection = (event.clientX - screenWidth) / screenWidth;
+        let verticalDirection = -(event.clientY - screenHeight) / screenHeight;
+
+        let geometry = new THREE.SphereGeometry( .15, 10, 5);
+        let material = new THREE.MeshStandardMaterial( { color: 0x9ab0ff, wireframe: true } );
+        let sphere = new THREE.Mesh( geometry, material );
+
+        let fov = THREE.Math.degToRad( camera.fov );
+        maxHeight = camera.position.z * Math.tan (fov/2);
+
+        sphere.position.x = horizontalDirection * maxHeight * screenWidth/screenHeight;
+        sphere.position.y = verticalDirection * maxHeight;
+        sphere.position.z = 0;
+
+        let normal = Math.abs(horizontalDirection) + Math.abs(verticalDirection + 1) + 1;
+        sphere.velocity = new THREE.Vector3 (
+          .15 * horizontalDirection / normal,
+          .15 * (verticalDirection + 1) / normal,
+          .15 * 1 / normal
+        )
+
+        scene.add( sphere );
+        spheres.push(sphere);
+      }
+
+      // add delete when off screen function
+      // add camera, directional light, and create sphere function
+      // clean up some more
 		</script>
 	</body>
 </html>
