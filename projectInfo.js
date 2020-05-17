@@ -1,6 +1,18 @@
 // JavaScript Document
 var projectInfo = [
   {
+    "title": "Artwork",
+    "date": "(Fall 2019)",
+    "team": "NA",
+    "url": "NA",
+    "summary": "Digital artwork made using circular rosette pattern for display in my home",
+    "role": "NA",
+    "skills": "Photoshop",
+    "image": "spiral_art.png",
+    "video": "spiral_art.mp4"
+  },
+
+  {
     'title': '< Brickbreaker />',
     'date': '(Summer 2019)',
     'team': 'NA',
@@ -82,18 +94,6 @@ var projectInfo = [
     'skills': 'HTML, CSS, Javascript, Tridiv',
     'image': 'calculator.png',
     'video': 'calculator.mp4'
-  },
-
-  {
-    'title': 'NFL Hackathon',
-    'date': '(Winter 2016)',
-    'team': 'NA',
-    'url': 'NA',
-    'summary': 'A project that allows users to analyze how a play in football would have unfolded had the tail back chosen a different direction to run. An interface allows the user to choose the direction they would like the tail back to run. Real in-game tracking data is used to determine the position of each player at the moment the ball is handed off.',
-    'role': 'NA',
-    'skills': 'Unity, C#, JSON',
-    'image': 'nflPresentation.jpg',
-    'video': 'nflHackathon.mp4'
   },
 
   {
