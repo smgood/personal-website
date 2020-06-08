@@ -1,10 +1,10 @@
 <html>
-<title>brickbreaker</title>  
+<title>brickbreaker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <script src="js/jquery-1.6.3.min.js"></script> 
-    <script src="js/jquery.easing.1.3.js"></script> 
-    <script src="js/jquery.animate-colors-min.js"></script> 
+    <script src="js/jquery-1.6.3.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.animate-colors-min.js"></script>
 
 <head>
 <style type="text/css">
@@ -16,7 +16,7 @@ body {
 #menu {
 	position:absolute;
 	width:50vw;
-	height:30vw;	
+	height:30vw;
 	left:25vw;
 	top:25vw;
 	background-color:red;
@@ -26,7 +26,7 @@ body {
 }
 
 #paddle {
-	position: absolute;	
+	position: absolute;
 	width: 25vw;
 	height: 4vw;
 	border-radius: 2vw;
@@ -35,7 +35,7 @@ body {
 }
 
 .ball {
-	position: absolute;	
+	position: absolute;
 	width: 5vw;
 	height: 5vw;
 	border-radius: 2.5vw;
@@ -57,7 +57,7 @@ body {
 	border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
-	
+
 .OvalBottomOuter{
     height:1vw;
     width:3.2vw;
@@ -74,7 +74,7 @@ body {
 	position:absolute;
 	bottom:0px;
 }
-	
+
 .OvalTopOuter{
     height:.5vw;
     width:4.4vw;
@@ -154,28 +154,35 @@ menu.onclick=function(){
   });
 };
 
-if (window.DeviceMotionEvent != undefined) {
-	window.ondevicemotion = function(e) {
-		paddleAX = event.accelerationIncludingGravity.x * 8;     
-		phoneAcceleration = event.acceleration.x;
+if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.ondevicemotion = function(e) {
+          		paddleAX = event.accelerationIncludingGravity.x * 8;
+          		phoneAcceleration = event.acceleration.x;
 
-		if (Math.abs(phoneAcceleration) > 2.5 && paddleRotateTime == 0)
-			{
-			rotatePaddle(e.rotationRate.alpha);	
-			paddleRotateTime = 1;
-			}		
-	}
-} 
+          		if (Math.abs(phoneAcceleration) > 2.5 && paddleRotateTime == 0)
+          			{
+          			rotatePaddle(e.rotationRate.alpha);
+          			paddleRotateTime = 1;
+          			}
+          	}
+          }
+        })
+        .catch(console.error);
+    }
+
 
 menuSTEP = function () {
 			paddleVX = paddleVX + paddleAX;
 			paddleVX = paddleVX * 0.98;
 			paddleX = (paddleX + paddleVX / 100);
-	
+
 			ballX = paddleX + paddlewidth/2 - ballwidth/2;
 			boundingBoxCheck();
 			ballY = windowWidth - $(ball).height()
-			
+
 			paddle.style.left = paddleX + "px";
 			ball.style.left = ballX + "px";
 			ball.style.top = ballY + "px";
@@ -184,59 +191,59 @@ menuSTEP = function () {
 gameSTEP = function () {
 			degree=degree+ballAX/20;
 			rotate();
-			
+
 			paddleVX = paddleVX + paddleAX;
 			paddleVX = paddleVX * 0.98;
 			paddleX = (paddleX + paddleVX / 100);
-	
+
 			ballVX = ballVX + ballAX/400;
 			ballX = (ballX + ballVX / 100);
 			ballAX = ballAX*0.99;
-	
+
 			ballVY = ballVY + ballAY;
 			hitBallCheck();
 			ballY = (ballY - ballVY / 100);
-			
+
 			boundingBoxCheck();
 			paddle.style.left = paddleX + "px";
-	
+
 			ball.style.left = ballX + "px";
 			ball.style.top = ballY + "px";
 }
 
 degree = 0;
 function rotate() {
-        $(ball).css({ WebkitTransform: 'rotate(' + degree + 'deg)'});  
-        $(ball).css({ '-moz-transform': 'rotate(' + degree + 'deg)'});                      
+        $(ball).css({ WebkitTransform: 'rotate(' + degree + 'deg)'});
+        $(ball).css({ '-moz-transform': 'rotate(' + degree + 'deg)'});
     }
-	
+
 function rotatePaddle(direction){
 	if (direction > 0)
 		{
  	   	$(paddle).css({ WebkitTransform: 'rotate(-45deg)'});
     	$(paddle).css({ '-moz-transform': 'rotate(-45deg)'});
-		
+
 		$(paddle)
   		.delay(1000)
-  		.queue( function(next){ 
-    		$(paddle).css({ WebkitTransform: 'rotate(0deg)'}); 
+  		.queue( function(next){
+    		$(paddle).css({ WebkitTransform: 'rotate(0deg)'});
     		$(paddle).css({ '-moz-transform': 'rotate(0deg)'});
     		 paddleRotateTime = 0;
-		next(); 
+		next();
   		});
 		}
 	else
 		{
- 	   	$(paddle).css({ WebkitTransform: 'rotate(45deg)'}); 
+ 	   	$(paddle).css({ WebkitTransform: 'rotate(45deg)'});
     	$(paddle).css({ '-moz-transform': 'rotate(45deg)'});
 
 		$(paddle)
   		.delay(1000)
-  		.queue( function(next){ 
-    		$(paddle).css({ WebkitTransform: 'rotate(0deg)'}); 
+  		.queue( function(next){
+    		$(paddle).css({ WebkitTransform: 'rotate(0deg)'});
     		$(paddle).css({ '-moz-transform': 'rotate(0deg)'});
     		paddleRotateTime = 0;
-		next(); 
+		next();
   		});
 		}
 	}
@@ -255,7 +262,7 @@ function hitBallCheck(){
 		if(ballX >= paddleX && ballX <= paddleX + paddlewidth)
 				{
 				ballVY = 600;
-				ballY = windowWidth - $(ball).height(); 
+				ballY = windowWidth - $(ball).height();
 				count++;
 				document.getElementById('counter').innerHTML = count;
 				ballAX = paddleVX*-1;
@@ -270,10 +277,9 @@ function hitBallCheck(){
 		document.getElementById('counter').innerHTML = count;
 		ballVX = 0;
 		ballAX = 0;
-		}	
+		}
 }
 </script>
 
 </body>
 </html>
-
