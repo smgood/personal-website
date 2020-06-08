@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hacker Fund Brickbreaker</title>
+<link rel="stylesheet" href="css/MainStyleSheet.css">
+<script src="js/brickbreaker.js"></script>
+
+<script>
+  let ballSpeed = 4;
+</script>
+
+<style>
+  .sesame-seed {
+    position: absolute;
+    background: #ffe3ca;
+    height: 8px;
+    width: 20px;
+    border-radius: 100%;
+  }
+
+  .one {
+    transform: rotate(-10deg);
+    top: 10px;
+    left: 35%;
+  }
+
+  .two {
+    transform: rotate(8deg);
+    left: 45%;
+    top: 20px;
+  }
+
+  .three {
+    transform: rotate(4deg);
+    left: 55%;
+    top: 10px;
+  }
+
+  .burger {
+    margin: auto;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+  }
+
+  .bun {
+    height: 80px;
+    width: 180px;
+    border-radius: 100px 100px 0 0;
+    background: #f4a864;
+  }
+
+  .bottom {
+    border-radius: 0 0 100px 100px;
+  }
+
+  .cosmic-fill {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: url(https://res.cloudinary.com/ddbxzcb7k/image/upload/v1564751401/fill-01_vgkaj7.svg);
+    background-repeat: round;
+  }
+</style>
+</head>
+
+<body>
+<div id="screen">
+  <div id="paddle"></div>
+  <div id="ball"></div>
+
+  <div class="burger">
+    <div class="target bun top">
+      <div class="sesame-seed one"></div>
+      <div class="sesame-seed two"></div>
+      <div class="sesame-seed three"></div>
+    </div>
+    <div class="target cosmic-fill">
+    </div>
+    <div class="target bun bottom"></div>
+  </div>
+
+</div>
+</body>
+</html>

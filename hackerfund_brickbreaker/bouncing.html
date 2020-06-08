@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hacker Fund Brickbreaker</title>
+<link rel="stylesheet" href="css/MainStyleSheet.css">
+<script src="js/brickbreaker.js"></script>
+
+<script>
+  let ballSpeed = 4;
+</script>
+
+<style>
+  .circle{
+      width:40px;
+      height:40px;
+      position: absolute;
+      background-color: red;
+      left:5%;
+      animation: circle .5s alternate infinite ease;
+  }
+
+  @keyframes circle{
+      0%{
+          top:60px;
+          height:10px;
+          transform: scaleX(1.7);
+      }
+      40%{
+          height:40px;
+          transform: scaleX(1);
+      }
+      100%{
+          top:0%;
+      }
+  }
+  .circle:nth-child(2){
+      left:25%;
+      animation-delay: .3s;
+      margin-top: 10%
+  }
+  .circle:nth-child(3){
+      left:45%;
+      animation-delay: .1s;
+  }
+  .circle:nth-child(4){
+      left:65%;
+      animation-delay: .4s;
+      margin-top: 10%
+  }
+  .circle:nth-child(5){
+      left:85%;
+      animation-delay: .2s;
+  }
+</style>
+</head>
+
+<body>
+<div id="screen">
+  <div id="paddle"></div>
+  <div id="ball"></div>
+
+  <div>
+    <div class="target circle"></div>
+    <div class="target circle"></div>
+    <div class="target circle"></div>
+    <div class="target circle"></div>
+    <div class="target circle"></div>
+ </div>
+
+</div>
+</body>
+</html>
