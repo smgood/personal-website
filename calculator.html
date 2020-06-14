@@ -1,0 +1,199 @@
+<html>
+<head>
+<style type="text/css">
+body
+{
+background-color:white;
+}
+
+div.frame
+{
+	float:left;
+	border-radius:20px;
+	-moz-border-radius: 20px;
+	background-color:#D3D3D3;
+	border:5px;	
+	border-style:solid;
+	border-color: #8b8989;
+	border-top-color:#cdc9c9;
+	width:284px;
+	height:350px;
+	padding:10px;
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-top:00;
+	margin-bottom:100;
+}
+
+div.title
+{
+	text-align:center;
+	font-size:20;
+	font-family:"Times New Roman",Times,serif;
+}
+
+div.screen
+{
+	float:middle;
+	background-color:#fafad2;
+	border-radius:10px;
+	-moz-border-radius: 10px;
+	border:3px;
+	border-style:solid;
+	border-color:#2f4f4f;
+	border-bottom-color:#fffafa;
+    margin: 0px;
+	height:72;	
+	padding:10px;
+	min-width:259px;
+	display: table-cell;
+	vertical-align: middle;
+	margin-bottom:20px;
+
+}
+
+span.screentext
+{	
+	font-size:20;
+	float:right;
+	text-align:right;
+	font-family:"franklin gothic medium", Tahoma;	
+}
+
+button.buttons
+{
+	height:40px;
+	width:65px;
+	background-color:#eee9e9;
+	border-radius:10px;
+	-moz-border-radius: 10px;
+	text-align:center;
+	font-size:20;
+	padding:0px;	
+	font-family:"Futura", Helvetica, sans-serif;
+	margin:3px;
+	float:left;	
+}
+
+button.equal
+{
+	height:86px;
+	width:65px;
+	background-color:#eee9e9;
+	border-radius:10px;
+	-moz-border-radius: 10px;
+	text-align:center;
+	font-size:20;
+	padding:0px;	
+	font-family:"Futura", Helvetica, sans-serif;
+	margin:3px;
+	float:right;	
+}
+
+button.zero
+{
+	height:40px;
+	width:134px;
+	background-color:#eee9e9;
+	border-radius:10px;
+	-moz-border-radius: 10px;
+	text-align:center;
+	font-size:20;
+	padding:0px;	
+	font-family:"Futura", Helvetica, sans-serif;
+	margin:3px;
+	float:left;	
+}
+
+div.KeepEqualInLine
+{
+	float:left;
+	height:20px;
+	width:280px;
+	
+	
+}
+</style>
+</head>
+
+<body>
+<div class="frame">
+
+	<script type="text/javascript">
+	function functionC()
+	{document.getElementById("screentext").innerHTML="";}
+	</script>
+
+	<script type="text/javascript">
+	function functionAdjs(variable)
+	{
+	var equalAlreadyPushed=	document.getElementById("screentext").innerHTML.search("THE TRUTH");
+	if (equalAlreadyPushed==-1)
+	{
+	var pHeight = document.getElementById("screentext").offsetHeight;
+	var numbLines = pHeight/23;	
+			
+		if (numbLines==0)
+			document.getElementById("screentext").innerHTML="Sean is "+variable;
+		else if (numbLines==1 || numbLines==2)	
+		document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML + " & " + variable;
+	}
+	else
+		document.getElementById("screentext").innerHTML="Sean is "+variable;
+	}
+	</script>
+	
+	<script type="text/javascript">
+	function functionEquals()
+	{
+		var pHeight = document.getElementById("screentext").offsetHeight;
+		var numbLines = pHeight/23;
+			if(numbLines!=0)
+				document.getElementById("screentext").innerHTML="THE TRUTH";
+	}
+	</script>
+	
+	<div class="title">Calculator</span>
+
+	<div id="screen" class="screen">
+		<span id="screentext" class="screentext"></span>
+	</div>
+	
+	<div class="KeepEqualInLine">
+	</div>	
+		
+	<button id="Cbutton" class="buttons" type="button" onclick="functionC()">C</button>
+	<button id="signbutton" class="buttons" type="button" onclick="functionAdjs('sexy')">&plusmn</button>
+	<button id="dividebutton" class="buttons" type="button" onclick="functionAdjs('ripped')">&divide</button>
+	<button id="timesbutton" class="buttons" type="button" onclick="functionAdjs('intelligent')">X</button>
+
+	<br/>
+	
+	<button id="sevenbutton" class="buttons" type="button" onclick="functionAdjs('perfect')">7</button>
+	<button id="eightbutton" class="buttons" type="button" onclick="functionAdjs('interesting')">8</button>
+	<button id="ninebutton" class="buttons" type="button" onclick="functionAdjs('stylish')">9</button>
+	<button id="minusbutton" class="buttons" type="button" onclick="functionAdjs('handsome')">-</button>
+	
+	<br/>
+
+	<button class="buttons" type="button" onclick="functionAdjs('generous')">4</button>
+	<button class="buttons" type="button" onclick="functionAdjs('humble')">5</button>
+	<button class="buttons" type="button" onclick="functionAdjs('hot')">6</button>
+	<button class="buttons" type="button" onclick="functionAdjs('cultured')">+</button>
+	
+	<br/>
+
+	<button class="buttons" type="button" onclick="functionAdjs('funny')" >1</button>
+	<button class="buttons" type="button" onclick="functionAdjs('strong')">2</button>
+	<button class="buttons" type="button" onclick="functionAdjs('passionate')">3</button>
+	<button class="equal" type="button" onclick="functionEquals()">=</button>
+	
+	<br/>
+
+	<button class="zero" type="button" onclick="functionAdjs('loving')">0</button>
+	<button class="buttons" type="button" onclick="functionAdjs('gentlemanly')">.</button>
+
+</div>
+
+</body>
+</html>
