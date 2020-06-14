@@ -12,7 +12,7 @@ div.frame
 	border-radius:20px;
 	-moz-border-radius: 20px;
 	background-color:#D3D3D3;
-	border:5px;	
+	border:5px;
 	border-style:solid;
 	border-color: #8b8989;
 	border-top-color:#cdc9c9;
@@ -21,7 +21,7 @@ div.frame
 	padding:10px;
 	margin-left: 100px;
 	margin-right: 100px;
-	margin-top:00;
+	margin-top:100;
 	margin-bottom:100;
 }
 
@@ -43,7 +43,7 @@ div.screen
 	border-color:#2f4f4f;
 	border-bottom-color:#fffafa;
     margin: 0px;
-	height:72;	
+	height:72;
 	padding:10px;
 	min-width:259px;
 	display: table-cell;
@@ -53,11 +53,11 @@ div.screen
 }
 
 span.screentext
-{	
+{
 	font-size:20;
 	float:right;
 	text-align:right;
-	font-family:"franklin gothic medium", Tahoma;	
+	font-family:"franklin gothic medium", Tahoma;
 }
 
 button.buttons
@@ -69,10 +69,10 @@ button.buttons
 	-moz-border-radius: 10px;
 	text-align:center;
 	font-size:20;
-	padding:0px;	
+	padding:0px;
 	font-family:"Futura", Helvetica, sans-serif;
 	margin:3px;
-	float:left;	
+	float:left;
 }
 
 button.equal
@@ -84,10 +84,10 @@ button.equal
 	-moz-border-radius: 10px;
 	text-align:center;
 	font-size:20;
-	padding:0px;	
+	padding:0px;
 	font-family:"Futura", Helvetica, sans-serif;
 	margin:3px;
-	float:right;	
+	float:right;
 }
 
 button.zero
@@ -99,10 +99,10 @@ button.zero
 	-moz-border-radius: 10px;
 	text-align:center;
 	font-size:20;
-	padding:0px;	
+	padding:0px;
 	font-family:"Futura", Helvetica, sans-serif;
 	margin:3px;
-	float:left;	
+	float:left;
 }
 
 div.KeepEqualInLine
@@ -110,8 +110,8 @@ div.KeepEqualInLine
 	float:left;
 	height:20px;
 	width:280px;
-	
-	
+
+
 }
 </style>
 </head>
@@ -131,18 +131,21 @@ div.KeepEqualInLine
 	if (equalAlreadyPushed==-1)
 	{
 	var pHeight = document.getElementById("screentext").offsetHeight;
-	var numbLines = pHeight/23;	
-			
+	var numbLines = pHeight/23;
+
 		if (numbLines==0)
 			document.getElementById("screentext").innerHTML="Sean is "+variable;
-		else if (numbLines==1 || numbLines==2)	
-		document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML + " & " + variable;
+		else if(document.getElementById("screentext").innerHTML.substring(document.getElementById("screentext").innerHTML.length-1)=='.'||
+ document.getElementById("screentext").innerHTML.substring(document.getElementById("screentext").innerHTML.length-1)=='!'||document.getElementById("screentext").innerHTML.substring(document.getElementById("screentext").innerHTML.length-1)=='?')
+				document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML+ " Sean is "+variable;
+		else if (numbLines==1 || numbLines==2)
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML + " & " + variable;
 	}
 	else
 		document.getElementById("screentext").innerHTML="Sean is "+variable;
 	}
 	</script>
-	
+
 	<script type="text/javascript">
 	function functionEquals()
 	{
@@ -152,46 +155,188 @@ div.KeepEqualInLine
 				document.getElementById("screentext").innerHTML="THE TRUTH";
 	}
 	</script>
-	
-	<div class="title">Calculator</span>
+
+	<script type="text/javascript">
+	function functionHigher(varA,varB,varC,varD,varE, varLastWord,varSpace)
+	{
+	if (varLastWord==varA)
+			document.getElementById("screentext").innerHTML= document.getElementById("screentext").innerHTML.substring(0, varSpace) +" " + varB;
+	else if (varLastWord==varB)
+			document.getElementById("screentext").innerHTML= document.getElementById("screentext").innerHTML.substring(0, varSpace) +" " + varC;
+	else if (varLastWord==varC)
+			document.getElementById("screentext").innerHTML= document.getElementById("screentext").innerHTML.substring(0, varSpace) +" " + varD;
+	else if (varLastWord==varD)
+			document.getElementById("screentext").innerHTML= document.getElementById("screentext").innerHTML.substring(0, varSpace) +" " + varE;
+	}
+	</script>
+
+	<script type="text/javascript">
+	function functionPlus()
+	{
+	var space=document.getElementById("screentext").innerHTML.lastIndexOf(" ");
+	lastWord= document.getElementById("screentext").innerHTML.substring(space+1);
+	functionHigher('cute','attractive','handsome','hot','on-fire',lastWord,space);
+	functionHigher('fit','well-built','chiseled','ripped','swole',lastWord,space);
+	functionHigher('smart','intellectual','gifted','ingenious','omniscient',lastWord,space);
+	functionHigher('clever','witty','funny','comical','hilarious',lastWord,space);
+	functionHigher('kissable','romantic','passionate','sexy','irresistible',lastWord,space);
+	functionHigher('kind','polite','gentlemanly','chivalrous','brave',lastWord,space);
+	functionHigher('suave','interesting','sophisticated','worldly','cultured',lastWord,space);
+	functionHigher('generous','humble','charitable','bighearted','altruistic',lastWord,space);
+	functionHigher('stylish','classy','refined','regal','fly',lastWord,space);
+	functionHigher('nice','friendly','honest','affectionate','boyfriend-material',lastWord,space);
+	}
+	</script>
+
+	<script type="text/javascript">
+	function functionLower(varA,varB,varC,varD,varE, varLastWord,varSpace)
+	{
+	if (varLastWord==varE)
+			document.getElementById("screentext").innerHTML= document.getElementById("screentext").innerHTML.substring(0, varSpace) +" " + varD;
+	else if (varLastWord==varD)
+			document.getElementById("screentext").innerHTML= document.getElementById("screentext").innerHTML.substring(0, varSpace) +" " + varC;
+	else if (varLastWord==varC)
+			document.getElementById("screentext").innerHTML= document.getElementById("screentext").innerHTML.substring(0, varSpace) +" " + varB;
+	else if (varLastWord==varB)
+			document.getElementById("screentext").innerHTML= document.getElementById("screentext").innerHTML.substring(0, varSpace) +" " + varA;
+	}
+	</script>
+
+	<script type="text/javascript">
+	function functionMinus()
+	{
+	var space=document.getElementById("screentext").innerHTML.lastIndexOf(" ");
+	lastWord= document.getElementById("screentext").innerHTML.substring(space+1);
+	functionLower('cute','attractive','handsome','hot','on-fire',lastWord,space);
+	functionLower('fit','well-built','chiseled','ripped','swole',lastWord,space);
+	functionLower('smart','intelligent','gifted','ingenious','omniscient',lastWord,space);
+	functionLower('clever','witty','funny','comical','hilarious',lastWord,space);
+	functionLower('kissable','romantic','passionate','sexy','irresistible',lastWord,space);
+	functionLower('kind','polite','gentlemanly','chivalrous','brave',lastWord,space);
+	functionLower('suave','interesting','sophisticated','worldly','cultured',lastWord,space);
+	functionLower('generous','humble','charitable','bighearted','altruistic',lastWord,space);
+	functionLower('stylish','classy','refined','regal','fly',lastWord,space);
+	functionLower('nice','friendly','honest','affectionate','boyfriend-material',lastWord,space);
+
+	}
+	</script>
+
+	<script type="text/javascript">
+	function functionTimes()
+	{
+	var pHeight = document.getElementById("screentext").offsetHeight;
+	var numbLines = pHeight/23;
+	if (numbLines!=0)
+	{
+	var space=document.getElementById("screentext").innerHTML.lastIndexOf(" ");
+		if(document.getElementById("screentext").innerHTML.substring(space-6,space)=='fairly')
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space-6) + "pretty" + document.getElementById("screentext").innerHTML.substring(space);
+		else if(document.getElementById("screentext").innerHTML.substring(space-6,space)=='pretty')
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space-6) + document.getElementById("screentext").innerHTML.substring(space);
+ 		else if(document.getElementById("screentext").innerHTML.substring(space-4,space)=='very')
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space-4) +" extremely" + document.getElementById("screentext").innerHTML.substring(space);
+		else if(document.getElementById("screentext").innerHTML.substring(space-9,space)=='extremely')
+			return;
+		else
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space) +" very" + document.getElementById("screentext").innerHTML.substring(space);
+	}
+	}
+	</script>
+
+	<script type="text/javascript">
+	function functionDivide()
+	{
+	var pHeight = document.getElementById("screentext").offsetHeight;
+	var numbLines = pHeight/23;
+	if (numbLines!=0)
+	{
+	var space=document.getElementById("screentext").innerHTML.lastIndexOf(" ");
+		if(document.getElementById("screentext").innerHTML.substring(space-6,space)=='fairly')
+			return;
+		else if(document.getElementById("screentext").innerHTML.substring(space-6,space)=='pretty')
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space-6) + "fairly" + document.getElementById("screentext").innerHTML.substring(space);
+		else if(document.getElementById("screentext").innerHTML.substring(space-4,space)=='very')
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space-4) + document.getElementById("screentext").innerHTML.substring(space);
+		else if(document.getElementById("screentext").innerHTML.substring(space-9,space)=='extremely')
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space-9) + " very" + document.getElementById("screentext").innerHTML.substring(space);
+		else
+		document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space) +" pretty" + document.getElementById("screentext").innerHTML.substring(space);
+	}
+	}
+	</script>
+
+	<script type="text/javascript">
+	function functionPlusmn()
+	{
+	var pHeight = document.getElementById("screentext").offsetHeight;
+	var numbLines = pHeight/23;
+	if (numbLines!=0)
+	{
+	var space=document.getElementById("screentext").innerHTML.lastIndexOf(" ");
+		if(document.getElementById("screentext").innerHTML.substring(space-3,space)=='not')
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space-3) + document.getElementById("screentext").innerHTML.substring(space);
+		else
+		document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0, space) +" not" + document.getElementById("screentext").innerHTML.substring(space);
+	}
+	}
+	</script>
+
+	<script type="text/javascript">
+	function functionDecimal()
+	{
+	var pHeight = document.getElementById("screentext").offsetHeight;
+	var numbLines = pHeight/23;
+	if (numbLines!=0)
+		if(document.getElementById("screentext").innerHTML.substring(document.getElementById("screentext").innerHTML.length-1)=='.')
+		document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0,document.getElementById("screentext").innerHTML.length-1) + "!";
+		else if(document.getElementById("screentext").innerHTML.substring(document.getElementById("screentext").innerHTML.length-1)=='!')
+			document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0,document.getElementById("screentext").innerHTML.length-1) + "?";
+		else if(document.getElementById("screentext").innerHTML.substring(document.getElementById("screentext").innerHTML.length-1)=='?')
+				document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML.substring(0,document.getElementById("screentext").innerHTML.length-1);
+		else
+		document.getElementById("screentext").innerHTML=document.getElementById("screentext").innerHTML + ".";
+	}
+	</script>
+
+	<div class="title">Calculator</div>
 
 	<div id="screen" class="screen">
 		<span id="screentext" class="screentext"></span>
 	</div>
-	
+
 	<div class="KeepEqualInLine">
-	</div>	
-		
+	</div>
+
 	<button id="Cbutton" class="buttons" type="button" onclick="functionC()">C</button>
-	<button id="signbutton" class="buttons" type="button" onclick="functionAdjs('sexy')">&plusmn</button>
-	<button id="dividebutton" class="buttons" type="button" onclick="functionAdjs('ripped')">&divide</button>
-	<button id="timesbutton" class="buttons" type="button" onclick="functionAdjs('intelligent')">X</button>
+	<button id="signbutton" class="buttons" type="button" onclick="functionPlusmn()">&plusmn</button>
+	<button id="dividebutton" class="buttons" type="button" onclick="functionDivide()">&divide</button>
+	<button id="timesbutton" class="buttons" type="button" onclick="functionTimes()">X</button>
 
 	<br/>
-	
-	<button id="sevenbutton" class="buttons" type="button" onclick="functionAdjs('perfect')">7</button>
-	<button id="eightbutton" class="buttons" type="button" onclick="functionAdjs('interesting')">8</button>
-	<button id="ninebutton" class="buttons" type="button" onclick="functionAdjs('stylish')">9</button>
-	<button id="minusbutton" class="buttons" type="button" onclick="functionAdjs('handsome')">-</button>
-	
+
+	<button id="sevenbutton" class="buttons" type="button" onclick="functionAdjs('sophisticated')">7</button>
+	<button id="eightbutton" class="buttons" type="button" onclick="functionAdjs('charitable')">8</button>
+	<button id="ninebutton" class="buttons" type="button" onclick="functionAdjs('refined')">9</button>
+	<button id="minusbutton" class="buttons" type="button" onclick="functionMinus()">-</button>
+
 	<br/>
 
-	<button class="buttons" type="button" onclick="functionAdjs('generous')">4</button>
-	<button class="buttons" type="button" onclick="functionAdjs('humble')">5</button>
-	<button class="buttons" type="button" onclick="functionAdjs('hot')">6</button>
-	<button class="buttons" type="button" onclick="functionAdjs('cultured')">+</button>
-	
+	<button class="buttons" type="button" onclick="functionAdjs('funny')">4</button>
+	<button class="buttons" type="button" onclick="functionAdjs('passionate')">5</button>
+	<button class="buttons" type="button" onclick="functionAdjs('gentlemanly')">6</button>
+	<button class="buttons" type="button" onclick="functionPlus()">+</button>
+
 	<br/>
 
-	<button class="buttons" type="button" onclick="functionAdjs('funny')" >1</button>
-	<button class="buttons" type="button" onclick="functionAdjs('strong')">2</button>
-	<button class="buttons" type="button" onclick="functionAdjs('passionate')">3</button>
+	<button class="buttons" type="button" onclick="functionAdjs('handsome')" >1</button>
+	<button class="buttons" type="button" onclick="functionAdjs('chiseled')">2</button>
+	<button class="buttons" type="button" onclick="functionAdjs('gifted')">3</button>
 	<button class="equal" type="button" onclick="functionEquals()">=</button>
-	
+
 	<br/>
 
-	<button class="zero" type="button" onclick="functionAdjs('loving')">0</button>
-	<button class="buttons" type="button" onclick="functionAdjs('gentlemanly')">.</button>
+	<button class="zero" type="button" onclick="functionAdjs('honest')">0</button>
+	<button class="buttons" type="button" onclick="functionDecimal()">.</button>
 
 </div>
 
