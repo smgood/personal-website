@@ -82,11 +82,7 @@
   var current_page;
 
   var portfolio_loaded = false;
-  var loaded_pg2 = false;
   var loaded_pg3 = false;
-
-  var portfolioClass;
-  var linksClass;
 
   loadingFinished = {
     execute: function () {
@@ -117,21 +113,17 @@
       'onLeave': function(index, nextIndex, direction){
         scrolling = true;
         if (index == 1){
-          ExplodeFunction();
-          $("#continue").fadeOut(function(){
-            if (nextIndex == 2){
-              $("#instructions").fadeIn();
+          page1.explode();
+          page2.resetPortfolio();
+          setTimeout(function(){
+            page2.showPortfolio();
+            if (page1.isExploding()){
+              page1.stop();
             }
+          }, 2000);
+          $("#continue").fadeOut(function(){
+            $("#instructions").fadeIn();
           });
-
-          if (nextIndex == 2){
-            setTimeout(function(){portfolioClass.showPortfolio(250);}, 2000);
-            loaded_pg2 = true;
-          } else if (nextIndex == 3){
-            linksClass.linksAppear(250);
-            loaded_pg3 = true;
-            window.setTimeout(function(){linksClass.showLinks = true;}, 250 * 7);
-          }
         }
 
         else if (index == 2){
@@ -142,31 +134,21 @@
             }
           });
 
-          if (nextIndex == 3 && loaded_pg3 == false){
+          if (nextIndex == 1){
+            page1.play();
+            page2.hidePortfolio();
+          } else if (nextIndex == 3 && loaded_pg3 == false){
+            page2.linksAppear();
             loaded_pg3 = true;
-            linksClass.linksAppear(250);
-            window.setTimeout(function(){linksClass.showLinks = true;}, 250 * 7);
           }
         }
 
         else{
           page2.noHoverLinks();
-          if (nextIndex == 1){
-            $("#continue").fadeIn();
-          } else if (nextIndex == 2){
-            $("#instructions").fadeIn();
-            if (loaded_pg2 == false){
-              loaded_pg2 = true;
-              portfolioClass.showPortfolio(250);
-            }
-          }
+          $("#instructions").fadeIn();
         }
 
-        if (nextIndex == 1){
-          page1.play();
-          loaded_pg2 = false;
-          portfolioClass.hidePortfolio(10000);
-        } else if (portfolio_loaded == false){
+        if (portfolio_loaded == false){
           page2.animate();
           portfolio_loaded = true;
         }
@@ -177,16 +159,6 @@
         current_page = index;
       }
     });
-
-    function ExplodeFunction(){
-      page1.explode();
-      portfolioClass.resetPortfolio();
-      setTimeout(function(){
-        if (page1.isExploding()){
-          page1.stop();
-        }
-      }, 2000);
-    }
 
     var doScroll = function (event) {
       event = window.event || event;

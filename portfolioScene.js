@@ -220,6 +220,25 @@ function portfolio_scene(scrollManager){
     }
   }
 
+  this.showPortfolio = function() {
+    portfolioClass.showPortfolio(250);
+  }
+
+  this.hidePortfolio = function() {
+    portfolioClass.hidePortfolio(10000);
+  }
+
+  this.resetPortfolio = function() {
+    portfolioClass.resetPortfolio()
+  }
+
+  this.linksAppear = function() {
+    linksClass.linksAppear(250);
+    window.setTimeout(function(){
+      linksClass.showLinks = true
+    }, 250 * 7);
+  }
+
   function getTouchPosition(event) {
     return new THREE.Vector2(
       ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1,
