@@ -1,4 +1,4 @@
-function portfolio_scene(){
+function portfolio_scene(scrollManager){
   if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
   let $this = this;
@@ -6,9 +6,6 @@ function portfolio_scene(){
   var camera, scene, renderer;
   var mouseX = 0;
   var mouseY = 0;
-
-  var controls;
-  var objects = [];
 
   var windowHalfX = window.innerWidth / 2;
   var windowHalfY = window.innerHeight / 2;
@@ -37,7 +34,7 @@ function portfolio_scene(){
 
     camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
     camera.position.z = 3000;
-    camera.position.y = 2050*(1.5 - scroll_height/window.innerHeight);
+    camera.position.y = 2050*(1.5 - scrollManager.getHeightOffset()/window.innerHeight);
     camera.position.x = 0;
 
     var light = new THREE.DirectionalLight( 0xffffff, 0.8 );
@@ -181,7 +178,7 @@ function portfolio_scene(){
   }
 
   this.animate = function() {
-    camera.position.y = 2050*(1.5 - scroll_height/window.innerHeight);
+    camera.position.y = 2050*(1.5 - scrollManager.getHeightOffset()/window.innerHeight);
     requestAnimationFrame( $this.animate );
     TWEEN.update();
     render();

@@ -1,7 +1,9 @@
 // JavaScript Document
 // create 3D portfolio
 
-function sLogo (container) {
+function sLogo (scrollManager, container) {
+    let $this = this;
+
     var scene, camera, group, renderer;
     var animationRequest;
 
@@ -19,27 +21,6 @@ function sLogo (container) {
     var minDistance = 60;
     var flipped = 1;
     var explode;
-
-    init ();
-
-    function init () {
-        scene = new THREE.Scene();
-
-        group = new THREE.Group();
-        scene.add( group );
-
-        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / (window.innerHeight), 1, 10000 );
-        camera.position.z = 1300;
-
-        renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-        renderer.setClearColor( 0xffffff, 0 ); // the default
-        renderer.setPixelRatio( window.devicePixelRatio );
-
-        renderer.gammaInput = true;
-        renderer.gammaOutput = true;
-
-        container.appendChild( renderer.domElement );
-    };
 
     var instantiateLogo = function() {
         explode = false;
@@ -232,7 +213,7 @@ function sLogo (container) {
                     positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
 
                     // need to account for x position
-                    if (flipped * particlePositions[ i * 3 + 1 ] < ( 1042 * (scroll_height/window.innerHeight - 47/400)) - 400)
+                    if (flipped * particlePositions[ i * 3 + 1 ] < ( 1042 * (scrollManager.getHeightOffset()/window.innerHeight - 47/400)) - 400)
                         alpha = (40 / 255) * (1-alpha) + alpha;
 
                     colors[ colorpos++ ] = alpha;
@@ -345,5 +326,28 @@ function sLogo (container) {
 
     this.isExploding = function () {
         return explode;
+    };
+
+    init ();
+
+    function init () {
+        scene = new THREE.Scene();
+
+        group = new THREE.Group();
+        scene.add( group );
+
+        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / (window.innerHeight), 1, 10000 );
+        camera.position.z = 1300;
+
+        renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+        renderer.setClearColor( 0xffffff, 0 ); // the default
+        renderer.setPixelRatio( window.devicePixelRatio );
+
+        renderer.gammaInput = true;
+        renderer.gammaOutput = true;
+
+        container.appendChild( renderer.domElement );
+
+        $this.play();
     };
 }

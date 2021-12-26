@@ -36,6 +36,7 @@
     <script type="text/javascript" src="link.js"></script>
     <script type="text/javascript" src="links.js"></script>
     <script type="text/javascript" src="geometries.js"></script>
+    <script type="text/javascript" src="ScrollManager.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/MainStyleSheet.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
@@ -77,7 +78,6 @@
 
 <script type="text/javascript">
 
-  var scroll_height;
   var scrolling = false;
   var current_page;
 
@@ -86,7 +86,6 @@
   var loaded_pg3 = false;
 
   var portfolioClass;
-  var portfolioPopover;
   var linksClass;
 
   loadingFinished = {
@@ -103,10 +102,9 @@
   };
 
   $(document).ready(function() {
-    page1 = new sLogo(document.getElementById("container"));
-    page1.play();
-
-    page2 = new portfolio_scene();
+    let scrollManager = new ScrollManager();
+    page1 = new sLogo(scrollManager, document.getElementById("container"));
+    page2 = new portfolio_scene(scrollManager);
 
     $('#fullpage').fullpage({
       sectionsColor: ['#000000', '#282828', '#33383D'],
@@ -190,11 +188,6 @@
       }, 2000);
     }
 
-    setInterval(function(){
-      var node = document.getElementById("fullpage");
-      scroll_height = -1 * node.getBoundingClientRect().top; //real offset top
-    }, 20);
-
     var doScroll = function (event) {
       event = window.event || event;
 
@@ -212,7 +205,6 @@
 
     window.addEventListener( 'resize', onWindowResize, false );
     window.addEventListener('mousewheel', doScroll, false);
-    //window.addEventListener('DOMMouseScroll', doScroll, false);
   });
 
 </script>
