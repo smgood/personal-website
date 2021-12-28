@@ -19,60 +19,6 @@ function portfolio_scene(scrollManager){
   var targetRotationOnMouseDown = 0;
   var mouseXOnMouseDown = 0;
 
-  init();
-
-  function init() {
-    scene = new THREE.Scene();
-
-    portfolioClass = new PortfolioVideos(scene, loadingFinished);
-    portfolioPopover = new lib_portfolio_popover();
-    linksClass = new Links(scene);
-
-    container = document.createElement('div');
-    container.id = "container2";
-    document.body.appendChild( container );
-
-    camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-    camera.position.z = 3000;
-    camera.position.y = 2050*(1.5 - scrollManager.getHeightOffset()/window.innerHeight);
-    camera.position.x = 0;
-
-    var light = new THREE.DirectionalLight( 0xffffff, 0.8 );
-    light.position.set(0.2, 0, 1 ).normalize();
-    scene.add( light );
-
-    var ambient = new THREE.AmbientLight(0x222222);
-    scene.add( ambient );
-
-    renderer = new THREE.WebGLRenderer( { alpha: true } );
-    renderer.setSize( window.innerWidth, window.innerHeight);
-    container.appendChild( renderer.domElement );
-
-    var pointLight = new THREE.PointLight( 0xffffff, 0.3, 2500 );
-    pointLight.position.set(-162.5, -800 , 0);
-    scene.add( pointLight );
-
-    renderer.autoClear = false;
-
-    document.addEventListener( 'mousemove', onMouseMove, false );
-    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-    document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-
-    window.addEventListener( 'resize', onWindowResize, false );
-
-    document.addEventListener( 'touchstart', touchIcon, { passive: false });
-    document.addEventListener( 'touchstart', touchPortfolio, false );
-    document.addEventListener( 'mousemove', mouseIcon, false );
-    document.addEventListener( 'mousemove', mousePortfolio, false );
-
-    document.addEventListener( 'click', openLink, false );
-    document.getElementById("close").addEventListener( 'click', closePortfolioInfo, false );
-
-    renderer.setClearColor( 0x000000, 0 ); // the default
-  }
-
-
   var box_clicked = false;
   var down_clicked;
   var start_position;
@@ -321,5 +267,59 @@ function portfolio_scene(scrollManager){
     } else{
       $this.noHoverLinks();
     }
+  }
+
+  init();
+
+  function init() {
+    scene = new THREE.Scene();
+
+    portfolioClass = new PortfolioVideos(scene, loadingFinished);
+    portfolioPopover = new lib_portfolio_popover();
+    linksClass = new Links(scene);
+
+    container = document.createElement('div');
+    container.id = "container2";
+    document.body.appendChild( container );
+
+    camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+    camera.position.z = 3000;
+    camera.position.y = 2050*(1.5 - scrollManager.getHeightOffset()/window.innerHeight);
+    camera.position.x = 0;
+
+    var light = new THREE.DirectionalLight( 0xffffff, 0.8 );
+    light.position.set(0.2, 0, 1 ).normalize();
+    scene.add( light );
+
+    var ambient = new THREE.AmbientLight(0x222222);
+    scene.add( ambient );
+
+    renderer = new THREE.WebGLRenderer( { alpha: true } );
+    renderer.setSize( window.innerWidth, window.innerHeight);
+    container.appendChild( renderer.domElement );
+
+    var pointLight = new THREE.PointLight( 0xffffff, 0.3, 2500 );
+    pointLight.position.set(-162.5, -800 , 0);
+    scene.add( pointLight );
+
+    renderer.autoClear = false;
+
+    document.addEventListener( 'mousemove', onMouseMove, false );
+    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+    window.addEventListener( 'resize', onWindowResize, false );
+
+    document.addEventListener( 'touchstart', touchIcon, { passive: false });
+    document.addEventListener( 'touchstart', touchPortfolio, false );
+    document.addEventListener( 'mousemove', mouseIcon, false );
+    document.addEventListener( 'mousemove', mousePortfolio, false );
+
+    document.addEventListener( 'click', openLink, false );
+    document.getElementById("close").addEventListener( 'click', closePortfolioInfo, false );
+
+    renderer.setClearColor( 0x000000, 0 ); // the default
+    $this.animate();
   }
 }

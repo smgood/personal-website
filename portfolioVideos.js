@@ -57,7 +57,6 @@ class PortfolioVideos {
   loadingCallback(){
     this.loadedVideos++;
     if (this.loadedVideos === this.totalVideos){
-      $('#continue').html('Scroll &#9661 Down');
       this.loadingFinished.execute();
     } else {
       $('#continue').html(Math.round(this.loadedVideos/this.totalVideos * 100) + '% Ready');

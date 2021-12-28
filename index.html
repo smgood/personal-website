@@ -55,7 +55,7 @@
 
     <div id ="container"></div>
 
-    <div id = "continue" class="footer">
+    <div id ="continue" class="footer">
       0% Ready
     </div>
 
@@ -80,8 +80,6 @@
 
   var scrolling = false;
   var current_page;
-
-  var portfolio_loaded = false;
   var loaded_pg3 = false;
 
   loadingFinished = {
@@ -90,10 +88,12 @@
       $.fn.fullpage.setKeyboardScrolling(true);
       $("#fp-nav").fadeIn(750);
 
+      $('#continue').html('Scroll &#9661 Down');
       $('#continue').addClass('continue');
       $('#continue').on('click', function() {
         $.fn.fullpage.moveSectionDown();
       });
+      window.addEventListener('mousewheel', doScroll, false);
     }
   };
 
@@ -147,11 +147,6 @@
           page2.noHoverLinks();
           $("#instructions").fadeIn();
         }
-
-        if (portfolio_loaded == false){
-          page2.animate();
-          portfolio_loaded = true;
-        }
       },
 
       'afterLoad': function(anchorLink, index){
@@ -159,12 +154,13 @@
         current_page = index;
       }
     });
+    $.fn.fullpage.setMouseWheelScrolling(false);
 
     var doScroll = function (event) {
       event = window.event || event;
 
       var delta = event.wheelDeltaY;
-      if (Math.abs(delta) < 100 || $("#info_page").is(':visible') ){
+      if (Math.abs(delta) < 100){
         $.fn.fullpage.setMouseWheelScrolling(false);
       } else{
         $.fn.fullpage.setMouseWheelScrolling(true);
@@ -176,7 +172,6 @@
     }
 
     window.addEventListener( 'resize', onWindowResize, false );
-    window.addEventListener('mousewheel', doScroll, false);
   });
 
 </script>
