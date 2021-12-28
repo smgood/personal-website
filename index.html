@@ -123,8 +123,6 @@
       navigationPosition: 'right',
       scrollingSpeed: 1000,
       navigationTooltips: ['Logo', 'Portfolio', 'Connect'],
-      setAllowScrolling: false,
-      setKeyboardScrolling: false,
       'onLeave': function(index, nextIndex, direction){
         scrolling = true;
         if (index == 1){
@@ -169,6 +167,8 @@
         current_page = index;
       }
     });
+    $.fn.fullpage.setAllowScrolling(false);
+    $.fn.fullpage.setKeyboardScrolling(false);
     $.fn.fullpage.setMouseWheelScrolling(false);
 
     function onWindowResize() {
