@@ -1,8 +1,8 @@
 // JavaScript Document
 class PortfolioVideos {
-  constructor(scene, loadingFinished){
+  constructor(scene, loadFunctions){
     this.scene = scene;
-    this.loadingFinished = loadingFinished;
+    this.loadFunctions = loadFunctions;
     this.loadingCallback = this.loadingCallback.bind(this);
     this.errorCallback = this.errorCallback.bind(this);
 
@@ -57,9 +57,11 @@ class PortfolioVideos {
   loadingCallback(){
     this.loadedVideos++;
     if (this.loadedVideos === this.totalVideos){
-      this.loadingFinished.execute();
+      this.loadFunctions.completeLoading();
     } else {
-      $('#continue').html(Math.round(this.loadedVideos/this.totalVideos * 100) + '% Ready');
+      this.loadFunctions.updateProgress(
+        Math.round(this.loadedVideos/this.totalVideos * 100)
+      );
     }
   }
 

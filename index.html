@@ -82,8 +82,12 @@
   var current_page;
   var loaded_pg3 = false;
 
-  loadingFinished = {
-    execute: function () {
+  loadFunctions = {
+    updateProgress: function (percent) {
+      $('#continue').html(percent + '% Ready');
+    }
+
+    completeLoading: function () {
       $.fn.fullpage.setAllowScrolling(true);
       $.fn.fullpage.setKeyboardScrolling(true);
       $("#fp-nav").fadeIn(750);

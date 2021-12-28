@@ -274,7 +274,7 @@ function portfolio_scene(scrollManager){
   function init() {
     scene = new THREE.Scene();
 
-    portfolioClass = new PortfolioVideos(scene, loadingFinished);
+    portfolioClass = new PortfolioVideos(scene, loadFunctions);
     portfolioPopover = new lib_portfolio_popover();
     linksClass = new Links(scene);
 
