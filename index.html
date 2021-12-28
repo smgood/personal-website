@@ -82,6 +82,17 @@
   var current_page;
   var loaded_pg3 = false;
 
+  var doScroll = function (event) {
+    event = window.event || event;
+
+    var delta = event.wheelDeltaY;
+    if (Math.abs(delta) < 100){
+      $.fn.fullpage.setMouseWheelScrolling(false);
+    } else{
+      $.fn.fullpage.setMouseWheelScrolling(true);
+    }
+  };
+
   loadFunctions = {
     updateProgress: function (percent) {
       $('#continue').html(percent + '% Ready');
@@ -160,24 +171,12 @@
     });
     $.fn.fullpage.setMouseWheelScrolling(false);
 
-    var doScroll = function (event) {
-      event = window.event || event;
-
-      var delta = event.wheelDeltaY;
-      if (Math.abs(delta) < 100){
-        $.fn.fullpage.setMouseWheelScrolling(false);
-      } else{
-        $.fn.fullpage.setMouseWheelScrolling(true);
-      }
-    };
-
     function onWindowResize() {
       $.fn.fullpage.reBuild();
     }
 
     window.addEventListener( 'resize', onWindowResize, false );
   });
-
 </script>
 
 </body>
