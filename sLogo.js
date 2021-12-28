@@ -324,10 +324,6 @@ function sLogo (scrollManager, container) {
         explode = true;
     };
 
-    this.isExploding = function () {
-        return explode;
-    };
-
     init ();
 
     function init () {

@@ -130,9 +130,7 @@
           page2.resetPortfolio();
           setTimeout(function(){
             page2.showPortfolio();
-            if (page1.isExploding()){
-              page1.stop();
-            }
+            page1.stop();
           }, 2000);
           $("#continue").fadeOut(function(){
             $("#instructions").fadeIn();
