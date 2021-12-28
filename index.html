@@ -22,7 +22,7 @@
     <title>Sean Goodrich</title>
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
     <meta charset="utf-8">
-    <meta name="description" content="Welcome to my personal website! I am a Software Engineer currently working at Amazon Web Services and living in Seattle.">
+    <meta name="description" content="Welcome to my personal website! I am a Software Engineer currently working at Google LAX.">
     <meta name="author" content="Sean Goodrich">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="keywords" content="Sean, Goodrich, UM, Michigan, Computer, Science, Los, Angeles, LA">
@@ -101,6 +101,7 @@
     completeLoading: function () {
       $.fn.fullpage.setAllowScrolling(true);
       $.fn.fullpage.setKeyboardScrolling(true);
+      window.addEventListener('mousewheel', doScroll, false);
       $("#fp-nav").fadeIn(750);
 
       $('#continue').html('Scroll &#9661 Down');
@@ -108,9 +109,12 @@
       $('#continue').on('click', function() {
         $.fn.fullpage.moveSectionDown();
       });
-      window.addEventListener('mousewheel', doScroll, false);
     }
   };
+
+  function onWindowResize() {
+    $.fn.fullpage.reBuild();
+  }
 
   $(document).ready(function() {
     let scrollManager = new ScrollManager();
@@ -168,10 +172,6 @@
     $.fn.fullpage.setAllowScrolling(false);
     $.fn.fullpage.setKeyboardScrolling(false);
     $.fn.fullpage.setMouseWheelScrolling(false);
-
-    function onWindowResize() {
-      $.fn.fullpage.reBuild();
-    }
 
     window.addEventListener( 'resize', onWindowResize, false );
   });
