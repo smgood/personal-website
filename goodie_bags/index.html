@@ -1,231 +1,39 @@
 <!-- TODO:
   1. Make colors more faded and more vibrant when loud noise
-  2. Move javascript to separate file
-  3. Make javascript to class
-  4. Remove jquery
-  5. remove html and dynamically create html
-  6. move css to seperate file
+  2. Remove jquery or update
 -->
 
 <!DOCTYPE html>
 <html>
 <head>
 
-<style>
-  div {
-    position: absolute;
-  }
+<!-- Import css -->
+<link rel="stylesheet" href="css/style.css">
 
-  #image1 {
-    z-index: 5;
-  }
-  #image2 {
-    z-index: 4;
-  }
-  #image3 {
-    z-index: 3;
-  }
-  #image4 {
-    z-index: 2;
-  }
-  #image5 {
-    z-index: 1;
-  }
-
-  html, body {
-    height: 100%;
-}
-</style>
-
+<!-- Import JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<!-- Import Javascript files -->
+<script src="js/animate.js"></script>
+<script src="js/colors.js"></script>
+<script src="js/svg_paths.js"></script>
+
 <script>
-  let colors = {
-    "aqua": [67, 193, 185],
-    "pink": [238, 46, 120],
-    "yellow": [226, 225, 77],
-    "black": [4, 7, 7],
-    "white": [230, 231, 231],
+window.onload=function() {
+  for (let i = 0; i < svg_paths.length; i++) {
+    let div = document.createElement("div");
+    div.id = "image" + i;
+    document.body.appendChild(div);
 
-    "navy": [0, 0, 128],
-    "firebrick": [178, 34, 34],
-    "coral": [255, 127, 80],
-    "limegreen": [50, 205, 50],
-    "tan": [210, 180, 140],
-    "chocolate": [210, 105, 30],
-    "lavender": [230, 230, 250],
-    "salmon": [250, 128, 114],
-    "darkorange": [255, 140, 0],
-    "gold": [255, 215, 0],
-    "ivory": [255, 255, 240],
-    "dodgerblue": [30, 144, 255],
-    "tomato": [255, 99, 71]
-  };
-
-  let svgs=[
-    "./svgs/image1.html",
-    "./svgs/image2.html",
-    "./svgs/image3.html",
-    "./svgs/image4.html",
-    "./svgs/image5.html"
-  ];
-
-  window.onload=function() {
-    for (let i = 0; i < svgs.length; i++) {
-      let name = "image" + (i+1);
-      $('#' + name).load(svgs[i], function () {animate(name, 'white')});    }
-  };
-
-  function animate(id, startColor) {
-    let rgbStart = colors[startColor]
-    let rgbEnd = getRandomColor(rgbStart);
-
-    let svg = $("#" + id).children("svg")[0];
-    let paths = $(svg).children("path");
-
-    for (let i = 0; i < paths.length; i++) {
-      paths[i].setAttribute('fill', rgbToString(rgbStart));
+    $(div).load(svg_paths[i], function () {
+      let svg = $(div).children("svg")[0];
+      new Animate(svg)});
     }
-
-    requestAnimationFrame(function(timestamp) {
-      animateHelper(paths, rgbStart, rgbEnd, 0, getEndTime(0, rgbStart, rgbEnd), timestamp);
-    });
-  }
-
-  function animateHelper(paths, rgbStart, rgbEnd, startTime, endTime, elapsedTime) {
-    let percent = (elapsedTime - startTime) / (endTime - startTime);
-    for (let i = 0; i < paths.length; i++) {
-      paths[i].setAttribute('fill', rgbToString(rgbLerp(rgbStart, rgbEnd, percent)));
-    }
-
-    requestAnimationFrame(function(timestamp) {
-      if (timestamp > endTime) {
-        let delayTime = Math.random() * 2000;
-
-        rgbStart = rgbEnd;
-        rgbEnd = getRandomColor(rgbStart);
-
-        startTime = endTime + delayTime;
-        endTime = getEndTime(startTime, rgbStart, rgbEnd);
-
-        setTimeout(function(){
-          animateHelper(paths, rgbStart, rgbEnd, startTime, endTime, timestamp + delayTime);
-        }, delayTime);
-      } else {
-        animateHelper(paths, rgbStart, rgbEnd, startTime, endTime, timestamp);
-      }
-    });
-  };
-
-  function getEndTime (startTime, rgbStart, rgbEnd) {
-    return startTime + (100 * Math.sqrt(
-      Math.pow(rgbEnd[0] - rgbStart[0], 2) +
-      Math.pow(rgbEnd[1] - rgbStart[1], 2) +
-      Math.pow(rgbEnd[2] - rgbStart[2], 2)
-    ));
-  };
-
-  function getRandomColor (rgbCurrent) {
-    let keys = Object.keys(colors);
-    let rgbNew = null;
-    while (!rgbNew || rgbEqual(rgbCurrent, rgbNew)) {
-      let randomKey = keys[Math.floor(Math.random() * keys.length)];
-      rgbNew = colors[randomKey];
-    }
-    return rgbNew;
-  };
-
-  function rgbEqual(rgb1, rgb2) {
-    return (rgb1[0] === rgb2[0]) && (rgb1[1] === rgb2[1]) && (rgb1[2] === rgb2[2]);
-  }
-
-  function rgbLerp(rgbStart, rgbEnd, percent){
-    let diff = [
-      rgbEnd[0] - rgbStart[0],
-      rgbEnd[1] - rgbStart[1],
-      rgbEnd[2] - rgbStart[2]
-    ];
-
-    return [
-      rgbStart[0] + (diff[0] * percent),
-      rgbStart[1] + (diff[1] * percent),
-      rgbStart[2] + (diff[2] * percent),
-    ];
-  }
-
-  function createGradient(id, rgb) {
-    let defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-
-    let linearGradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
-    linearGradient.id="linear-" + id;
-    linearGradient.setAttribute("x1", "0%");
-    linearGradient.setAttribute("y1", "0%");
-    linearGradient.setAttribute("x2", "100%");
-    linearGradient.setAttribute("y2", "100%");
-    defs.appendChild(linearGradient);
-
-    let stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
-    stop1.setAttribute("offset", "0%");
-    stop1.setAttribute("stop-color", rgbToString(rgb));
-    linearGradient.appendChild(stop1);
-
-    let stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
-    stop2.setAttribute("offset", "50%");
-    stop2.setAttribute("stop-color", rgbToString(changeBrightness(rgb, 1.5)));
-    linearGradient.appendChild(stop2);
-
-    let stop3 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
-    stop3.setAttribute("offset", "100%");
-    stop3.setAttribute("stop-color", rgbToString(changeBrightness(rgb, 0.2)));
-    linearGradient.appendChild(stop3);
-
-    return defs;
-  }
-
-  function rgbToString(rgb) {
-    return "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
-  }
-
-  function randomDiff(max) {
-    return (Math.random()*max*2) - max;
-  }
-
-  function boundedColor(color) {
-    if (color > 255) {
-      return 255;
-    }
-
-    if (color < 0) {
-      return 0;
-    }
-
-    return color;
-  }
-
-  function getNewRgb(rgb, max) {
-    let r = boundedColor(rgb[0] + randomDiff(max));
-    let g = boundedColor(rgb[1] + randomDiff(max));
-    let b = boundedColor(rgb[2] + randomDiff(max));
-    return [r,g,b];
-  }
-
-  function changeBrightness(rgb, diff){
-    let r = boundedColor(rgb[0] * diff);
-    let g = boundedColor(rgb[1] * diff);
-    let b = boundedColor(rgb[2] * diff);
-    return [r,g,b];
-  }
-
+};
 </script>
 
 </head>
+
 <body>
-
-<div id="image1"></div>
-<div id="image2"></div>
-<div id="image3"></div>
-<div id="image4"></div>
-<div id="image5"></div>
-
 </body>
 </html>

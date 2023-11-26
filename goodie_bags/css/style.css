@@ -1,0 +1,23 @@
+div {
+  position: absolute;
+}
+
+#image1 {
+  z-index: 5;
+}
+
+#image2 {
+  z-index: 4;
+}
+
+#image3 {
+  z-index: 3;
+}
+
+#image4 {
+  z-index: 2;
+}
+
+#image5 {
+  z-index: 1;
+}
