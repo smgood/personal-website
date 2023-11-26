@@ -19,7 +19,9 @@
 <script src="js/svg_paths.js"></script>
 
 <script>
-window.onload=function() {
+let stream = null;
+
+window.onload=async function() {
   for (let i = 0; i < svg_paths.length; i++) {
     let div = document.createElement("div");
     div.id = "image" + i;
@@ -29,6 +31,10 @@ window.onload=function() {
       let svg = $(div).children("svg")[0];
       new Animate(svg)});
     }
+
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    console.log("hello");
+    console.log(stream);
 };
 </script>
 
