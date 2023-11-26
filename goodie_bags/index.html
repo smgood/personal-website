@@ -3,8 +3,8 @@
   2. Move javascript to separate file
   3. Make javascript to class
   4. Remove jquery
-  5. rename svgs from color to number
-  6. remove html and dynamically create html
+  5. remove html and dynamically create html
+  6. move css to seperate file
 -->
 
 <!DOCTYPE html>
@@ -16,19 +16,19 @@
     position: absolute;
   }
 
-  #white {
+  #image1 {
     z-index: 5;
   }
-  #black {
+  #image2 {
     z-index: 4;
   }
-  #yellow {
+  #image3 {
     z-index: 3;
   }
-  #pink {
+  #image4 {
     z-index: 2;
   }
-  #aqua {
+  #image5 {
     z-index: 1;
   }
 
@@ -63,11 +63,11 @@
   };
 
   window.onload=function() {
-    $('#white').load('./svgs/white.html', function () {animate('white', 'white')});
-    $('#black').load('./svgs/black.html', function () {animate('black', 'black')});
-    $('#yellow').load('./svgs/yellow.html', function () {animate('yellow', 'yellow')});
-    $('#pink').load('./svgs/pink.html', function () {animate('pink', 'pink')});
-    $('#aqua').load('./svgs/aqua.html', function () {animate('aqua', 'aqua')});
+    $('#image1').load('./svgs/image1.html', function () {animate('image1', 'white')});
+    $('#image2').load('./svgs/image2.html', function () {animate('image2', 'black')});
+    $('#image3').load('./svgs/image3.html', function () {animate('image3', 'yellow')});
+    $('#image4').load('./svgs/image4.html', function () {animate('image4', 'pink')});
+    $('#image5').load('./svgs/image5.html', function () {animate('image5', 'aqua')});
   };
 
   function animate(id, startColor) {
@@ -215,11 +215,11 @@
 </head>
 <body>
 
-<div id="white"></div>
-<div id="black"></div>
-<div id="yellow"></div>
-<div id="pink"></div>
-<div id="aqua"></div>
+<div id="image1"></div>
+<div id="image2"></div>
+<div id="image3"></div>
+<div id="image4"></div>
+<div id="image5"></div>
 
 </body>
 </html>
