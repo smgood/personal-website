@@ -62,12 +62,18 @@
     "tomato": [255, 99, 71]
   };
 
+  let svgs=[
+    "./svgs/image1.html",
+    "./svgs/image2.html",
+    "./svgs/image3.html",
+    "./svgs/image4.html",
+    "./svgs/image5.html"
+  ];
+
   window.onload=function() {
-    $('#image1').load('./svgs/image1.html', function () {animate('image1', 'white')});
-    $('#image2').load('./svgs/image2.html', function () {animate('image2', 'black')});
-    $('#image3').load('./svgs/image3.html', function () {animate('image3', 'yellow')});
-    $('#image4').load('./svgs/image4.html', function () {animate('image4', 'pink')});
-    $('#image5').load('./svgs/image5.html', function () {animate('image5', 'aqua')});
+    for (let i = 0; i < svgs.length; i++) {
+      let name = "image" + (i+1);
+      $('#' + name).load(svgs[i], function () {animate(name, 'white')});    }
   };
 
   function animate(id, startColor) {
