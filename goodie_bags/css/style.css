@@ -2,12 +2,16 @@ div {
   position: absolute;
 }
 
+#image0 {
+  z-index: 0;
+}
+
 #image1 {
-  z-index: 5;
+  z-index: 1;
 }
 
 #image2 {
-  z-index: 4;
+  z-index: 2;
 }
 
 #image3 {
@@ -15,9 +19,5 @@ div {
 }
 
 #image4 {
-  z-index: 2;
-}
-
-#image5 {
-  z-index: 1;
+  z-index: 4;
 }
