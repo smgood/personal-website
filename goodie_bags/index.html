@@ -1,3 +1,12 @@
+<!-- TODO:
+  1. Make colors more faded and more vibrant when loud noise
+  2. Move javascript to separate file
+  3. Make javascript to class
+  4. Remove jquery
+  5. rename svgs from color to number
+  6. remove html and dynamically create html
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,12 +63,6 @@
   };
 
   window.onload=function() {
-    // $('#white').load('./svgs/white.html', function () {animate('white')});
-    // $('#black').load('./svgs/black.html', function () {animate('black')});
-    // $('#yellow').load('./svgs/yellow.html', function () {animate('yellow')});
-    // $('#pink').load('./svgs/pink.html', function () {animate('pink')});
-    // $('#aqua').load('./svgs/aqua.html', function () {animate('aqua')});
-
     $('#white').load('./svgs/white.html', function () {animate('white', 'white')});
     $('#black').load('./svgs/black.html', function () {animate('black', 'black')});
     $('#yellow').load('./svgs/yellow.html', function () {animate('yellow', 'yellow')});
@@ -143,15 +146,6 @@
       rgbStart[2] + (diff[2] * percent),
     ];
   }
-
-  //function linearGradient () {
-    // let defs = $(svg).children("defs");
-    // $(defs).remove();
-    // svg.prepend(createGradient(id, rgb));
-    // for (let i = 0; i < paths.length; i++) {
-      // paths[i].setAttribute('fill', 'url(#linear-' + id + ')');
-    //}
-  //}
 
   function createGradient(id, rgb) {
     let defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
