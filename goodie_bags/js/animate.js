@@ -90,7 +90,7 @@ class Animate {
 
   get getVolume () {
     return this.volumeAnimate
-      ? this.analyser.getVolume
+      ? this.analyser.getVolume * 10
       : 1;
   }
 }
