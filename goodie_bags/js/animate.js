@@ -1,5 +1,7 @@
 class Animate {
-  constructor(svg) {
+  constructor(svg, analyser, volumeAnimate) {
+    this.analyser = analyser;
+    this.volumeAnimate = volumeAnimate;
     this.paths = $(svg).children("path");
 
     let delayTime = Math.random() * 5000;
@@ -7,13 +9,12 @@ class Animate {
     let rgbStart = this.getRandomColor(null);
     let rgbEnd = this.getRandomColor(rgbStart);
 
-    setTimeout(() => {
-      requestAnimationFrame((timestamp) => {
-        let startTime = timestamp;
-        let endTime = this.getEndTime(startTime, rgbStart, rgbEnd);
-        this.animateHelper(rgbStart, rgbEnd, startTime, endTime, timestamp);
-      })
-    }, delayTime);
+    let startTime = delayTime;
+    let endTime = this.getEndTime(startTime, rgbStart, rgbEnd);
+
+    requestAnimationFrame((timestamp) => {
+      this.animateHelper(rgbStart, rgbEnd, startTime, endTime, timestamp);
+    })
 
     for (let i = 0; i < this.paths.length; i++) {
       this.paths[i].setAttribute('fill', this.rgbToString(rgbStart));
@@ -21,7 +22,11 @@ class Animate {
   }
 
   animateHelper(rgbStart, rgbEnd, startTime, endTime, elapsedTime) {
-    let percent = (elapsedTime - startTime) / (endTime - startTime);
+    let percent = 0;
+    if (elapsedTime > startTime) {
+      percent = (elapsedTime - startTime) / (endTime - startTime);
+    }
+
     for (let i = 0; i < this.paths.length; i++) {
       this.paths[i].setAttribute('fill', this.rgbToString(this.rgbLerp(rgbStart, rgbEnd, percent)));
     }
@@ -36,9 +41,7 @@ class Animate {
         startTime = endTime + delayTime;
         endTime = this.getEndTime(startTime, rgbStart, rgbEnd);
 
-        setTimeout((timestamp) => {
-          this.animateHelper(rgbStart, rgbEnd, startTime, endTime, timestamp);
-        }, delayTime);
+        this.animateHelper(rgbStart, rgbEnd, startTime, endTime, timestamp);
       } else {
         this.animateHelper(rgbStart, rgbEnd, startTime, endTime, timestamp);
       }
@@ -82,6 +85,12 @@ class Animate {
   }
 
   rgbToString(rgb) {
-    return "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
+    return "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + this.getVolume + ")";
+  }
+
+  get getVolume () {
+    return this.volumeAnimate
+      ? this.analyser.getVolume
+      : 1;
   }
 }

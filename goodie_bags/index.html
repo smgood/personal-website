@@ -1,6 +1,11 @@
 <!-- TODO:
   1. Make colors more faded and more vibrant when loud noise
-  2. Remove jquery or update
+      - make color have threshold so either 0, 0.5, or 1.0
+      - change from opacity to vibrance / saturation
+      - add slider for sensitivity
+      - make option for image to getter bigger based on noise level
+      - have check boxes to select which features to turn on and off
+  2. Remove jquery
 -->
 
 <!DOCTYPE html>
@@ -14,20 +19,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- Import Javascript files -->
+<script src="js/analyser.js"></script>
 <script src="js/animate.js"></script>
 <script src="js/colors.js"></script>
-<script src="js/svg_paths.js"></script>
+<script src="js/svgs.js"></script>
 
 <script>
-window.onload=function() {
-  for (let i = 0; i < svg_paths.length; i++) {
+
+window.onload = function() {
+
+  let animations = [];
+  let analyser = new Analyser();
+
+  for (let i = 0; i < svgs.length; i++) {
+    let volumeAnimate = svgs[i].volumeAnimate;
+
     let div = document.createElement("div");
     div.id = "image" + i;
     document.body.appendChild(div);
 
-    $(div).load(svg_paths[i], function () {
+    $(div).load(svgs[i].path, function () {
       let svg = $(div).children("svg")[0];
-      new Animate(svg)
+      animations.push(new Animate(svg, analyser, volumeAnimate));
     });
   }
 };
