@@ -10,7 +10,7 @@ var projectInfo = [
     'skills': 'HTML, Javascript',
     'image': 'goodie_bags.png',
     'video': 'goodie_bags.mp4'
-  }
+  },
 
   {
     "title": "Artwork",
