@@ -1,6 +1,18 @@
 // JavaScript Document
 var projectInfo = [
   {
+    'title': 'Goodie Bags',
+    'date': '(Fall 2023)',
+    'team': 'NA',
+    'url': '/goodie_bags/',
+    'summary': 'An artwork for a musicians twitch stream that changes colors and reacts to the music',
+    'role': 'NA',
+    'skills': 'HTML, Javascript',
+    'image': 'goodie_bags.png',
+    'video': 'goodie_bags.mp4'
+  }
+
+  {
     "title": "Artwork",
     "date": "(Fall 2019)",
     "team": "NA",
@@ -179,7 +191,9 @@ var projectInfo = [
     'image': 'circle.png',
     'video': 'circle.mp4'
   },
+];
 
+/*
   {
     'title': 'Mary Sue Coalman',
     'date': '(Summer 2013)',
@@ -191,9 +205,7 @@ var projectInfo = [
     'image': 'coalman.png',
     'video': 'Coalman.mp4'
   }
-];
 
-/*
   {
     "title": "Mobile Game",
     "date": "(Winter 2014)",
