@@ -217,6 +217,7 @@ function portfolio_scene(scrollManager){
     if (current_page == 2 && !scrolling && event.touches.length === 1 ) {
       hoverPortfolio(event, getRaycaster(getTouchPosition(event)));
       document.addEventListener( 'touchend', touchEndPortfolio, false );
+      down_clicked = current_mesh;
       setTimeout(() => {
         console.log("Delayed for 2 seconds.");
         touchCount = 0;
@@ -226,10 +227,19 @@ function portfolio_scene(scrollManager){
   }
 
   function touchEndPortfolio(event) {
-    // check touched same mesh.
-    console.log("touch");
     touchCount++;
-    if (touchCount >= 2) {
+
+    var sameMesh = false;
+    var intersects = raycaster.intersectObjects(portfolioClass.portfolioContainer.children);
+    if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0){
+      if (intersects[0].object == down_clicked){
+        sameMesh = true;
+      }
+    }
+
+    if (!sameMesh) {
+      document.removeEventListener( 'touchend', touchEndPortfolio, false );
+    } else if (touchCount >= 2) {
       console.log("double touch");
       clickVideo();
       document.removeEventListener( 'touchend', touchEndPortfolio, true );
