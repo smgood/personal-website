@@ -86,20 +86,24 @@ function portfolio_scene(scrollManager){
       box_clicked = false;
       document.removeEventListener( 'mousedown', onDocumentMouseDown, false );
 
-      // 1st number represents number of inputs
-      var current_project = down_clicked.info;
-      portfolioPopover.projectDescription(current_project);
-
-      $("#photo").one("load", function(){
-        portfolioPopover.resize();
-        $("#opacity_page").fadeIn();
-        $("#info_page").fadeIn();
-      }).attr("src", "images/" + current_project.image);
+      clickVideo();
     }
 
     document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
     document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
     document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+  }
+
+  function clickVideo() {
+    // 1st number represents number of inputs
+    var current_project = down_clicked.info;
+    portfolioPopover.projectDescription(current_project);
+
+    $("#photo").one("load", function(){
+      portfolioPopover.resize();
+      $("#opacity_page").fadeIn();
+      $("#info_page").fadeIn();
+    }).attr("src", "images/" + current_project.image);
   }
 
   function onDocumentMouseOut(event){
@@ -208,16 +212,26 @@ function portfolio_scene(scrollManager){
     }
   }
 
+  var firstTouchTime;
   function touchPortfolio(event){
     if (current_page == 2 && !scrolling && event.touches.length === 1 ) {
       hoverPortfolio(event, getRaycaster(getTouchPosition(event)));
       document.addEventListener( 'touchend', touchEndPortfolio, false );
+      firstTouchTime = Date.now();
     }
   }
 
   function touchEndPortfolio(event) {
-    console.log("touch end");
     document.removeEventListener( 'touchend', touchEndPortfolio, false );
+    document.addEventListener( 'touchend', dobuleTouchEndPortfolio, false );
+  }
+
+  function doubleTouchEndPortfolio(event) {
+    console.log("double touch");
+    document.removeEventListener( 'touchend', dobuleTouchEndPortfolio, false );
+    if (Date.now() - firstTouchTime < 1000) {
+      clickVideo();
+    }
   }
 
   function hoverPortfolio(event, raycaster) {
