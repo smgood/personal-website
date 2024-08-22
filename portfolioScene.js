@@ -216,7 +216,7 @@ function portfolio_scene(scrollManager){
   }
 
   function touchEndPortfolio(event) {
-    console.log("touchend");
+    console.log("touch end");
     document.removeEventListener( 'touchend', touchEndPortfolio, false );
   }
 
