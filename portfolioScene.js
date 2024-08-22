@@ -33,7 +33,7 @@ function portfolio_scene(scrollManager){
     $("#opacity_page").fadeOut();
     $("#info_page").fadeOut();
     if (hasTouchEvents()){
-      document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+      document.addEventListener( 'touchmove', onDocumentTouchMove, false );
     } else {
       document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     }
@@ -259,7 +259,7 @@ function portfolio_scene(scrollManager){
       clickVideo();
       touchCount = 0;
       document.removeEventListener( 'touchend', touchEndPortfolio, false );
-      document.removeEventListener( 'touchstart', onDocumentTouchStart, false );
+      document.removeEventListener( 'touchmove', onDocumentTouchMove, false );
     }
   }
 
