@@ -211,7 +211,13 @@ function portfolio_scene(scrollManager){
   function touchPortfolio(event){
     if (current_page == 2 && !scrolling && event.touches.length === 1 ) {
       hoverPortfolio(event, getRaycaster(getTouchPosition(event)));
+      document.addEventListener( 'touchend', onDocumentMouseUp, false );
     }
+  }
+
+  function touchEndPortfolio(event) {
+    console.log("touchend");
+    document.removeEventListener( 'touchend', onDocumentMouseUp, false );
   }
 
   function hoverPortfolio(event, raycaster) {
