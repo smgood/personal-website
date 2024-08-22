@@ -213,24 +213,27 @@ function portfolio_scene(scrollManager){
   }
 
   var firstTouchTime;
+  var touchCount = 0;
   function touchPortfolio(event){
     if (current_page == 2 && !scrolling && event.touches.length === 1 ) {
       hoverPortfolio(event, getRaycaster(getTouchPosition(event)));
       document.addEventListener( 'touchend', touchEndPortfolio, false );
       firstTouchTime = Date.now();
+      setTimeout(() => {
+        console.log("Delayed for 2 seconds.");
+        touchCount = 0;
+        document.removeEventListener( 'touchend', touchEndPortfolio, false );
+      }, "2000");
     }
   }
 
   function touchEndPortfolio(event) {
-    document.removeEventListener( 'touchend', touchEndPortfolio, false );
-    document.addEventListener( 'touchend', doubleTouchEndPortfolio, false );
-  }
-
-  function doubleTouchEndPortfolio(event) {
-    console.log("double touch");
-    document.removeEventListener( 'touchend', doubleTouchEndPortfolio, false );
-    if (Date.now() - firstTouchTime < 1000) {
+    console.log("touch");
+    touchCount++;
+    if (touchCount >= 2) {
+      console.log("double touch");
       clickVideo();
+      document.removeEventListener( 'touchend', touchEndPortfolio, false );
     }
   }
 
