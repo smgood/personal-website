@@ -230,7 +230,7 @@ function portfolio_scene(scrollManager){
     touchCount++;
 
     var sameMesh = false;
-    var intersects = raycaster.intersectObjects(portfolioClass.portfolioContainer.children);
+    var intersects = getRaycaster(getTouchPosition(event)).intersectObjects(portfolioClass.portfolioContainer.children);
     if (intersects.length > 0 && $("#info_page").is(':hidden') && intersects[0].point.z > 0){
       if (intersects[0].object == down_clicked){
         sameMesh = true;
