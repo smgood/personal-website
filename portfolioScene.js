@@ -229,7 +229,6 @@ function portfolio_scene(scrollManager){
       }
       down_clicked = current_mesh;
       setTimeout(() => {
-        console.log("Delayed for 1 seconds.");
         touchCount = 0;
         document.removeEventListener( 'touchend', touchEndPortfolio, false );
       }, "1000");
@@ -250,9 +249,8 @@ function portfolio_scene(scrollManager){
     if (!sameMesh) {
       document.removeEventListener( 'touchend', touchEndPortfolio, false );
     } else if (touchCount >= 2) {
-      console.log("double touch");
       clickVideo();
-      document.removeEventListener( 'touchend', touchEndPortfolio, true );
+      document.removeEventListener( 'touchend', touchEndPortfolio, false );
     }
   }
 
