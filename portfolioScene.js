@@ -223,12 +223,12 @@ function portfolio_scene(scrollManager){
 
   function touchEndPortfolio(event) {
     document.removeEventListener( 'touchend', touchEndPortfolio, false );
-    document.addEventListener( 'touchend', dobuleTouchEndPortfolio, false );
+    document.addEventListener( 'touchend', doubleTouchEndPortfolio, false );
   }
 
   function doubleTouchEndPortfolio(event) {
     console.log("double touch");
-    document.removeEventListener( 'touchend', dobuleTouchEndPortfolio, false );
+    document.removeEventListener( 'touchend', doubleTouchEndPortfolio, false );
     if (Date.now() - firstTouchTime < 1000) {
       clickVideo();
     }
