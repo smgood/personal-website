@@ -193,7 +193,7 @@ const projectInfo = [
   },
 ];
 
-const computerInstructions = 'Drag to spin projects. Hover to play. Click for more info.';
+const desktopInstructions = 'Drag to spin projects. Hover to play. Click for more info.';
 const mobileInstructions = 'Drag to spin projects. Tap to play. Double tap for more info.';
 
 /*
