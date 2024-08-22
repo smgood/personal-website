@@ -308,7 +308,7 @@ function portfolio_scene(scrollManager){
 
     renderer.autoClear = false;
 
-    if (hasTouchEvents) {
+    if (hasTouchEvents()) {
       document.addEventListener( 'touchstart', onDocumentTouchStart, false );
       document.addEventListener( 'touchmove', onDocumentTouchMove, false );
       document.addEventListener( 'touchstart', touchPortfolio, false );
