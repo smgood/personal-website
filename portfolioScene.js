@@ -229,7 +229,9 @@ function portfolio_scene(scrollManager){
       }
       down_clicked = current_mesh;
       setTimeout(() => {
-        touchCount = 0;
+        if (touchCount > 0) {
+          touchCount--;
+        }
         document.removeEventListener( 'touchend', touchEndPortfolio, false );
       }, "1000");
     }
@@ -248,8 +250,10 @@ function portfolio_scene(scrollManager){
 
     if (!sameMesh) {
       document.removeEventListener( 'touchend', touchEndPortfolio, false );
+      touchCount = 0;
     } else if (touchCount >= 2) {
       clickVideo();
+      touchCount = 0;
       document.removeEventListener( 'touchend', touchEndPortfolio, false );
     }
   }
