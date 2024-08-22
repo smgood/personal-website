@@ -32,7 +32,9 @@ function portfolio_scene(scrollManager){
   function closePortfolioInfo() {
     $("#opacity_page").fadeOut();
     $("#info_page").fadeOut();
-    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    if (hasTouchEvents());
+      document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    }
   }
 
   function onMouseMove( event ) {
