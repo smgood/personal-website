@@ -32,7 +32,9 @@ function portfolio_scene(scrollManager){
   function closePortfolioInfo() {
     $("#opacity_page").fadeOut();
     $("#info_page").fadeOut();
-    if (!hasTouchEvents()){
+    if (hasTouchEvents()){
+      document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+    } else {
       document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     }
   }
@@ -257,6 +259,7 @@ function portfolio_scene(scrollManager){
       clickVideo();
       touchCount = 0;
       document.removeEventListener( 'touchend', touchEndPortfolio, false );
+      document.removeEventListener( 'touchstart', onDocumentTouchStart, false );
     }
   }
 
