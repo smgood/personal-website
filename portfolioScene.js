@@ -224,7 +224,7 @@ function portfolio_scene(scrollManager){
     if (current_page == 2 && !scrolling && event.touches.length === 1 ) {
       hoverPortfolio(event, getRaycaster(getTouchPosition(event)));
       document.addEventListener( 'touchend', touchEndPortfolio, false );
-      if (down_clicked != current_mesh;) {
+      if (down_clicked != current_mesh) {
         touchCount = 0;
       }
       down_clicked = current_mesh;
