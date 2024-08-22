@@ -224,12 +224,15 @@ function portfolio_scene(scrollManager){
     if (current_page == 2 && !scrolling && event.touches.length === 1 ) {
       hoverPortfolio(event, getRaycaster(getTouchPosition(event)));
       document.addEventListener( 'touchend', touchEndPortfolio, false );
+      if (down_clicked != current_mesh;) {
+        touchCount = 0;
+      }
       down_clicked = current_mesh;
       setTimeout(() => {
-        console.log("Delayed for 2 seconds.");
+        console.log("Delayed for 1 seconds.");
         touchCount = 0;
         document.removeEventListener( 'touchend', touchEndPortfolio, false );
-      }, "2000");
+      }, "1000");
     }
   }
 
