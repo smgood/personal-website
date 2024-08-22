@@ -212,13 +212,11 @@ function portfolio_scene(scrollManager){
     }
   }
 
-  var firstTouchTime;
   var touchCount = 0;
   function touchPortfolio(event){
     if (current_page == 2 && !scrolling && event.touches.length === 1 ) {
       hoverPortfolio(event, getRaycaster(getTouchPosition(event)));
       document.addEventListener( 'touchend', touchEndPortfolio, false );
-      firstTouchTime = Date.now();
       setTimeout(() => {
         console.log("Delayed for 2 seconds.");
         touchCount = 0;
@@ -228,6 +226,7 @@ function portfolio_scene(scrollManager){
   }
 
   function touchEndPortfolio(event) {
+    // check touched same mesh.
     console.log("touch");
     touchCount++;
     if (touchCount >= 2) {
