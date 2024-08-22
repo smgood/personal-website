@@ -185,6 +185,10 @@ function portfolio_scene(scrollManager){
     }, 250 * 7);
   }
 
+  function hasTouchEvents () {
+    return ('ontouchstart' in document.documentElement);
+  }
+
   function getTouchPosition(event) {
     return new THREE.Vector2(
       ( event.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1,
@@ -304,18 +308,19 @@ function portfolio_scene(scrollManager){
 
     renderer.autoClear = false;
 
-    document.addEventListener( 'mousemove', onMouseMove, false );
-    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-    document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+    if (hasTouchEvents) {
+      document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+      document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+      document.addEventListener( 'touchstart', touchPortfolio, false );
+      document.addEventListener( 'touchstart', touchIcon, { passive: false });
+    } else {
+      document.addEventListener( 'mousemove', onMouseMove, false );
+      document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+      document.addEventListener( 'mousemove', mousePortfolio, false );
+      document.addEventListener( 'mousemove', mouseIcon, false );
+    }
 
     window.addEventListener( 'resize', onWindowResize, false );
-
-    document.addEventListener( 'touchstart', touchIcon, { passive: false });
-    document.addEventListener( 'touchstart', touchPortfolio, false );
-    document.addEventListener( 'mousemove', mouseIcon, false );
-    document.addEventListener( 'mousemove', mousePortfolio, false );
-
     document.addEventListener( 'click', openLink, false );
     document.getElementById("close").addEventListener( 'click', closePortfolioInfo, false );
 
