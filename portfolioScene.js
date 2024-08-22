@@ -232,7 +232,7 @@ function portfolio_scene(scrollManager){
     if (touchCount >= 2) {
       console.log("double touch");
       clickVideo();
-      document.removeEventListener( 'touchend', touchEndPortfolio, false );
+      document.removeEventListener( 'touchend', touchEndPortfolio, true );
     }
   }
 
