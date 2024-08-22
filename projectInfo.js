@@ -1,5 +1,5 @@
 // JavaScript Document
-var projectInfo = [
+const projectInfo = [
   {
     'title': 'Goodie Bags',
     'date': '(Fall 2023)',
@@ -192,6 +192,9 @@ var projectInfo = [
     'video': 'circle.mp4'
   },
 ];
+
+const computerInstructions = 'Drag to spin projects. Hover to play. Click for more info.';
+const mobileInstructions = 'Drag to spin projects. Tap to play. Double tap for more info.';
 
 /*
   {

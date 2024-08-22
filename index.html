@@ -73,7 +73,6 @@
     </div>
 
     <div id = "instructions" class="footer">
-      Drag to spin projects. Hover to play. Click for more info.
     </div>
 
 <script type="text/javascript">
@@ -117,6 +116,12 @@
   }
 
   $(document).ready(function() {
+    if ('ontouchstart' in document.documentElement) {
+      $('#instructions').html(mobileInstructions);
+    } else {
+      $('#instructions').html(computerInstructions);
+    }
+
     let scrollManager = new ScrollManager();
     page1 = new sLogo(scrollManager, document.getElementById("container"));
     page2 = new portfolio_scene(scrollManager);
