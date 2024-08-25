@@ -131,9 +131,9 @@ function sLogo (scrollManager, container) {
             zPos = particlePositions[ i * 3 +2];
 
             if (explode){
-                particleVelocity.x *= (1 + animationFrameElapsedTime / 200);
-                particleVelocity.y *= (1 + animationFrameElapsedTime / 200);
-                particleVelocity.z *= (1 + animationFrameElapsedTime / 200);
+                particleVelocity.x *= Math.pow(1.07, animationFrameElapsedTime / 15);
+                particleVelocity.y *= Math.pow(1.07, animationFrameElapsedTime / 15);
+                particleVelocity.z *= Math.pow(1.07, animationFrameElapsedTime / 15);
             }
 
             else {
