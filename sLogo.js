@@ -21,6 +21,7 @@ function sLogo (scrollManager, container) {
     var minDistance = 60;
     var flipped = 1;
     var explode;
+    var animationFrameStartTime;
 
     var instantiateLogo = function() {
         explode = false;
@@ -104,6 +105,8 @@ function sLogo (scrollManager, container) {
     };
 
     var animate = function() {
+        var animationFrameElapsedTime = Date.now() - animationFrameStartTime;
+        animationFrameStartTime = Date.now();
 
         var vertexpos = 0;
         var colorpos = 0;
@@ -128,9 +131,9 @@ function sLogo (scrollManager, container) {
             zPos = particlePositions[ i * 3 +2];
 
             if (explode){
-                particleVelocity.x *= 1.07;
-                particleVelocity.y *= 1.07;
-                particleVelocity.z *= 1.07;
+                particleVelocity.x *= animationFrameElapsedTime / 15;
+                particleVelocity.y *= animationFrameElapsedTime / 15;
+                particleVelocity.z *= animationFrameElapsedTime / 15;
             }
 
             else {
@@ -303,6 +306,7 @@ function sLogo (scrollManager, container) {
         onWindowResize();
 
         if (!animationRequest) {
+            animationFrameStartTime = Date.now();
             animationRequest = requestAnimationFrame( animate );
 
             $(container).show();
