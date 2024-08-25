@@ -132,7 +132,7 @@ function sLogo (scrollManager, container) {
 
             if (explode){
                 particleVelocity.x *= (1 + animationFrameElapsedTime / 200);
-                particleVelocity.y *= 1 + animationFrameElapsedTime / 200);
+                particleVelocity.y *= (1 + animationFrameElapsedTime / 200);
                 particleVelocity.z *= (1 + animationFrameElapsedTime / 200);
             }
 
