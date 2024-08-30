@@ -1,9 +1,14 @@
 class portfolio_scene{
   touchCount;
   container;
-  camera, scene, renderer, mouse;
-  mouseX, mouseY;
-  windowHalfX, windowHalfY;
+  camera;
+  scene;
+  renderer;
+  mouse;
+  mouseX;
+  mouseY;
+  windowHalfX;
+  windowHalfY;
   down_clicked;
   start_position;
   box_clicked;
