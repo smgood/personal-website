@@ -1,20 +1,20 @@
 class portfolio_scene{
-  var touchCount;
-  var container;
-  var camera, scene, renderer, mouse;
-  var mouseX, mouseY;
-  var windowHalfX, windowHalfY;
-  var down_clicked;
-  var start_position;
-  var box_clicked;
+  touchCount;
+  container;
+  camera, scene, renderer, mouse;
+  mouseX, mouseY;
+  windowHalfX, windowHalfY;
+  down_clicked;
+  start_position;
+  box_clicked;
 
-  var current_mesh;
-  var current_link;
+  current_mesh;
+  current_link;
 
-  var actualRotation;
-  var targetRotation;
-  var targetRotationOnMouseDown;
-  var mouseXOnMouseDown;
+  actualRotation;
+  targetRotation;
+  targetRotationOnMouseDown;
+  mouseXOnMouseDown;
 
   constructor(scrollManager) {
     mouseX = 0;
