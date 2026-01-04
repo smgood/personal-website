@@ -11,12 +11,12 @@ class Links{
 
     this.links.push(
       new Link(
-        Geometries.facebookGeometry(),
-        0x3B5998,
+        Geometries.instagramGeometry(),
+        0xe56969,
         -500,
         400,
         1000,
-        'https://www.facebook.com/sean.m.goodrich'
+        'https://www.instagram.com/seans.goods'
       )
     );
 
@@ -45,7 +45,7 @@ class Links{
     this.links.push(
       new Link(
         Geometries.spotifyGeometry(),
-        0x1DB954,
+        0x1db954,
         175,
         0,
         1000,
@@ -67,7 +67,7 @@ class Links{
     this.links.push(
       new Link(
         Geometries.emailGeometry(),
-        0xff6666,
+        0xd98541,
         175,
         -400,
         1000,

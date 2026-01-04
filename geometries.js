@@ -81,37 +81,81 @@ const Geometries = {
     return linkedIn_geometry;
   },
 
-  facebookGeometry(){
-    var ctx_facebook = new THREE.Shape();
+  instagramGeometry() {
+    // 1. The main background box
+    var ctx_insta_box = new THREE.Shape();
+    ctx_insta_box.moveTo(30.86, 0);
+    ctx_insta_box.lineTo(185.14, 0);
+    ctx_insta_box.bezierCurveTo(202.11, 0, 216, 13.89, 216, 30.86);
+    ctx_insta_box.lineTo(216, 185.14);
+    ctx_insta_box.bezierCurveTo(216, 202.11, 202.11, 216, 185.14, 216);
+    ctx_insta_box.lineTo(30.86, 216);
+    ctx_insta_box.bezierCurveTo(13.89, 216, 0, 202.11, 0, 185.14);
+    ctx_insta_box.lineTo(0, 30.86);
+    ctx_insta_box.bezierCurveTo(0, 13.89, 13.89, 0, 30.86, 0);
+    ctx_insta_box.closePath();
 
-    ctx_facebook.moveTo(204.1, 0.0);
-    ctx_facebook.lineTo(11.9, 0.0);
-    ctx_facebook.bezierCurveTo(5.3, 0.0, 0.0, 5.3, 0.0, 11.9);
-    ctx_facebook.lineTo(0.0, 204.1);
-    ctx_facebook.bezierCurveTo(0.0, 210.7, 5.3, 216.0, 11.9, 216.0);
-    ctx_facebook.lineTo(115.4, 216.0);
-    ctx_facebook.lineTo(115.4, 132.4);
-    ctx_facebook.lineTo(87.2, 132.4);
-    ctx_facebook.lineTo(87.2, 99.8);
-    ctx_facebook.lineTo(115.4, 99.8);
-    ctx_facebook.lineTo(115.4, 75.7);
-    ctx_facebook.bezierCurveTo(115.4, 47.8, 132.4, 32.6, 157.3, 32.6);
-    ctx_facebook.bezierCurveTo(169.2, 32.6, 179.5, 33.5, 182.5, 33.9);
-    ctx_facebook.lineTo(182.5, 63.1);
-    ctx_facebook.lineTo(165.2, 63.1);
-    ctx_facebook.bezierCurveTo(151.7, 63.1, 149.0, 69.5, 149.0, 78.9);
-    ctx_facebook.lineTo(149.0, 99.8);
-    ctx_facebook.lineTo(181.3, 99.8);
-    ctx_facebook.lineTo(177.1, 132.4);
-    ctx_facebook.lineTo(149.0, 132.4);
-    ctx_facebook.lineTo(149.0, 216.0);
-    ctx_facebook.lineTo(204.1, 216.0);
-    ctx_facebook.bezierCurveTo(210.7, 216.0, 216.0, 210.7, 216.0, 204.1);
-    ctx_facebook.lineTo(216.0, 11.9);
-    ctx_facebook.bezierCurveTo(216.0, 5.3, 210.7, 0.0, 204.1, 0.0);
+    var ctx_camera_hole = new THREE.Shape();
+    ctx_camera_hole.moveTo(138.86, 30.86);
+    ctx_camera_hole.lineTo(77.14, 30.86);
+    ctx_camera_hole.bezierCurveTo(51.69, 30.86, 30.86, 51.69, 30.86, 77.14);
+    ctx_camera_hole.lineTo(30.86, 138.86);
+    ctx_camera_hole.bezierCurveTo(30.86, 164.31, 51.69, 185.14, 77.14, 185.14);
+    ctx_camera_hole.lineTo(138.86, 185.14);
+    ctx_camera_hole.bezierCurveTo(164.31, 185.14, 185.14, 164.31, 185.14, 138.86);
+    ctx_camera_hole.lineTo(185.14, 77.14);
+    ctx_camera_hole.bezierCurveTo(185.14, 51.69, 164.31, 30.86, 138.86, 30.86);
+    ctx_camera_hole.closePath();
+    ctx_insta_box.holes.push( ctx_camera_hole )
 
-    var facebook_geometry = new THREE.ExtrudeGeometry( ctx_facebook, this.extrusionSettings );
-    return facebook_geometry;
+    // 2. The camera
+    var ctx_camera_squircle = new THREE.Shape();
+    ctx_camera_squircle.moveTo(170.49, 138.86);
+    ctx_camera_squircle.bezierCurveTo(170.49, 156.60, 155.83, 170.49, 138.86, 170.49);
+    ctx_camera_squircle.lineTo(77.14, 170.49);
+    ctx_camera_squircle.bezierCurveTo(59.40, 170.49, 45.51, 155.83, 45.51, 138.86);
+    ctx_camera_squircle.lineTo(45.51, 77.14);
+    ctx_camera_squircle.bezierCurveTo(45.51, 59.40, 60.17, 45.51, 77.14, 45.51);
+    ctx_camera_squircle.lineTo(138.86, 45.51);
+    ctx_camera_squircle.bezierCurveTo(156.60, 45.51, 170.49, 60.17, 170.49, 77.14);
+    ctx_camera_squircle.lineTo(170.49, 138.86);
+    ctx_camera_squircle.closePath();
+
+    var ctx_lens_hole = new THREE.Shape();
+    ctx_lens_hole.moveTo(108, 70.97);
+    ctx_lens_hole.bezierCurveTo(87.17, 70.97, 70.20, 87.94, 70.20, 108.77);
+    ctx_lens_hole.bezierCurveTo(70.20, 129.60, 87.17, 146.57, 108, 146.57);
+    ctx_lens_hole.bezierCurveTo(128.83, 146.57, 145.80, 129.60, 145.80, 108.77);
+    ctx_lens_hole.bezierCurveTo(146.57, 87.94, 129.60, 70.97, 108, 70.97);
+    ctx_lens_hole.closePath();
+    ctx_camera_squircle.holes.push ( ctx_lens_hole )
+
+    var ctx_flash_hole = new THREE.Shape();
+    ctx_flash_hole.moveTo(148.93, 59.40);
+    ctx_flash_hole.bezierCurveTo(144.30, 59.40, 139.67, 63.26, 139.67, 68.66);
+    ctx_flash_hole.bezierCurveTo(139.67, 74.06, 143.53, 77.91, 148.93, 77.91);
+    ctx_flash_hole.bezierCurveTo(154.33, 77.91, 158.19, 74.06, 158.19, 68.66);
+    ctx_flash_hole.bezierCurveTo(157.41, 63.26, 153.56, 59.40, 148.93, 59.40);
+    ctx_flash_hole.closePath();
+    ctx_camera_squircle.holes.push ( ctx_flash_hole )
+
+    // 3. The camera lens
+    var ctx_lens_circle = new THREE.Shape();
+    ctx_lens_circle.moveTo(108, 133.46);
+    ctx_lens_circle.bezierCurveTo(94.89, 133.46, 83.31, 122.66, 83.31, 108.77);
+    ctx_lens_circle.bezierCurveTo(83.31, 95.66, 94.11, 84.09, 108, 84.09);
+    ctx_lens_circle.bezierCurveTo(121.11, 84.09, 132.69, 94.89, 132.69, 108.77);
+    ctx_lens_circle.bezierCurveTo(132.69, 122.66, 121.89, 133.46, 108, 133.46);
+    ctx_lens_circle.closePath();
+
+    var instagram_geometry = new THREE.ExtrudeGeometry( ctx_insta_box, this.extrusionSettings );
+    var instagram_geometry_2 = new THREE.ExtrudeGeometry( ctx_camera_squircle, this.extrusionSettings );
+    var instagram_geometry_3 = new THREE.ExtrudeGeometry( ctx_lens_circle, this.extrusionSettings ); 
+
+    instagram_geometry.merge( instagram_geometry_2 );
+    instagram_geometry.merge( instagram_geometry_3 );    
+
+    return instagram_geometry;
   },
 
   spotifyGeometry(){
